@@ -11,7 +11,6 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
-import "./Members.scss";
 import Footer from "../footer/Footer";
 import { useGetRecentRegisters } from "../api/Auth";
 
@@ -19,9 +18,7 @@ const Members = () => {
   const isLargeScreen = useMediaQuery("(min-width:1200px)");
   const isMediumScreen = useMediaQuery("(min-width:900px)");
   const isSmallScreen = useMediaQuery("(min-width:600px)");
-  const {data:recentregisters} = useGetRecentRegisters()
-
-  
+  const { data: recentregisters } = useGetRecentRegisters();
 
   const getSlidesPerView = () => {
     if (isLargeScreen) return 3;
@@ -35,20 +32,20 @@ const Members = () => {
       <Container
         sx={{
           textAlign: "center",
-          marginTop: { xs: 3, sm: 5 },
-          marginBottom: { xs: 5, sm: 10 },
+          mt: { xs: 3, sm: 5 },
+          mb: { xs: 5, sm: 10 },
           px: { xs: 2, sm: 3 },
         }}
       >
         <Typography
           variant="h4"
           sx={{
-            color: "#182848",
+            color: "#63084e",
             fontWeight: "bold",
             fontFamily: "Outfit, sans-serif",
             fontSize: { xs: "1.5rem", sm: "2rem" },
-            marginBottom: 5,
-            marginTop:3
+            mb: 5,
+            mt: 3,
           }}
         >
           RECENT REGISTERS
@@ -68,42 +65,41 @@ const Members = () => {
             loop
           >
             {recentregisters?.map((member) => (
-              <SwiperSlide >
+              <SwiperSlide key={member._id}>
                 <Box
-                  className="member-card"
                   sx={{
-                    fontFamily: "Outfit, sans-serif",
                     px: { xs: 1, sm: 0 },
                     pb: 2,
+                    transition: "transform 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-5px)",
+                    },
                   }}
                 >
                   <Paper
-                    elevation={3}
+                    elevation={6}
                     sx={{
-                      borderRadius: 2,
-                      overflow: "hidden",
-                      position: "relative",
+                      borderRadius: 4,
+                      p: 3,
+                      background: "linear-gradient(to right, #63084e, #d05ec8)",
+                      color: "#fff",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
                       height: "100%",
                       display: "flex",
                       flexDirection: "column",
-                      p: 3,
-                      background: "linear-gradient(to right, #182848, #4d75d4)",
-                      color: "white",
-                      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                      justifyContent: "center",
                     }}
                   >
                     <Typography
-                      variant="h4"
+                      variant="h5"
                       sx={{
                         textAlign: "center",
-                        color: "white",
-                        mb: 2,
                         fontWeight: "bold",
-                        fontFamily: "Outfit, sans-serif",
-                        textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
+                        mb: 2,
+                        textShadow: "0 2px 4px rgba(0, 0, 0, 0.4)",
                       }}
                     >
-                      Girija❤️Kalyana
+                      Girija ❤️ Kalyana
                     </Typography>
 
                     <Box
@@ -111,7 +107,6 @@ const Members = () => {
                         display: "flex",
                         flexDirection: "column",
                         gap: 1.5,
-              
                       }}
                     >
                       {[
@@ -119,20 +114,20 @@ const Members = () => {
                         { label: "Name:", value: member.name },
                         { label: "Age:", value: member.age },
                         { label: "Caste:", value: member.caste },
-                        { label: "Education:", value: member.educational_qualification },
+                        {
+                          label: "Education:",
+                          value: member.educational_qualification,
+                        },
                         { label: "Occupation:", value: member.occupation },
                         { label: "City:", value: member.city },
                       ].map((item, index) => (
-                        <Box key={index} sx={{ display: "flex" }}>
+                        <Box key={index} sx={{ display: "flex", gap: 1 }}>
                           <Typography
                             variant="body1"
                             sx={{
-                              ml:3,
                               fontWeight: "bold",
                               width: "100px",
-                              fontFamily: "Outfit, sans-serif",
                               color: "#fff",
-                              display:"flex",
                             }}
                           >
                             {item.label}
@@ -140,8 +135,8 @@ const Members = () => {
                           <Typography
                             variant="body1"
                             sx={{
-                              fontFamily: "Outfit, sans-serif",
                               color: "#fff",
+                              wordBreak: "break-word",
                             }}
                           >
                             {item.value}

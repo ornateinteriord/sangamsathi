@@ -230,17 +230,21 @@ const Navbar = () => {
                 variant="contained"
                 size={isMobile ? "medium" : "large"}
                 onClick={handleLogout}
-                sx={{
-                  backgroundColor: "black",
-                  minWidth: "120px",
-                  color: "#fff",
-                  fontWeight: 700,
-                  height: { xs: "36px", md: "42px" },
-                  textTransform: "capitalize",
-                  display: { xs: "none", sm: "inline-flex" },
-                  "&:hover": {
-                    backgroundColor: "#333333",
-                  },
+                           sx={{
+                    minWidth: "120px",
+    color: "#ffff", 
+    fontWeight:800,
+    fontSize:{xs:"20px", md:'18px'},
+    height: { xs: "36px", md: "42px" },
+    textTransform: "capitalize",
+    backgroundColor: "transparent", 
+    boxShadow: "none",
+    display: { xs: "none", sm: "inline-flex" },
+    "&:hover": {
+      backgroundColor: "#cde3f9", 
+      color: "#000", 
+      boxShadow: "none",
+    },
                 }}
               >
                 Logout
@@ -284,7 +288,7 @@ const Navbar = () => {
         sx={{
           "& .MuiDrawer-paper": {
             width: "280px",
-            background: 'linear-gradient(to right, #182848, #4d75d4)',
+             background: 'linear-gradient(to right, #63084e, #da39cf)', 
             color: "#fff",
           },
         }}
@@ -305,7 +309,7 @@ const Navbar = () => {
               component="div"
               sx={{ fontWeight: "bold", fontSize: "1.3rem" }}
             >
-              Girija❤️Kalyana
+              Sangam❤️Sathi
             </Typography>
             <IconButton onClick={toggleMobileMenu} sx={{ color: "#fff" }}>
               <CloseIcon />
@@ -352,13 +356,13 @@ const Navbar = () => {
                   toggleMobileMenu();
                 }}
                 sx={{
-                  backgroundColor: "black",
-                  color: "#fff",
+                  backgroundColor: "#ffff",
+                  color: "black",
                   fontWeight: 700,
                   height: "42px",
                   textTransform: "capitalize",
                   "&:hover": {
-                    backgroundColor: "#333333",
+                    backgroundColor: "#ffff",
                   },
                 }}
               >
@@ -374,13 +378,13 @@ const Navbar = () => {
                     toggleMobileMenu();
                   }}
                   sx={{
-                    backgroundColor: "black",
-                    color: "#fff",
+                    backgroundColor: "#ffff",
+                    color: "black",
                     fontWeight: 700,
                     height: "42px",
                     textTransform: "capitalize",
                     "&:hover": {
-                      backgroundColor: "#333333",
+                      backgroundColor: "#ffff",
                     },
                   }}
                 >
