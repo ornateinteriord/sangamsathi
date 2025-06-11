@@ -232,13 +232,14 @@ const Navbar = () => {
                 onClick={handleLogout}
                            sx={{
                     minWidth: "120px",
-    color: "#ffff", 
-    fontWeight:800,
+    color: "#000", 
+    fontWeight:700,
     fontSize:{xs:"20px", md:'18px'},
     height: { xs: "36px", md: "42px" },
     textTransform: "capitalize",
-    backgroundColor: "transparent", 
+    backgroundColor: "#ffff", 
     boxShadow: "none",
+    fontFamily: "'Poppins', sans-serif",
     display: { xs: "none", sm: "inline-flex" },
     "&:hover": {
       backgroundColor: "#cde3f9", 
@@ -252,22 +253,23 @@ const Navbar = () => {
             ) : (
               <>
              <Button
-                  variant="text"
+                  variant="contained"
                   size={isMobile ? "medium" : "large"}
                   onClick={handleOpen}
                   sx={{
                     minWidth: "120px",
-    color: "#ffff", 
-    fontWeight:800,
+    color: "#000", 
+    fontWeight:700,
     fontSize:{xs:"20px", md:'18px'},
     height: { xs: "36px", md: "42px" },
     textTransform: "capitalize",
-    backgroundColor: "transparent", 
+    backgroundColor: "#ffff", 
     boxShadow: "none",
+    fontFamily: "'Poppins', sans-serif",
     display: { xs: "none", sm: "inline-flex" },
-    "&:hover": {
+    "&:hover": {    
       backgroundColor: "#cde3f9", 
-      color: "#000", 
+     color: "#000", 
       boxShadow: "none",
     },
                   }}
@@ -360,6 +362,7 @@ const Navbar = () => {
                   color: "black",
                   fontWeight: 700,
                   height: "42px",
+                  fontFamily: "'Poppins', sans-serif",
                   textTransform: "capitalize",
                   "&:hover": {
                     backgroundColor: "#ffff",
@@ -382,6 +385,7 @@ const Navbar = () => {
                     color: "black",
                     fontWeight: 700,
                     height: "42px",
+                    fontFamily: "'Poppins', sans-serif",
                     textTransform: "capitalize",
                     "&:hover": {
                       backgroundColor: "#ffff",
@@ -415,6 +419,7 @@ const Navbar = () => {
             fontWeight: "bold",
             fontSize: "1.5rem",
             paddingBottom: "20px",
+            fontFamily: "'Poppins', sans-serif",
           }}
         >
           Login
@@ -455,6 +460,7 @@ const Navbar = () => {
               variant="outlined"
               required
               sx={{
+                fontFamily: "'Poppins', sans-serif",
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "5px",
                 },
@@ -463,6 +469,7 @@ const Navbar = () => {
             <Typography
               variant="body2"
               sx={{
+                fontFamily: "'Poppins', sans-serif",
                 color: theme.palette.primary.main,
                 cursor: "pointer",
                 textAlign: "center",
@@ -495,6 +502,7 @@ const Navbar = () => {
               fontWeight: "bold",
               textTransform: "capitalize",
               fontSize: "1rem",
+              fontFamily: "'Poppins', sans-serif",
             }}
           >
             {isLoginPending ? (
@@ -506,6 +514,7 @@ const Navbar = () => {
           <Typography
             variant="body2"
             sx={{
+              fontFamily: "'Poppins', sans-serif",
               textAlign: "center",
               color: theme.palette.text.secondary,
             }}
@@ -513,6 +522,7 @@ const Navbar = () => {
             Don't have an account?{" "}
             <span
               style={{
+                fontFamily: "'Poppins', sans-serif",
                 color: theme.palette.primary.main,
                 cursor: "pointer",
                 fontWeight: "bold",
@@ -547,6 +557,7 @@ const Navbar = () => {
             fontWeight: "bold",
             fontSize: "1.5rem",
             paddingBottom: "8px",
+            fontFamily: "'Poppins', sans-serif",
           }}
         >
           {otpSent ? "Reset Password" : "Forgot Password"}
@@ -559,11 +570,12 @@ const Navbar = () => {
               flexDirection: "column",
               gap: 2,
               paddingTop: "16px",
+              fontFamily: "'Poppins', sans-serif",
             }}
           >
             {!otpSent ? (
               <>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" fontFamily={ "'Poppins', sans-serif"} color="text.secondary">
                   Enter your registered email to receive a password reset OTP.
                 </Typography>
                 <TextField
@@ -582,7 +594,7 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2"  fontFamily={ "'Poppins', sans-serif"} color="text.secondary">
                   Enter the OTP sent to your email and your new password.
                 </Typography>
                 <TextField
