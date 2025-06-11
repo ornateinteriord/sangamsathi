@@ -1,4 +1,5 @@
 .servicebody {
+  width: 100%;
   padding: 4.1rem 1rem;
   background: linear-gradient(to bottom right, #7c3aed, #0f766e);
   font-family: 'Poppins', sans-serif;
@@ -18,7 +19,7 @@
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     justify-items: center;
   }

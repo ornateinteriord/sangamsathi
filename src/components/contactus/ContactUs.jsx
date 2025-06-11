@@ -21,11 +21,13 @@ const ContactUs = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2>Get In Touch</h2>
-          <p>
-            We're here to assist you! Feel free to reach out to us with any
-            questions, concerns, or feedback.
-          </p>
+          <div className="header-content">
+            <h2>Get In Touch</h2>
+            <p>
+              We're here to assist you! Feel free to reach out with any
+              questions, concerns, or feedback.
+            </p>
+          </div>
         </motion.div>
 
         {/* Main Content */}
@@ -40,7 +42,7 @@ const ContactUs = () => {
             >
               <motion.div 
                 className="contact-card"
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="icon-wrapper">
@@ -53,7 +55,7 @@ const ContactUs = () => {
 
               <motion.div 
                 className="contact-card"
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="icon-wrapper">
@@ -66,7 +68,7 @@ const ContactUs = () => {
 
               <motion.div 
                 className="contact-card"
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="icon-wrapper">
@@ -126,16 +128,16 @@ const ContactUs = () => {
                   <motion.button 
                     type="submit" 
                     className="subbtn"
-                    whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(52, 152, 219, 0.4)" }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.03, boxShadow: "0 5px 15px rgba(79, 70, 229, 0.3)" }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     Send Message
                   </motion.button>
                   <motion.button 
                     type="reset" 
                     className="subbtn clear-btn"
-                    whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(231, 76, 60, 0.4)" }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.03, boxShadow: "0 5px 15px rgba(220, 38, 38, 0.3)" }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     Clear Form
                   </motion.button>
