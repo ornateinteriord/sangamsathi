@@ -1,132 +1,109 @@
 .servicebody {
-  margin-top: 40px;
+  padding: 4.1rem 1rem;
+  background: linear-gradient(to bottom right, #7c3aed, #0f766e);
+  font-family: 'Poppins', sans-serif;
+  color: #1e293b;
   text-align: center;
-  padding: 2rem;
-  max-width: 1600px;
-  margin-left: auto;
-  margin-right: auto;
 
   h2 {
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    margin-bottom: 1.5rem;
-    margin-top: 1.0rem;
-    color: #2c3e50 !important;
-    font-family: "Outfit sans-serif";
-    padding: 0 1rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    font-family: 'Poppins', sans-serif;
   }
 
   .service-grid {
     display: grid;
+    gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    font-family: "Outfit sans-serif";
-    padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-items: center;
   }
 
   .service-card {
-    background: #2c3e50;
-    color: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 1rem;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    position: relative;
-    min-height: 280px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 360px;
+    color: #334155;
 
     &:hover {
-      transform: translateY(-5px);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(124, 58, 237, 0.3);
     }
 
     .icon-wrapper {
-      margin-bottom: 1rem;
+      background: #14b8a6;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: #fff;
+      margin: 0 auto 1.5rem auto;
     }
 
     h3 {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      margin-bottom: 0.5rem;
-      font-family: "Outfit sans-serif";
-      padding: 0 0.5rem;
-      text-align: center;
-      width: 100%;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #7c3aed;
+        font-family: 'Poppins', sans-serif;
     }
 
     p {
-      font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-      line-height: 1.4;
-      font-family: "Outfit sans-serif";
-      margin-bottom: 1rem;
-      padding: 0 0.5rem;
-      text-align: center;
-      width: 100%;
+      font-size: 0.95rem;
+      color: #475569;
+      padding: 0 1rem;
+      font-family: 'Poppins', sans-serif;
     }
 
     .arrow-icon {
-      font-size: 24px;
-      color: #fff;
-      margin-top: 1rem;
-      align-self: center;
-      position: static; // Remove absolute positioning
-      display: block !important; // Always show on all screens
-    }
-  }
+      font-size: 22px;
+      color: #14b8a6;
+      margin-top: 1.2rem;
+      display: inline-block;
+      transition: transform 0.3s ease;
 
-  .happydiv {
-    margin-top: 2rem;
-    padding: 0 1rem;
-
-    #happy {
-      font-size: clamp(1.2rem, 3vw, 1.5rem);
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-      color: #2c3e50;
-      font-family: "Outfit sans-serif";
-    }
-
-    p {
-      font-size: clamp(1rem, 2.5vw, 1.5rem);
-      font-family: "Outfit sans-serif";
-      color: #2c3e50;
-    }
-  }
-
-  // Responsive adjustments
-  @media (max-width: 768px) {
-    padding: 1rem;
-
-    .service-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .service-card {
-      min-height: auto;
-      padding: 1.5rem 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      
-      h3, p {
-        padding: 0;
-        text-align: center;
-        width: 100%;
+      &:hover {
+        transform: translateX(6px);
       }
     }
   }
 
-  @media (min-width: 1200px) {
-    .service-grid {
-      grid-template-columns: repeat(3, 1fr);
+  .happydiv {
+    margin-top: 4rem;
+
+    #happy {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #e0f2f1;
+        font-family: 'Poppins', sans-serif;
     }
   }
 
-  @media (min-width: 768px) and (max-width: 1199px) {
-    .service-grid {
-      grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 2rem;
+    }
+
+    .service-card {
+      padding: 1.5rem;
     }
   }
 }
