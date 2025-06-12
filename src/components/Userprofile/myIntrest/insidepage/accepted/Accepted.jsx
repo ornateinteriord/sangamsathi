@@ -14,7 +14,7 @@ import {
 import { FaBriefcase, FaMapMarkerAlt } from "react-icons/fa";
 import TokenService from "../../../../token/tokenService";
 import { useGetAcceptedInterests } from "../../../../api/User/useGetProfileDetails";
-import { LoadingComponent } from "../../../../../App";
+import { LoadingComponent, TableLoadingComponent } from "../../../../../App";
 import ProfileDialog from "../../../ProfileDialog/ProfileDialog";
 import AboutPop from "../../../viewAll/popupContent/abouPop/AboutPop";
 import FamilyPop from "../../../viewAll/popupContent/familyPop/FamilyPop";
@@ -79,7 +79,7 @@ const Accepted = () => {
   return (
     <Box sx={{ padding: 3 }}>
       {isLoading ? (
-        <LoadingComponent />
+        <TableLoadingComponent />
       ) : totalItems === 0 ? (
         <Typography variant="h6" textAlign="center" mt={4}>
           No accepted interests found
@@ -174,7 +174,7 @@ const Accepted = () => {
                         </Typography>
                       </Box>
 
-                      <Divider sx={{ my: 1}} />
+                      <Divider sx={{ my: 1, height:'1px'}} />
 
                       <Box display="flex" justifyContent="space-around" mb={2}>
                         <ProfileInfo label="Height" value={profile.height || "N/A"} />

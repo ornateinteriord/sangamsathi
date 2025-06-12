@@ -214,7 +214,7 @@ const handleSubmitPasswordChange = () => {
           position="fixed"
           sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            background: "#1a4f72",
+              background: 'linear-gradient(to right, #63084e, #da39cf)', 
             height: "60px",
           }}
         >
@@ -287,7 +287,7 @@ const handleSubmitPasswordChange = () => {
     [`& .MuiDrawer-paper`]: {
       width: isSidebarOpen ? drawerWidth : 0,
       boxSizing: "border-box",
-      background: "#1a4f72",
+      background: '#63084e',
       color: "#fff",
       transition: "width 0.6s ease, opacity 0.6s ease",
       opacity: isSidebarOpen ? 1 : 0,
