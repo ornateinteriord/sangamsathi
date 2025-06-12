@@ -50,10 +50,10 @@ const SidebarMenu = ({
             }}
             sx={{
               backgroundColor:
-                selectedItem === item.text ? "#1976d2" : "transparent",
+                selectedItem === item.text ? "	#c065a0" : "transparent",
               "&:hover": {
                 backgroundColor:
-                  selectedItem === item.text ? "#1976d2" : "transparent",
+                  selectedItem === item.text ? " #c065a0" : "rgba(255, 255, 255, 0.08)t",
               },
               borderRadius: "2px",
               mx: 0,

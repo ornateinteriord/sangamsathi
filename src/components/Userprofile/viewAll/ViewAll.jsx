@@ -17,7 +17,7 @@ import {
   useGetAllUsersProfiles,
 } from "../../api/User/useGetProfileDetails";
 import TokenService from "../../token/tokenService";
-import { LoadingComponent } from "../../../App";
+import { LoadingComponent, TableLoadingComponent } from "../../../App";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";
 import GenderFilter from "../../../utils/Filters/GenderFilter";
 import { useVerifiedImage } from "../../hook/ImageVerification";
@@ -61,7 +61,6 @@ const ViewAll = () => {
       if (user.registration_no === loggedInUserId || user.user_role === "Admin") {
         return false;
       }
-      
       if (selectedStatus !== "all" && user.gender !== selectedStatus) {
         return false;
       }
@@ -246,7 +245,7 @@ const ViewAll = () => {
             </Typography>
           </Box>
 
-          <Divider sx={{  my: 1 }} />
+          <Divider sx={{  my: 1, height:'1px' }} />
 
           {/* Details row */}
           <Box display="flex" justifyContent="space-around" width="100%" my={2}>
@@ -360,7 +359,7 @@ const ViewAll = () => {
       )}
 
       {/* Loading state */}
-      {isLoading && <LoadingComponent />}
+      {isLoading && <TableLoadingComponent />}
     </Box>
   );
 };

@@ -142,7 +142,14 @@ const InterestCard = ({ senderData, handleResponse }) => {
           </Typography>
         </Box>
 
-        <Divider sx={{ my: 1 }} />
+              <Divider
+  sx={{
+    my: 1,
+    height: '1px',
+    backgroundColor: '#ccc',
+    width: '100%',
+  }}
+/>
 
         <Box display="flex" justifyContent="space-around" width="100%" my={2}>
           <ProfileInfo label="Height" value={senderData?.height || "N/A"} />
@@ -159,7 +166,10 @@ const InterestCard = ({ senderData, handleResponse }) => {
               color: "red",
               fontWeight: "bold",
               borderColor: "red",
-              textTransform: "capitalize"
+              textTransform: "capitalize",
+              "&:hover":{
+                backgroundColor:'rgba(224, 216, 216, 0.96)'
+              }
             }}
             onClick={() => handleResponse(senderData.registration_no, false)}
           >

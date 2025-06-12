@@ -26,6 +26,7 @@ import FamilyPop from "../../viewAll/popupContent/familyPop/FamilyPop";
 import AboutPop from "../../viewAll/popupContent/abouPop/AboutPop";
 import ProfileDialog from "../../ProfileDialog/ProfileDialog";
 import { useVerifiedImage } from "../../../hook/ImageVerification";
+import { TableLoadingComponent } from "../../../../App";
 
 const Sent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -119,10 +120,10 @@ const Sent = () => {
 
   return (
     <Box sx={{ p: 3 }}>
-      {isLoading ? (
-        <Typography>Loading...</Typography>
-      ) : sentData.length === 0 ? (
-        <Typography>You haven't sent any interest requests.</Typography>
+        {isLoading ? (
+                <TableLoadingComponent />
+              ) : sentData?.length === 0 ? (
+                <Typography variant="h6">You haven't sent any interest requests.</Typography>
       ) : (
         <>
           <Box
@@ -290,7 +291,7 @@ return (
         </Typography>
       </Box>
 
-      <Divider sx={{ width:'100%', my: 1 }} />
+      <Divider sx={{ width:'100%', my: 1, height:'1px' }} />
 
       <Box display="flex" justifyContent="space-around" width="100%" my={2}>
         <ProfileInfo  label="Height" value={profile.height || "N/A"} />

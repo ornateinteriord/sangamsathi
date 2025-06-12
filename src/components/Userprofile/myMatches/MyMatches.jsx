@@ -17,7 +17,7 @@ import {
   useGetAllUsersProfiles,
   useGetMemberDetails,
 } from "../../api/User/useGetProfileDetails";
-import { LoadingComponent } from "../../../App";
+import { LoadingComponent, TableLoadingComponent } from "../../../App";
 import toast from "react-hot-toast";
 import AboutPop from "../viewAll/popupContent/abouPop/AboutPop";
 import FamilyPop from "../viewAll/popupContent/familyPop/FamilyPop";
@@ -66,7 +66,7 @@ const MyMatches = () => {
     if (allUsers.length > 0 && userProfile) {
       const filteredUsers = allUsers.filter((user) => {
         if (user.registration_no === registerNo) return false;
-
+        if (user.user_role && user.user_role.toLowerCase() === "admin") return false;
         if (selectedStatus !== "all" && user.gender !== selectedStatus) {
           return false;
         }
@@ -186,7 +186,7 @@ const MyMatches = () => {
       </Box>
 
       {isProfileLoading || isUsersLoading ? (
-        <LoadingComponent />
+        <TableLoadingComponent />
       ) : userCard.length === 0 ? (
         <Typography variant="h6" textAlign="center" mt={4}>
           No matches found based on your preferences.
@@ -310,7 +310,7 @@ const MyMatches = () => {
                   </Typography>
                 </Box>
 
-                <Divider sx={{ my: 1 }} />
+                <Divider sx={{ my: 1, height:'1px' }} />
 
                 {/* Additional Details */}
                 <Box display="flex" justifyContent="space-around">
