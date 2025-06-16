@@ -158,12 +158,12 @@ const HeroSlider = () => {
                   variant="contained"
                   size={isMobile ? "small" : "large"}
                   sx={{
-                    color:'black',
+                    color:'#ffff',
                      fontWeight:'bold',
-                    backgroundColor: '#ffff',
-                    '&:hover': {
-                      backgroundColor: 'rgb(205, 207, 206)',
-                    },
+                    backgroundColor: '#da39cf',
+                  '&:hover': {
+                    backgroundColor: '#da13ab',
+                  },
                     borderRadius: '8px',
                     textTransform: 'capitalize',
                     px: isMobile ? 2 : 4,

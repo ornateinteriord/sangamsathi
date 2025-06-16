@@ -8,6 +8,8 @@ import { ToastContainer } from 'react-toastify';
 import ProtectedRoute from './components/roterProtector/RouterProtector';
 import Register from './components/register/Register';
 import MembershipPlane from './components/membershipplan/MembershipPlane';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 // Create a query client with default options
 const queryClient = new QueryClient({

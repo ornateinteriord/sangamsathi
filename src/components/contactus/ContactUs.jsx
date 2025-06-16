@@ -46,7 +46,7 @@ const ContactUs = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="icon-wrapper">
-                  <i className="fas fa-map-marker-alt"></i>
+                  <i className="fas fa-map-marker-alt" style={{color:'#fff'}}></i>
                 </div>
                 <h3>Our Office</h3>
                 <p>#148/E, 2nd Floor, 17th Main Vijaynagar,</p>
