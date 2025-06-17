@@ -4,9 +4,9 @@ import { styled } from "@mui/system";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import wall1 from '../../assets/wallpaper/wall1.jpg';
-import card4 from '../../assets/card4.jpg';
-import wall2 from '../../assets/wallpaper/wall2.jpg';
+import wed1 from '../../assets/wallpaper/wed1.jpg';
+import wed2 from '../../assets/wallpaper/wed2.jpg';
+import wed3 from '../../assets/wallpaper/wed3.jpg';
 import Navbar from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import "./HeroSlider.scss";
@@ -20,9 +20,9 @@ const HeroSlider = () => {
   const { isLoggedIn } = useAuth();
 
   const images = [
-    { src: wall1, alt: "Happy Couple 1" },
-    { src: card4, alt: "Happy Couple 2" },
-    { src: wall2, alt: "Happy Couple 3" },
+    { src: wed1, alt: "Happy Couple 1" },
+    { src: wed2, alt: "Happy Couple 2" },
+    { src: wed3, alt: "Happy Couple 3" },
   ];
 
   const settings = {
