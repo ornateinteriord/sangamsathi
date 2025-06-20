@@ -13,11 +13,10 @@ import {
 import { FaMapMarkerAlt, FaBriefcase } from "react-icons/fa";
 import TokenService from "../../token/tokenService";
 import {
-  useGetAcceptedInterests,
   useGetAllUsersProfiles,
   useGetMemberDetails,
 } from "../../api/User/useGetProfileDetails";
-import { LoadingComponent, TableLoadingComponent } from "../../../App";
+import { LoadingComponent } from "../../../App";
 import toast from "react-hot-toast";
 import AboutPop from "../viewAll/popupContent/abouPop/AboutPop";
 import FamilyPop from "../viewAll/popupContent/familyPop/FamilyPop";
@@ -26,8 +25,8 @@ import LifeStylePop from "../viewAll/popupContent/lifeStylePop/LifeStylePop";
 import PreferencePop from "../viewAll/popupContent/preferencePop/PreferencePop";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";
 import GenderFilter from "../../../utils/Filters/GenderFilter";
-import { useVerifiedImage } from "../../hook/ImageVerification";
-import { useConnectionStatus } from "../../hook/ConnectionStatus";
+
+
 
 const MyMatches = () => {
   const [userCard, setUserCard] = useState([]);
@@ -37,12 +36,9 @@ const MyMatches = () => {
   const [openDialog, setOpenDialog] = useState(null);
   const [currentTab, setCurrentTab] = useState(0);
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const {getVerifiedImage} = useVerifiedImage()
   const itemsPerPage = 8;
   const registerNo = TokenService.getRegistrationNo();
-  const loggedInUserRole = TokenService.getRole()
-  const { data: responseData } = useGetAcceptedInterests(registerNo);
-  const { getConnectionStatus } = useConnectionStatus(responseData);
+
 
   const {
     data: userProfile,
@@ -66,7 +62,7 @@ const MyMatches = () => {
     if (allUsers.length > 0 && userProfile) {
       const filteredUsers = allUsers.filter((user) => {
         if (user.registration_no === registerNo) return false;
-        if (user.user_role && user.user_role.toLowerCase() === "admin") return false;
+
         if (selectedStatus !== "all" && user.gender !== selectedStatus) {
           return false;
         }
@@ -186,7 +182,7 @@ const MyMatches = () => {
       </Box>
 
       {isProfileLoading || isUsersLoading ? (
-        <TableLoadingComponent />
+        <LoadingComponent />
       ) : userCard.length === 0 ? (
         <Typography variant="h6" textAlign="center" mt={4}>
           No matches found based on your preferences.
@@ -210,8 +206,6 @@ const MyMatches = () => {
 >
 
           {userCard.map((user) => {
-            const connectionStatus = getConnectionStatus(user.registration_no);
-    const imageSrc = getVerifiedImage(user, loggedInUserRole, connectionStatus);
            return(
             <Card
               key={user.registration_no}
@@ -224,9 +218,10 @@ const MyMatches = () => {
                 overflow: "hidden",
                 transition: "transform 0.3s",
                 "&:hover": { transform: "translateY(-5px)" },
-                display: "flex", // Add flex display
-                flexDirection: "column", // Stack children vertically
-                height: "100%", // Take full height available
+                display: "flex", 
+                flexDirection: "column", 
+                height: "100%", 
+                color: "#000"
               }}
             >
               {/* Premium badge */}
@@ -258,7 +253,7 @@ const MyMatches = () => {
                 }}
               >
                 <Avatar
-                  src={imageSrc}
+                  src={user?.image}
                   alt="Profile"
                   sx={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
@@ -269,13 +264,13 @@ const MyMatches = () => {
                 sx={{
                   textAlign: "center",
                   p: 0,
-                  flexGrow: 1, // Allow this section to grow and take available space
+                  flexGrow: 1, 
                   display: "flex",
                   flexDirection: "column",
                 }}
               >
                 <Box>
-                  <Typography fontWeight="bold">
+                  <Typography fontWeight="bold"  color={"#000"}>
                     {user.first_name} {user.last_name}{" "}
                   </Typography>
                   <Typography component="span" color="text.secondary">
@@ -288,9 +283,10 @@ const MyMatches = () => {
                   justifyContent="center"
                   mt={1}
                   gap={0.5}
+                  
                 >
                   <FaBriefcase size={14} />
-                  <Typography variant="body2">
+                  <Typography variant="body2" color={"#000"}>
                     {user.occupation || "Not specified"}
                   </Typography>
                 </Box>
@@ -303,7 +299,7 @@ const MyMatches = () => {
                   gap={0.5}
                 >
                   <FaMapMarkerAlt size={14} />
-                  <Typography variant="body2">
+                  <Typography variant="body2" color={"#000"}>
                     {[user.city, user.state, user.country]
                       .filter(Boolean)
                       .join(", ") || "Location not specified"}

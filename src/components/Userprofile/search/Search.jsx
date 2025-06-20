@@ -12,22 +12,21 @@ import {
   TextField,
 } from "@mui/material";
 import { FaMapMarkerAlt, FaBriefcase, FaSearch } from "react-icons/fa";
-import { useGetAcceptedInterests, useGetAllUsersProfiles } from "../../api/User/useGetProfileDetails";
+import {  useGetAllUsersProfiles } from "../../api/User/useGetProfileDetails";
 import TokenService from "../../token/tokenService";
-import { useVerifiedImage } from "../../hook/ImageVerification";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";
 import AboutPop from "../viewAll/popupContent/abouPop/AboutPop";
 import FamilyPop from "../viewAll/popupContent/familyPop/FamilyPop";
 import EducationPop from "../viewAll/popupContent/educationPop/EducationPop";
 import LifeStylePop from "../viewAll/popupContent/lifeStylePop/LifeStylePop";
 import PreferencePop from "../viewAll/popupContent/preferencePop/PreferencePop";
-import { useConnectionStatus } from "../../hook/ConnectionStatus";
+
 
 const itemsPerPage = 8;
 
 const ProfileInfo = ({ label, value }) => (
   <Box sx={{ textAlign: "center" }}>
-    <Typography variant="body2" fontWeight="bold">
+    <Typography variant="body2" fontWeight="bold" color="#000">
       {label}
     </Typography>
     <Typography variant="body2" color="text.secondary">
@@ -43,12 +42,9 @@ const Search = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const { getVerifiedImage } = useVerifiedImage();
   const { data: users = [] } = useGetAllUsersProfiles();
   const loggedInUserId = TokenService.getRegistrationNo();
-  const { data: responseData } = useGetAcceptedInterests(loggedInUserId);
-  const { getConnectionStatus } = useConnectionStatus(responseData);
-   const loggedInUserRole = TokenService.getRole()
+  
 
   // Update searchQuery when clicking Search button
   const handleSearch = () => {
@@ -117,8 +113,6 @@ const Search = () => {
 
   const renderUserCard = (user) => {
     const age = user.age || calculateAge(user.date_of_birth);
-    const connectionStatus = getConnectionStatus(user.registration_no);
-    const imageSrc = getVerifiedImage(user, loggedInUserRole, connectionStatus);
     return (
       <Card
         key={user._id}
@@ -171,7 +165,7 @@ const Search = () => {
             }}
           >
             <Avatar
-              src={imageSrc}
+              src={user?.image}
               alt="Profile"
               sx={{ width: "100%", height: "100%" }}
             />
@@ -189,27 +183,27 @@ const Search = () => {
           }}
         >
           <Box sx={{ textAlign: "center", mb: 0.5 }}>
-            <Typography fontWeight="bold" fontSize="1rem">
+            <Typography fontWeight="bold" color="#000" fontSize="1rem">
               {user.first_name} {user.last_name}
             </Typography>
             <Typography color="text.secondary">{age || "N/A"} yrs</Typography>
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center",justifyContent:'center', mb: 0.5 }}>
-            <FaBriefcase size={14} color="#777" style={{ marginRight: 6 }} />
-            <Typography variant="body2" color="text.secondary">
+            <FaBriefcase size={14} color="#000" style={{ marginRight: 6 }} />
+            <Typography variant="body2" color="#000">
               {user.occupation || "Not specified"}
             </Typography>
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center",justifyContent:'center', mb: 1 }}>
-            <FaMapMarkerAlt size={14} color="#777" style={{ marginRight: 6 }} />
-            <Typography variant="body2">
+            <FaMapMarkerAlt size={14} color="#000" style={{ marginRight: 6 }} />
+            <Typography variant="body2" color="#000">
               {[user.city, user.state].filter(Boolean).join(", ") || "Location not specified"}
             </Typography>
           </Box>
 
-          <Divider sx={{ my: 1}} />
+          <Divider sx={{ my: 1, height:'1px'}} />
 
           <Box display="flex" justifyContent="space-around" my={2}>
             <ProfileInfo label="Height" value={user.height || "N/A"} />
