@@ -53,22 +53,22 @@ const Profile = () => {
       bgcolor: 'background.paper',
       borderRadius: 2,
       boxShadow: 1,
-      p: { xs: 1, sm: 3, md: 4 },
+      p: { xs: 1, sm: 3, md: 2 },
       maxWidth: 1200,
       justifySelf:{md:'center'},
       // mx: 'auto',
       width: { 
-        xs: '40%',   // For very small screens (like iPhone SE)
-        sm: '90%',   // For small screens (like iPhone 15/16 in portrait)
-        md: '85%',   // For medium screens (like iPhone 15/16 in landscape)
-        lg: '100%'   // For larger screens
+        xs: '40%',  
+        sm: '90%',  
+        md: '85%',   
+        lg: '100%' 
       },
       '@media (min-width: 600px) and (max-width: 899px)': {
-        // Specific adjustments for iPhone 15/16 in landscape
+
         width: '81%',
       },
       '@media (min-width: 375px) and (max-width: 428px)': {
-        // Specific adjustments for iPhone 15/16 in portrait
+
         width: '44%',
       }
     }}

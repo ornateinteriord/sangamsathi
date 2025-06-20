@@ -13,28 +13,19 @@ import {
 import { FaMapMarkerAlt, FaBriefcase } from "react-icons/fa";
 
 import {
-  useGetAcceptedInterests,
   useGetAllUsersProfiles,
 } from "../../api/User/useGetProfileDetails";
 import TokenService from "../../token/tokenService";
-import { LoadingComponent, TableLoadingComponent } from "../../../App";
+import { LoadingComponent } from "../../../App";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";
 import GenderFilter from "../../../utils/Filters/GenderFilter";
-import { useVerifiedImage } from "../../hook/ImageVerification";
-
 import AboutPop from "./popupContent/abouPop/AboutPop";
 import FamilyPop from "./popupContent/familyPop/FamilyPop";
 import EducationPop from "./popupContent/educationPop/EducationPop";
 import LifeStylePop from "./popupContent/lifeStylePop/LifeStylePop";
 import PreferencePop from "./popupContent/preferencePop/PreferencePop";
 
-import { useConnectionStatus } from "../../hook/ConnectionStatus";
-
-
-
-
 const itemsPerPage = 8;
-
 
 const ViewAll = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -42,33 +33,30 @@ const ViewAll = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const {getVerifiedImage} = useVerifiedImage()
   const { data: users = [], isLoading } = useGetAllUsersProfiles();
   const loggedInUserId = TokenService.getRegistrationNo();
-  const loggedInUserRole = TokenService.getRole()
-   const { data: responseData } = useGetAcceptedInterests(loggedInUserId);
-   const { getConnectionStatus } = useConnectionStatus(responseData);
-  
 
   const handleStatusChange = useCallback((value) => {
     setSelectedStatus(value);
     setCurrentPage(1);
   }, []);
 
- 
   const filteredUsers = useMemo(() => {
-    return users.filter(user => {
-      if (user.registration_no === loggedInUserId || user.user_role === "Admin") {
+    return users.filter((user) => {
+      if (
+        user.registration_no === loggedInUserId ||
+        user.user_role === "Admin"
+      ) {
         return false;
       }
+
       if (selectedStatus !== "all" && user.gender !== selectedStatus) {
         return false;
       }
-      
+
       return true;
     });
   }, [users, loggedInUserId, selectedStatus]);
-
 
   const paginatedUsers = useMemo(
     () =>
@@ -111,15 +99,12 @@ const ViewAll = () => {
   const renderUserCard = (user) => {
     const age = user.age || calculateAge(user.date_of_birth);
 
-     const connectionStatus = getConnectionStatus(user.registration_no);
-    const imageSrc = getVerifiedImage(user, loggedInUserRole, connectionStatus);
-
     return (
       <Card
         key={user._id}
         sx={{
           width: { xs: 300, sm: 280, md: 260, lg: 280 },
-          height:"auto", // Fixed height
+          height: "auto", // Fixed height
           borderRadius: 4,
           boxShadow: 3,
           overflow: "hidden",
@@ -174,7 +159,7 @@ const ViewAll = () => {
             }}
           >
             <Avatar
-              src={imageSrc}
+              src={user?.image}
               alt="Profile"
               sx={{
                 width: "100%",
@@ -182,7 +167,6 @@ const ViewAll = () => {
                 objectFit: "cover",
               }}
             />
-           
           </Box>
         </Box>
 
@@ -202,6 +186,7 @@ const ViewAll = () => {
           <Box sx={{ textAlign: "center", mb: 0.5 }}>
             <Typography
               fontWeight="bold"
+              color="#000"
               sx={{
                 fontSize: { xs: "16px", sm: "17px", md: "16px", lg: "17px" },
               }}
@@ -216,13 +201,13 @@ const ViewAll = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-                justifyContent:"center",
+              justifyContent: "center",
               mb: 0.5,
               fontSize: { xs: "0.8rem", sm: "0.9rem" },
             }}
           >
-            <FaBriefcase size={14} color="#777" style={{ marginRight: 6 }} />
-            <Typography variant="body2" color="text.secondary">
+            <FaBriefcase size={14} color="#000" style={{ marginRight: 6 }} />
+            <Typography variant="body2" color="#000">
               {user.occupation || "Not specified"}
             </Typography>
           </Box>
@@ -232,13 +217,13 @@ const ViewAll = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-               justifyContent:"center",
+              justifyContent: "center",
               mb: 1,
               fontSize: { xs: "0.8rem", sm: "0.9rem" },
             }}
           >
-            <FaMapMarkerAlt size={14} color="#777" style={{ marginRight: 6 }} />
-            <Typography variant="body2" >
+            <FaMapMarkerAlt size={14} color="#000" style={{ marginRight: 6 }} />
+            <Typography variant="body2" color="#000">
               {[user.city, user.state, user.country]
                 .filter(Boolean)
                 .join(", ") || "Location not specified"}
@@ -278,12 +263,14 @@ const ViewAll = () => {
   };
 
   return (
-    <Box sx={{ 
-      p: { xs: 1, sm: 2 },
-      backgroundColor: "#f9f9f9",
-      maxWidth: '100%',
-      overflowX: 'hidden'
-    }}>
+    <Box
+      sx={{
+        p: { xs: 1, sm: 2 },
+        backgroundColor: "#f9f9f9",
+        maxWidth: "100%",
+        overflowX: "hidden",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -312,7 +299,7 @@ const ViewAll = () => {
           handleStatusChange={handleStatusChange}
         />
       </Box>
-      
+
       {/* User cards grid */}
       <Box
         sx={{
@@ -359,7 +346,7 @@ const ViewAll = () => {
       )}
 
       {/* Loading state */}
-      {isLoading && <TableLoadingComponent />}
+      {isLoading && <LoadingComponent />}
     </Box>
   );
 };

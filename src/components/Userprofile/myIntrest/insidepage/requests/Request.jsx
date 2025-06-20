@@ -4,7 +4,7 @@ import { useGetReceivedInterests, useUpdateInterestStatus } from "../../../../ap
 import TokenService from "../../../../token/tokenService";
 import toast from "react-hot-toast";
 import InterestCard from "../../../intrestCard/IntrestCard";
-import { LoadingComponent, TableLoadingComponent } from "../../../../../App";
+import { LoadingComponent } from "../../../../../App";
 
 const Requests = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,7 +78,7 @@ const Requests = () => {
         }}
       >
         {isLoading ? (
-          <TableLoadingComponent />
+          <LoadingComponent />
         ) : currentInterests?.length === 0 ? (
           <Typography variant="h6">No pending requests found</Typography>
         ) : (

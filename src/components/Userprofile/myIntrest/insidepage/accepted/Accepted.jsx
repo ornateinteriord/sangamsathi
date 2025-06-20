@@ -14,34 +14,29 @@ import {
 import { FaBriefcase, FaMapMarkerAlt } from "react-icons/fa";
 import TokenService from "../../../../token/tokenService";
 import { useGetAcceptedInterests } from "../../../../api/User/useGetProfileDetails";
-import { LoadingComponent, TableLoadingComponent } from "../../../../../App";
+import { LoadingComponent } from "../../../../../App";
 import ProfileDialog from "../../../ProfileDialog/ProfileDialog";
 import AboutPop from "../../../viewAll/popupContent/abouPop/AboutPop";
 import FamilyPop from "../../../viewAll/popupContent/familyPop/FamilyPop";
 import EducationPop from "../../../viewAll/popupContent/educationPop/EducationPop";
 import LifeStylePop from "../../../viewAll/popupContent/lifeStylePop/LifeStylePop";
 import PreferencePop from "../../../viewAll/popupContent/preferencePop/PreferencePop";
-import { useVerifiedImage } from "../../../../hook/ImageVerification";
-import { useConnectionStatus } from "../../../../hook/ConnectionStatus";
 
 const ProfileInfo = ({ label, value }) => (
   <Box sx={{ textAlign: "center" }}>
-    <Typography variant="body2" fontWeight="bold">{label}</Typography>
+    <Typography variant="body2" fontWeight="bold" color="#000">{label}</Typography>
     <Typography variant="body2" color="text.secondary">{value}</Typography>
   </Box>
 );
 
 const Accepted = () => {
   const registrationNo = TokenService.getRegistrationNo();
-  const loggedInUserRole = TokenService.getRole()
   const { data: responseData, isLoading } = useGetAcceptedInterests(registrationNo);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [currentTab, setCurrentTab] = useState(0);
-  const {getVerifiedImage} = useVerifiedImage()
-  const { getConnectionStatus } = useConnectionStatus(responseData);
 
   const allAccepted = Array.isArray(responseData)
     ? responseData.filter(item => item?.status === "accepted")
@@ -79,7 +74,7 @@ const Accepted = () => {
   return (
     <Box sx={{ padding: 3 }}>
       {isLoading ? (
-        <TableLoadingComponent />
+        <LoadingComponent />
       ) : totalItems === 0 ? (
         <Typography variant="h6" textAlign="center" mt={4}>
           No accepted interests found
@@ -89,8 +84,7 @@ const Accepted = () => {
           <Grid container spacing={3}>
             {currentItems.map((item, index) => {
               const profile = item.sender || {};
-              const connectionStatus = getConnectionStatus(profile.registration_no);
-               const imageSrc = getVerifiedImage(profile, loggedInUserRole, connectionStatus);
+              
               return (
                 <Grid item xs={12} sm={6} md={3} key={index}>
                   <Card
@@ -140,14 +134,14 @@ const Accepted = () => {
                          }}
                        >
                       <Avatar
-                        src={imageSrc}
-                        alt={profile.first_name}
+                        src={profile?.image}
+                        alt={profile?.first_name}
                         sx={{ width: "100%", height: "100%" }}
                       />
                     </Box>
 
                     <CardContent sx={{ width: "100%", textAlign: "center", px: 2 }}>
-                      <Typography fontWeight="bold" gutterBottom>
+                      <Typography fontWeight="bold" gutterBottom color={"#000"}>
                         {profile.first_name} {profile.last_name}
                       </Typography>
                       <Typography color="text.secondary">
@@ -158,7 +152,7 @@ const Accepted = () => {
                         sx={{ display: "flex",alignItems:'center', justifyContent: "center", gap: 1, mt: 1 }}
                       >
                         <FaBriefcase size={14} color="#777" />
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="body2" color={"#000"}>
                           {profile.occupation || "Not specified"}
                         </Typography>
                       </Box>
@@ -167,7 +161,7 @@ const Accepted = () => {
                         sx={{ display: "flex",alignItems:'center', justifyContent: "center", gap: 1, mt: 1 }}
                       >
                         <FaMapMarkerAlt size={14} color="#777" />
-                        <Typography variant="body2">
+                        <Typography variant="body2" color={"#000"}>
                           {[profile.city, profile.state, profile.country]
                             .filter(Boolean)
                             .join(", ") || "Location not specified"}
@@ -176,7 +170,7 @@ const Accepted = () => {
 
                       <Divider sx={{ my: 1, height:'1px'}} />
 
-                      <Box display="flex" justifyContent="space-around" mb={2}>
+                      <Box display="flex" justifyContent="space-around" mb={2} color={"#000"}>
                         <ProfileInfo label="Height" value={profile.height || "N/A"} />
                         <ProfileInfo label="Religion" value={profile.religion || "N/A"} />
                         <ProfileInfo label="Caste" value={profile.caste || "N/A"} />
