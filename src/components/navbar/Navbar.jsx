@@ -503,10 +503,14 @@ const Navbar = () => {
               textTransform: "capitalize",
               fontSize: "1rem",
               fontFamily: "'Poppins', sans-serif",
+               background:'#63084e',
+                "&:hover": {
+                      backgroundColor: "#aa33a2",
+                    },
             }}
           >
             {isLoginPending ? (
-              <CircularProgress size={24} color="inherit" />
+              <CircularProgress size={24}  />
             ) : (
               "Login"
             )}

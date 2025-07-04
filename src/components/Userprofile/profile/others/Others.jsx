@@ -10,6 +10,14 @@ import {
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const buttonStyles = {
+  backgroundColor: '#63084e',
+  '&:hover': {
+    backgroundColor: '#4a063a',
+  },
+};
+
+
 const Others = () => {
   const [otherInfo, setOtherInfo] = useState("");
   const [userId, setUserId] = useState("");
@@ -112,7 +120,7 @@ const userData = sessionStorage.getItem("userData");
           sx={{
             backgroundColor: "#1976d2",
               textTransform:'capitalize',
-             background:'#34495e'
+             ...buttonStyles
           }}
         >
           Submit

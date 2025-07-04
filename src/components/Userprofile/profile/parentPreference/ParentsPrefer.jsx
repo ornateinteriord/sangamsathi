@@ -18,6 +18,13 @@ import { useGetMemberDetails, useUpdateProfile } from "../../../api/User/useGetP
 import TokenService from "../../../token/tokenService";
 import { LoadingComponent } from "../../../../App";
 
+const buttonStyles = {
+  backgroundColor: '#63084e',
+  '&:hover': {
+    backgroundColor: '#4a063a',
+  },
+};
+
 const datas = rawJsonData.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
 const ParentsPrefer = () => {
@@ -218,9 +225,9 @@ const ParentsPrefer = () => {
                       variant="contained"
                       disabled={isUpdating}
                       sx={{
-                        backgroundColor: "#34495e",
+                     
                         textTransform: "capitalize",
-                        "&:hover": { backgroundColor: "#2c3e50" },
+                       ...buttonStyles,
                         width: { xs: "100%", sm: "130px" }
                       }}
                     >

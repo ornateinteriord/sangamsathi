@@ -88,11 +88,11 @@ const Photos = () => {
     );
   };
 
-   const handleDeleteClick = () => {
+  const handleDeleteClick = () => {
     setOpenDeleteDialog(true);
   };
 
-   const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = () => {
     updateProfile(
       {
         registerNo,
@@ -122,21 +122,21 @@ const Photos = () => {
   return (
     <Box
       sx={{
-        padding: "24px",
+        padding: { xs: "16px", sm: "24px" },
         backgroundColor: "#f9f9f9",
         borderRadius: "12px",
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
         fontFamily: "Roboto, sans-serif",
-        maxWidth: "600px",
+        maxWidth: "700px",
         margin: "auto",
-        display: "flex",
+        width: "100%",
       }}
     >
       <Card
         sx={{
           boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
           borderRadius: "12px",
-          padding: "16px",
+          padding: { xs: "12px", sm: "16px" },
           width: "100%",
         }}
       >
@@ -153,21 +153,20 @@ const Photos = () => {
                 <CardMedia
                   src={formData.previewImage || userProfile?.image}
                   component="img"
-                  height="450"
-                  alt="Uploaded Preview"
                   sx={{
                     borderRadius: "12px",
                     marginBottom: "16px",
                     width: "100%",
+                    height: "auto",
+                    maxHeight: { xs: "300px", sm: "450px" },
                     objectFit: "cover",
-                    overflowY: "auto",
-                    maxHeight: "450px",
                   }}
+                  alt="Uploaded Preview"
                 />
               ) : (
                 <Box
                   sx={{
-                    height: "200px",
+                    height: { xs: "150px", sm: "200px" },
                     width: "100%",
                     backgroundColor: "#e0e0e0",
                     display: "flex",
@@ -187,73 +186,100 @@ const Photos = () => {
             <Typography
               variant="body2"
               color="text.primary"
-              sx={{ marginBottom: "16px", textAlign: "center" }}
+              sx={{ 
+                marginBottom: "16px", 
+                textAlign: "center",
+                fontSize: { xs: "0.8rem", sm: "0.875rem" }
+              }}
             >
               * Please upload high-resolution images only (Max size: 10 MB)
             </Typography>
           </Box>
-          <Box display="flex" gap={1}>
-            <Button
-              variant="outlined"
-              startIcon={<FaUpload />}
-              onClick={handleUploadClick}
-              sx={{
-                color: "#1976d2",
-                borderColor: "#1976d2",
-                "&:hover": {
-                  backgroundColor: "#f0f7ff",
-                },
-              }}
-            >
-              Choose File
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                hidden
-                ref={fileInputRef}
-                onChange={handleFileChange}
-              />
-            </Button>
+   <Box 
+  display="flex" 
+  gap={1}
+  flexDirection={{ xs: "column", sm: "row" }}
+  alignItems={{ xs: "center", sm: "center" }}
+>
+  {/* Choose File Button - Full width on xs, auto width on sm+ */}
+  <Button
+  
+    variant="outlined"
+    startIcon={<FaUpload />}
+    onClick={handleUploadClick}
+    sx={{
+      color: "#1976d2",
+      borderColor: "#1976d2",
+      "&:hover": {
+        backgroundColor: "#f0f7ff",
+      },
+      width: "100%",
+      mb: { xs: 1, sm: 0 }
+    }}
+  >
+    Choose File
+    <input
+      type="file"
+      name="image"
+      accept="image/*"
+      hidden
+      ref={fileInputRef}
+      onChange={handleFileChange}
+    />
+  </Button>
 
-            <Button
-              variant="contained"
-              size="small"
-              onClick={handleSave}
-              disabled={isUpdating || !formData.image}
-              sx={{
-                height: "35px",
-                backgroundColor: "#34495e",
-                "&:hover": {
-                  backgroundColor: "#1976d2",
-                },
-                visibility: formData.image ? "visible" : "visible", // Always visible
-                opacity: !formData.image || isUpdating ? 0.7 : 1, // Faded when disabled
+  {/* Save and Delete Buttons Container - Full width row below on xs, inline on sm+ */}
+  <Box 
+    display="flex" 
+    gap={1}
+    width="100%" // Full width container
+  >
+    <Button
+      variant="contained"
+      size="small"
+      onClick={handleSave}
+      disabled={isUpdating || !formData.image}
+      sx={{
+        height: { xs: "40px", sm: "35px" },
+        backgroundColor: "#34495e",
+        "&:hover": {
+          backgroundColor: "#1976d2",
+        },
+        opacity: !formData.image || isUpdating ? 0.7 : 1,
+        flex: 1 // Each button takes equal space
+      }}
+    >
+      {isUpdating ? "Saving..." : "Save"}
+    </Button>
+    
+    {(userProfile?.image || formData.image) && (
+      <Button
+        variant="contained"
+        color="error"
+        size="small"
+        startIcon={<FaTrash />}
+        onClick={handleDeleteClick}
+        disabled={isUpdating}
+        sx={{
+          height: { xs: "40px", sm: "35px" },
+          "&:hover": {
+            backgroundColor: "#d32f2f",
+          },
+          flex: 1 // Each button takes equal space
+        }}
+      >
+        Delete
+      </Button>
+    )}
+  </Box>
+</Box>
+          <Box sx={{ mt: 2 }}>
+            <Typography 
+              sx={{ 
+                fontWeight: "bold",
+                fontSize: { xs: "0.9rem", sm: "1rem" }
               }}
             >
-              {isUpdating ? "Saving..." : "Save"}
-            </Button>
-              {(userProfile?.image || formData.image) && (
-              <Button
-                variant="contained"
-                color="error"
-                size="small"
-                startIcon={<FaTrash />}
-                onClick={handleDeleteClick}
-                disabled={isUpdating}
-                sx={{
-                  height: "35px",
-                  "&:hover": {
-                    backgroundColor: "#d32f2f",
-                  },
-                }}
-              >
-                Delete
-              </Button>
-            )}
-          </Box>
-          <Box sx={{mt:2}}>
-            <Typography sx={{ fontWeight: "bold" }}>
               Image Verification Status:{" "}
               <Box
                 component="span"

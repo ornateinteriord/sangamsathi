@@ -117,7 +117,7 @@ const HomeUserTable = ({ userId }) => {
                 borderRadius: 3,
                 position: "relative",
                 overflow: "hidden",
-                background: "linear-gradient(135deg,rgb(235, 247, 101) 0%,rgb(136, 126, 8) 100%)",
+                background: "linear-gradient(135deg,rgb(163, 21, 113) 0%,rgb(246, 95, 198) 100%)",
                 color: "#fff",
                 width:isSmallScreen? "300px": "500px",
                 marginBottom: "15px",

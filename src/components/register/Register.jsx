@@ -450,8 +450,10 @@ const Register = () => {
               variant="contained"
               size="large"
               sx={{
-                backgroundColor: 'orange',
-                '&:hover': { backgroundColor: 'darkorange' },
+                background:'#63084e',
+                "&:hover": {
+                      backgroundColor: "#aa33a2",
+                    },
                 fontWeight: 600,
                 width: { xs: '100%', sm: '50%', md: '30%' },
                 textTransform: 'capitalize'
