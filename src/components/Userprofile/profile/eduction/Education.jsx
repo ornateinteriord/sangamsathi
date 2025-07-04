@@ -23,6 +23,13 @@ import { LoadingComponent } from "../../../../App";
 // Merge array of JSON objects into one object
 const jsonData = rawJsonData.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
+const buttonStyles = {
+  backgroundColor: '#63084e',
+  '&:hover': {
+    backgroundColor: '#4a063a',
+  },
+};
+
 const Education = () => {
   const registerNo = TokenService.getRegistrationNo();
 
@@ -118,7 +125,7 @@ const Education = () => {
       xs: "310px",
       sm: "500px",
       md: "350px",
-      lg: "400px"
+      lg: "500px"
     }
   };
 
@@ -223,7 +230,7 @@ const Education = () => {
               </Box>
 
               {/* Column 2 */}
-              <Box>
+              <Box width={'100%'}>
                 {showCustomIncome
                   ? renderCustomField(
                       "Income Per Month",
@@ -307,7 +314,7 @@ const Education = () => {
                 sx={{
                   backgroundColor: "#34495e",
                   textTransform: "capitalize",
-                  "&:hover": { backgroundColor: "#2c3e50" },
+                  ...buttonStyles,
                   width: { xs: "100%", sm: "auto" }
                 }}
               >

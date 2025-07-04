@@ -14,7 +14,15 @@ import TokenService from "../../../token/tokenService";
 import { useGetMemberDetails, useUpdateProfile } from "../../../api/User/useGetProfileDetails";
 import { LoadingComponent } from "../../../../App";
 
+
 const About = () => {
+  
+const buttonStyles = {
+  backgroundColor: '#63084e',
+  '&:hover': {
+    backgroundColor: '#4a063a',
+  },
+};
   const registerNo = TokenService.getRegistrationNo();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -105,8 +113,8 @@ const About = () => {
           Profile Information
         </Typography>
         <Button
-          variant={isEditing ? "outlined" : "contained"}
-          color={isEditing ? "error" : "primary"}
+          variant={"contained"}
+         
           onClick={() => setIsEditing(!isEditing)}
           disabled={isUpdating}
           fullWidth={true}
@@ -116,7 +124,8 @@ const About = () => {
             textTransform: 'capitalize',
             fontSize: '16px',
             "&:hover": {
-        backgroundColor: isEditing ?  "transparent" : ""}
+        backgroundColor: isEditing ?  "transparent" : ""},
+        ...buttonStyles
           }}
         >
           {isEditing ? 'Cancel' : 'Edit Profile'}
@@ -215,8 +224,9 @@ const About = () => {
             disabled={isUpdating}
             fullWidth={true}
             sx={{ maxWidth: { xs: '160px', sm: 200,textTransform:'capitalize', backgroundColor: "#34495e",
-            color: "#fff","&:hover": {
-              backgroundColor: "#4b6074"} } }}
+            color: "#fff",
+            ...buttonStyles
+            }}}
             startIcon={isUpdating ? <CircularProgress size={20} /> : null}
           >
             {isUpdating ? 'Saving...' : 'Save'}

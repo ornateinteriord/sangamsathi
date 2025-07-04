@@ -12,6 +12,13 @@ import TokenService from "../../../token/tokenService";
 import { LoadingComponent } from "../../../../App";
 import { toast } from "react-toastify";
 
+const buttonStyles = {
+  backgroundColor: '#63084e',
+  '&:hover': {
+    backgroundColor: '#4a063a',
+  },
+};
+
 const LifeStyle = () => {
   const registerNo = TokenService.getRegistrationNo();
   const [formData, setFormData] = useState({
@@ -79,7 +86,7 @@ const LifeStyle = () => {
       xs: "310px",
       sm: "100%",
       md: "350px",
-      lg: "400px"
+      lg: "500px"
     }
   };
 
@@ -236,9 +243,8 @@ const LifeStyle = () => {
                       variant="contained"
                       disabled={isUpdating}
                       sx={{
-                        backgroundColor: "#34495e",
                         textTransform: "capitalize",
-                        "&:hover": { backgroundColor: "#2c3e50" },
+                        ...buttonStyles,
                         width: { xs: "100%", sm: "130px" }
                       }}
                     >

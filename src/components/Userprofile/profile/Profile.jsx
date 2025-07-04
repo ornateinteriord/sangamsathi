@@ -55,7 +55,7 @@ const Profile = () => {
       boxShadow: 1,
       p: { xs: 1, sm: 3, md: 2 },
       maxWidth: 1200,
-      justifySelf:{md:'center'},
+      justifySelf:{md:'start'},
       // mx: 'auto',
       width: { 
         xs: '40%',  
