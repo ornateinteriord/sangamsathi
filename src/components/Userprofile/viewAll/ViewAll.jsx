@@ -123,9 +123,9 @@ const ViewAll = () => {
         {user.user_role === "PremiumUser" && (
           <Chip
             label="PREMIUM"
-            color="primary"
             size="small"
             sx={{
+              backgroundColor:'gold',
               position: "absolute",
               top: 12,
               right: 12,

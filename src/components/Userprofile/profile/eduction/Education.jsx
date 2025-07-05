@@ -158,7 +158,7 @@ const Education = () => {
         backgroundColor: "#f9f9f9",
         borderRadius: "8px",
         width: { xs: "100%", sm: "90%", md: "85%", lg: "73%" },
-        p: { xs: 1, sm: 4 }
+        p: { xs: 1, sm: 1, md: 2},
       }}
     >
       <Stack spacing={3}>

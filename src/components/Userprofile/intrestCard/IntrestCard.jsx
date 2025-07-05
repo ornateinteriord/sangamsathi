@@ -154,7 +154,10 @@ const InterestCard = ({ senderData, handleResponse }) => {
               color: "red",
               fontWeight: "bold",
               borderColor: "red",
-              textTransform: "capitalize"
+              textTransform: "capitalize",
+              '&:hover':{
+             background:'transparent'
+              }
             }}
             onClick={() => handleResponse(senderData.registration_no, false)}
           >
@@ -166,7 +169,8 @@ const InterestCard = ({ senderData, handleResponse }) => {
             color="primary"
             sx={{
               color: "#fff",
-              textTransform: "capitalize"
+              textTransform: "capitalize",
+              
             }}
             onClick={() => handleResponse(senderData.registration_no, true)}
           >
