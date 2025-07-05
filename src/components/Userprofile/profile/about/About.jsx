@@ -86,12 +86,12 @@ const buttonStyles = {
   return (
     <Box
       sx={{
-        bgcolor: 'background.paper',
+        // bgcolor: 'background.paper',
         borderRadius: 2,
         boxShadow: 1,
-        p: { xs: 1, sm: 3, md: 4 },
+        p: { xs: 1, sm: 1, md: 2},
         maxWidth: 1200,
-        mx: 'auto',
+        // mx: 'auto',
         width: '100%',
       }}
     >
