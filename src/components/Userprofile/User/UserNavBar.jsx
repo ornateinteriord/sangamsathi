@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  FaTachometerAlt,
-  FaUser,
-  FaUsers,
-  FaHeart,
-  FaSearch,
-  FaSignOutAlt,
-  FaBars,
-  FaCog,
-} from "react-icons/fa";
-import {
   Avatar,
   AppBar,
   Toolbar,
@@ -32,10 +22,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { FaDashcube, FaUsersViewfinder } from "react-icons/fa6";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import UserDashboard from "../userdDashboard/UserDashboard";
-import convertFromBase64 from "../profile/photo/Photos";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import useStore from "../../../store";
 import TokenService from "../../token/tokenService";
 import { useChangePassword, useGetMemberDetails } from "../../api/User/useGetProfileDetails";
@@ -57,16 +44,15 @@ const UserNavBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("Dashboard");
   const isLargeScreen = useMediaQuery('(min-width:790px)');
+  const location = useLocation();
+  const navigation = useNavigate();
 
   const [passwordData, setPasswordData] = useState({
     oldPassword: '',
     newPassword: '',
     confirmPassword: ''
   });
-  const navigation = useNavigate();
-  const [imageUrl, setImageUrl] = useState("");
 
   const registerNo = TokenService.getRegistrationNo();
 
@@ -78,6 +64,25 @@ const UserNavBar = () => {
   } = useGetMemberDetails(registerNo);
 
   const { mutate: changePassword, isPending } = useChangePassword();
+
+  // Determine the selected item based on current route
+  const getSelectedItemFromRoute = () => {
+    const path = location.pathname;
+    if (path.includes("userdashboard")) return "Dashboard";
+    if (path.includes("profile")) return "My Profile";
+    if (path.includes("MyMatches")) return "My Matches";
+    if (path.includes("myintrest")) return "My Interest";
+    if (path.includes("viewAll")) return "View All";
+    if (path.includes("search")) return "Search";
+    return "Dashboard"; // Default to Dashboard
+  };
+
+  const [selectedItem, setSelectedItem] = useState(getSelectedItemFromRoute());
+
+  // Update selected item when route changes
+  useEffect(() => {
+    setSelectedItem(getSelectedItemFromRoute());
+  }, [location.pathname]);
 
   useEffect(() => {
     if (isError) {
@@ -201,17 +206,12 @@ const UserNavBar = () => {
     }
   };
 
+  // On first render, ensure we're on the dashboard if no specific route is set
   useEffect(() => {
-    const savedItem = localStorage.getItem("selectedSidebarItem");
-    if (savedItem) {
-      setSelectedItem(savedItem);
+    if (location.pathname === "/user" || location.pathname === "/user/") {
+      navigation("/user/userdashboard");
     }
-  }, []);
-
-  const handleSetSelectedItem = (item) => {
-    setSelectedItem(item);
-    localStorage.setItem("selectedSidebarItem", item);
-  };
+  }, [location.pathname, navigation]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -306,7 +306,6 @@ const UserNavBar = () => {
           <Toolbar />
           <SidebarMenu
             selectedItem={selectedItem}
-            setSelectedItem={handleSetSelectedItem}
             handleDashboardClick={handleDashboardClick}
             handleProfileClick={handleProfileClick}
             handleMatchesClick={handleMatchesClick}
