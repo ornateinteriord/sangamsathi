@@ -228,9 +228,9 @@ const MyMatches = () => {
               {user.user_role === "PremiumUser" && (
                 <Chip
                   label="PREMIUM"
-                  color="primary"
                   size="small"
                   sx={{
+                    background:'gold',
                     position: "absolute",
                     top: 12,
                     right: 12,
