@@ -1,8 +1,18 @@
-import React, { useRef, useState } from "react";
-import { Box, Button, Typography, Card, CardMedia, DialogTitle, Dialog, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+import  { useRef, useState } from "react";
+import {
+  Box,
+  Button,
+  Typography,
+  Card,
+  CardMedia,
+  DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 import { FaTrash, FaUpload } from "react-icons/fa";
 import toast from "react-hot-toast";
-import useStore from "../../../../store";
 import {
   getCloudinaryUrl,
   useGetMemberDetails,
@@ -20,8 +30,9 @@ const Photos = () => {
   const fileInputRef = useRef(null);
 
   const handleFileChange = async (event) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
+    const input = event.target;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
       if (!file.type.match("image.*")) {
         toast.error("Please select an image file");
         return;
@@ -44,7 +55,7 @@ const Photos = () => {
               ...prev,
               image: data.secure_url,
               previewImage: data.secure_url,
-              image_verification: "pending" 
+              image_verification: "pending",
             }));
             toast.success("Image uploaded to Cloudinary");
           } else {
@@ -56,6 +67,7 @@ const Photos = () => {
           console.error(err);
         },
       });
+      input.value = null;
     }
   };
 
@@ -73,7 +85,7 @@ const Photos = () => {
       {
         registerNo,
         image: formData.image,
-        image_verification: "pending"
+        image_verification: "pending",
       },
       {
         onSuccess: () => {
@@ -97,12 +109,12 @@ const Photos = () => {
       {
         registerNo,
         image: null,
-        image_verification: null
+        image_verification: null,
       },
       {
         onSuccess: () => {
           toast.success("Profile image deleted successfully");
-          setFormData(prev => ({ ...prev, previewImage: null, image: null }));
+          setFormData((prev) => ({ ...prev, previewImage: null, image: null }));
           setOpenDeleteDialog(false);
         },
         onError: (error) => {
@@ -122,21 +134,21 @@ const Photos = () => {
   return (
     <Box
       sx={{
-        padding: { xs: "16px", sm: "24px" },
+        padding: "24px",
         backgroundColor: "#f9f9f9",
         borderRadius: "12px",
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
         fontFamily: "Roboto, sans-serif",
-        maxWidth: "700px",
+        maxWidth: "600px",
         margin: "auto",
-        width: "100%",
+        display: "flex",
       }}
     >
       <Card
         sx={{
           boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
           borderRadius: "12px",
-          padding: { xs: "12px", sm: "16px" },
+          padding: "16px",
           width: "100%",
         }}
       >
@@ -153,20 +165,21 @@ const Photos = () => {
                 <CardMedia
                   src={formData.previewImage || userProfile?.image}
                   component="img"
+                  height="450"
+                  alt="Uploaded Preview"
                   sx={{
                     borderRadius: "12px",
                     marginBottom: "16px",
                     width: "100%",
-                    height: "auto",
-                    maxHeight: { xs: "300px", sm: "450px" },
                     objectFit: "cover",
+                    overflowY: "auto",
+                    maxHeight: "450px",
                   }}
-                  alt="Uploaded Preview"
                 />
               ) : (
                 <Box
                   sx={{
-                    height: { xs: "150px", sm: "200px" },
+                    height: "200px",
                     width: "100%",
                     backgroundColor: "#e0e0e0",
                     display: "flex",
@@ -186,100 +199,13 @@ const Photos = () => {
             <Typography
               variant="body2"
               color="text.primary"
-              sx={{ 
-                marginBottom: "16px", 
-                textAlign: "center",
-                fontSize: { xs: "0.8rem", sm: "0.875rem" }
-              }}
+              sx={{ marginBottom: "16px", textAlign: "center" }}
             >
               * Please upload high-resolution images only (Max size: 10 MB)
             </Typography>
           </Box>
-   <Box 
-  display="flex" 
-  gap={1}
-  flexDirection={{ xs: "column", sm: "row" }}
-  alignItems={{ xs: "center", sm: "center" }}
->
-  {/* Choose File Button - Full width on xs, auto width on sm+ */}
-  <Button
-  
-    variant="outlined"
-    startIcon={<FaUpload />}
-    onClick={handleUploadClick}
-    sx={{
-      color: "#1976d2",
-      borderColor: "#1976d2",
-      "&:hover": {
-        backgroundColor: "#f0f7ff",
-      },
-      width: "100%",
-      mb: { xs: 1, sm: 0 }
-    }}
-  >
-    Choose File
-    <input
-      type="file"
-      name="image"
-      accept="image/*"
-      hidden
-      ref={fileInputRef}
-      onChange={handleFileChange}
-    />
-  </Button>
-
-  {/* Save and Delete Buttons Container - Full width row below on xs, inline on sm+ */}
-  <Box 
-    display="flex" 
-    gap={1}
-    width="100%" // Full width container
-  >
-    <Button
-      variant="contained"
-      size="small"
-      onClick={handleSave}
-      disabled={isUpdating || !formData.image}
-      sx={{
-        height: { xs: "40px", sm: "35px" },
-        backgroundColor: "#34495e",
-        "&:hover": {
-          backgroundColor: "#1976d2",
-        },
-        opacity: !formData.image || isUpdating ? 0.7 : 1,
-        flex: 1 // Each button takes equal space
-      }}
-    >
-      {isUpdating ? "Saving..." : "Save"}
-    </Button>
-    
-    {(userProfile?.image || formData.image) && (
-      <Button
-        variant="contained"
-        color="error"
-        size="small"
-        startIcon={<FaTrash />}
-        onClick={handleDeleteClick}
-        disabled={isUpdating}
-        sx={{
-          height: { xs: "40px", sm: "35px" },
-          "&:hover": {
-            backgroundColor: "#d32f2f",
-          },
-          flex: 1 // Each button takes equal space
-        }}
-      >
-        Delete
-      </Button>
-    )}
-  </Box>
-</Box>
-          <Box sx={{ mt: 2 }}>
-            <Typography 
-              sx={{ 
-                fontWeight: "bold",
-                fontSize: { xs: "0.9rem", sm: "1rem" }
-              }}
-            >
+          <Box sx={{ mb: 2 }}>
+            <Typography sx={{ fontWeight: "bold" ,color:"#000" }}>
               Image Verification Status:{" "}
               <Box
                 component="span"
@@ -291,9 +217,89 @@ const Photos = () => {
                     }[userProfile?.image_verification] || "text.secondary",
                 }}
               >
-                {!userProfile?.image ? "Please Upload Image" : userProfile?.image_verification}
+                {!userProfile?.image
+                  ? "Please Upload Image"
+                  : userProfile?.image_verification}
               </Box>
             </Typography>
+          </Box>
+          <Box
+            display="flex"
+            gap={1}
+            flexWrap="wrap" 
+            alignItems="center" 
+            sx={{
+            
+              "@media (max-width: 600px)": {
+                width:"100%",
+                flexDirection: "column", 
+                alignItems: "stretch", 
+                "& > button": {
+                  width: "100%", 
+                  margin: "4px 0 !important", 
+                },
+              },
+            }}
+          >
+            <Button
+              variant="outlined"
+              component="label" 
+              startIcon={<FaUpload />}
+              sx={{
+                width:"100%",
+                color: "#1976d2",
+                borderColor: "#1976d2",
+                "&:hover": {
+                  backgroundColor: "#f0f7ff",
+                },
+              }}
+            >
+              Choose File
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                hidden
+                onChange={handleFileChange}
+                onClick={(e) => (e.target.value = null)}
+              />
+            </Button>
+
+            <Button
+              variant="contained"
+              size="small"
+              onClick={handleSave}
+              disabled={isUpdating || !formData.image}
+              sx={{
+                height: "35px",
+                backgroundColor: "#34495e",
+                "&:hover": {
+                  backgroundColor: "#1976d2",
+                },
+                opacity: isUpdating ? 0.7 : 1,
+                cursor: isUpdating ? "not-allowed" : "pointer",
+              }}
+            >
+              {isUpdating ? "Saving..." : "Save"}
+            </Button>
+            {(userProfile?.image || formData.image) && (
+              <Button
+                variant="contained"
+                color="error"
+                size="small"
+                startIcon={<FaTrash />}
+                onClick={handleDeleteClick}
+                disabled={isUpdating}
+                sx={{
+                  height: "35px",
+                  "&:hover": {
+                    backgroundColor: "#d32f2f",
+                  },
+                }}
+              >
+                Delete
+              </Button>
+            )}
           </Box>
         </Box>
       </Card>
@@ -305,10 +311,13 @@ const Photos = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Delete Profile Image?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Delete Profile Image?"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete your profile image? This action cannot be undone.
+            Are you sure you want to delete your profile image? This action
+            cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -81,10 +81,10 @@ const Members = () => {
                     sx={{
                       borderRadius: 4,
                       p: 3,
-                      background: "linear-gradient(to right, #63084e, #d05ec8)",
+                      background: "#da39cf",
                       color: "#fff",
                       boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
-                      height: "100%",
+                      height: "380px",
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",

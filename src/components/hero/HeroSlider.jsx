@@ -24,7 +24,6 @@ const HeroSlider = () => {
     { src: wed2, alt: "Happy Couple 2" },
     { src: wed3, alt: "Happy Couple 3" },
   ];
-
   const settings = {
     dots: true,
     infinite: true,
@@ -136,9 +135,9 @@ const HeroSlider = () => {
                 variant="contained"
                 size={isMobile ? "small" : "large"}
                 sx={{
-                  backgroundColor: '#da39cf',
+                  backgroundColor: '#34495e',
                   '&:hover': {
-                    backgroundColor: '#da13ab',
+                    backgroundColor: '#34495e',
                   },
                   borderRadius: '8px',
                   textTransform: 'capitalize',
@@ -148,7 +147,7 @@ const HeroSlider = () => {
                   fontFamily: 'Outfit, sans-serif',
                   minWidth: isMobile ? '160px' : '200px',
                 }}
-                onClick={() => navigate('/user/userDashboard')}
+                onClick={() => navigate(isAdmin? '/admin/dashboard' : '/user/userDashboard')}
               >
                 Get Started
               </Button>
@@ -181,12 +180,11 @@ const HeroSlider = () => {
                   variant="contained"
                   size={isMobile ? "small" : "large"}
                   sx={{
-                    color:'black',
-                    fontWeight:'bold',
-                    backgroundColor: 'rgb(247, 228, 21)',
-                    '&:hover': {
-                      backgroundColor: 'rgb(195, 179, 11)',
+                    backgroundColor: '#FFFF',
+                     '&:hover': {
+                      backgroundColor: '#FFFF',
                     },
+                     color:'#000',
                     borderRadius: '8px',
                     textTransform: 'capitalize',
                     px: isMobile ? 2 : 4,

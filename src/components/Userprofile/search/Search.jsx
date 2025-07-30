@@ -10,9 +10,10 @@ import {
   Avatar,
   Divider,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import { FaMapMarkerAlt, FaBriefcase, FaSearch } from "react-icons/fa";
-import {  useGetAllUsersProfiles } from "../../api/User/useGetProfileDetails";
+import { useGetAllUsersProfiles, useGetSearchProfiles } from "../../api/User/useGetProfileDetails";
 import TokenService from "../../token/tokenService";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";
 import AboutPop from "../viewAll/popupContent/abouPop/AboutPop";
@@ -20,9 +21,13 @@ import FamilyPop from "../viewAll/popupContent/familyPop/FamilyPop";
 import EducationPop from "../viewAll/popupContent/educationPop/EducationPop";
 import LifeStylePop from "../viewAll/popupContent/lifeStylePop/LifeStylePop";
 import PreferencePop from "../viewAll/popupContent/preferencePop/PreferencePop";
-
+import { LoadingComponent } from "../../../App";
+import { isSilverOrPremiumUser, LoadingTextSpinner } from "../../../utils/common";
+import OthersPop from "../viewAll/popupContent/others/OthersPop";
 
 const itemsPerPage = 8;
+
+
 
 const ProfileInfo = ({ label, value }) => (
   <Box sx={{ textAlign: "center" }}>
@@ -42,47 +47,24 @@ const Search = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const { data: users = [] } = useGetAllUsersProfiles();
+  const [isSearching, setIsSearching] = useState(false);
+  const { data = [], isFetching,refetch,isError, } = useGetSearchProfiles(searchTerm);
   const loggedInUserId = TokenService.getRegistrationNo();
-  
 
-  // Update searchQuery when clicking Search button
   const handleSearch = () => {
-    setSearchQuery(searchTerm.trim().toLowerCase());
-    setCurrentPage(1);
+   refetch()
   };
-
-  // Optionally, enable "Enter" key to trigger search
+  
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   };
 
-  // Filter users by searchQuery (name, email, or mobile number)
-  const filteredUsers = useMemo(() => {
-    if (!searchQuery) return [];
-
-    return users.filter((user) => {
-      // Exclude logged-in user and admin users
-      if (user.registration_no === loggedInUserId || user.user_role === "Admin") return false;
-
-      const fullName = `${user.first_name} ${user.last_name}`.toLowerCase();
-      const email = user.email_id?.toLowerCase() || "";
-      const number = user. mobile_no?.toLowerCase() || "";
-
-      // Check if searchQuery is in name, email, or number
-      return (
-        fullName.includes(searchQuery) ||
-        email.includes(searchQuery) ||
-        number.includes(searchQuery)
-      );
-    });
-  }, [users, loggedInUserId, searchQuery]);
 
   const paginatedUsers = useMemo(() => {
-    return filteredUsers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-  }, [filteredUsers, currentPage]);
+    return data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  }, [data, currentPage]);
 
   const handleOpenDialog = useCallback((user) => {
     setSelectedUser(user);
@@ -97,6 +79,7 @@ const Search = () => {
       2: <EducationPop userDetails={selectedUser} />,
       3: <LifeStylePop userDetails={selectedUser} />,
       4: <PreferencePop userDetails={selectedUser} />,
+      5: <OthersPop userDetails={selectedUser} />
     };
     return contentMap[currentTab] || null;
   };
@@ -130,12 +113,12 @@ const Search = () => {
           position: "relative",
         }}
       >
-        {user.user_role === "PremiumUser" && (
+        {isSilverOrPremiumUser(user?.type_of_user) && (
           <Chip
             label="PREMIUM"
             size="small"
             sx={{
-              background: "gold",
+            backgroundColor:"#FFD700",
               position: "absolute",
               top: 12,
               right: 12,
@@ -248,7 +231,7 @@ const Search = () => {
             size="medium"
             fullWidth
             variant="outlined"
-            placeholder="Search by name, email, or number"
+            placeholder="Search by name, email, or registeration number"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -257,62 +240,76 @@ const Search = () => {
             variant="contained"
             color="primary"
             onClick={handleSearch}
-            sx={{ whiteSpace: "nowrap", textTransform: "capitalize", width: "150px", fontSize: "18px" }}
+            disabled={isSearching || isFetching || !searchTerm.trim()}
+            sx={{ 
+              whiteSpace: "nowrap", 
+              textTransform: "capitalize", 
+              width: "150px", 
+              fontSize: "18px",
+              position: 'relative'
+            }}
           >
-            <FaSearch style={{ marginRight: 6 }} />
-            Search
+           
+                <FaSearch style={{ marginRight: 6 }} />
+                Search
           </Button>
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(4, 1fr)",
-          },
-          gap: { xs: 2, sm: 3 },
-        }}
-      >
-        {paginatedUsers.map(renderUserCard)}
-      </Box>
+      {isSearching || isFetching ? (
+        <LoadingTextSpinner />
+      ) : (
+        <>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+                lg: "repeat(4, 1fr)",
+              },
+              gap: { xs: 2, sm: 3 },
+            }}
+          >
+            {paginatedUsers.map(renderUserCard)}
+          </Box>
 
-      {selectedUser && (
-        <ProfileDialog
-          openDialog={openDialog}
-          setOpenDialog={setOpenDialog}
-          selectedUser={selectedUser}
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-          loggedInUserId={loggedInUserId}
-          isLoading={false}
-          renderDialogContent={renderDialogContent}
-        />
+          {selectedUser && (
+            <ProfileDialog
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+              selectedUser={selectedUser}
+              currentTab={currentTab}
+              setCurrentTab={setCurrentTab}
+              loggedInUserId={loggedInUserId}
+              isLoading={false}
+              renderDialogContent={renderDialogContent}
+            />
+          )}
+
+          {data.length > 0 && (
+            <Box display="flex" justifyContent="end" my={3}>
+              <Pagination
+                count={Math.ceil(data.length / itemsPerPage)}
+                page={currentPage}
+                shape="rounded"
+                onChange={(e, page) => setCurrentPage(page)}
+                color="primary"
+              />
+            </Box>
+          )}
+
+          {/* Show message if no results found */}
+          {isError && data.length === 0 && (
+            <Box mt={4} textAlign="center">
+              <Typography color="red">No users found matching the input</Typography>
+            </Box>
+          )}
+        </>
       )}
-
-     {filteredUsers.length > 0 && (
-  <Box display="flex" justifyContent="end" my={3}>
-    <Pagination
-      count={Math.ceil(filteredUsers.length / itemsPerPage)}
-      page={currentPage}
-      shape="rounded"
-      onChange={(e, page) => setCurrentPage(page)}
-      color="primary"
-    />
-  </Box>
-)}
-
-  {/* Show message if no results found */}
-  {searchQuery && filteredUsers.length === 0 && (
-    <Box mt={4} textAlign="center" color="text.secondary">
-      <Typography>No results found for "{searchQuery}"</Typography>
     </Box>
-  )}
-</Box>
-);
+  );
 };
 
 export default Search;

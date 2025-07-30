@@ -5,14 +5,18 @@ import { get, post, put } from "../authHooks";
 import { toast } from "react-toastify";
 
 export const getAllUserProfiles = () => {
-  return useQuery({
-    queryKey: ["profiles"],
-    queryFn: async () => {
-      const response = await get("/api/admin/all-user-details");
-      if (response.success) {
-        return response.users;
+   return useMutation({
+    mutationFn: async ({ page, pageSize }) => {
+      const response = await post("/api/admin/all-user-details", {
+        page,
+        pageSize,
+      });
+  console.log("API response:", response);
+      if (response?.success) {
+        return response;
+      
       } else {
-        throw new Error(response.message);
+        throw new Error(response?.message || "Failed to fetch users");
       }
     },
   });
@@ -21,10 +25,11 @@ export const getAllUserProfiles = () => {
 export const UpgradeUserStatus = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ regno, status, image_verification }) => {
+    mutationFn: async ({ regno, status, image_verification,isProfileUpdate }) => {
       const response = await put(`/api/admin/upgrade-user/${regno}`, {
         status,
         image_verification,
+        isProfileUpdate
       });
       return response;
     },

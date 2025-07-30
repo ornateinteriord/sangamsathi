@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {
+import { useEffect, useState } from "react";
+import {   
   Box,
   Paper,
   Typography,
@@ -12,98 +12,228 @@ import {
   Divider,
   Avatar,
   useMediaQuery,
-  useTheme
-} from '@mui/material';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
+  useTheme,
+  Chip,
+} from "@mui/material";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 import rawJsonData from "../Userprofile/profile/eduction/jsondata/data.json";
-import Navbar from '../navbar/Navbar';
+import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import { toast } from 'react-toastify'; 
-import { useSignupMutation } from '../api/Auth';
+import { toast } from "react-toastify";
+import { useSignupMutation } from "../api/Auth";
+import { useLocation } from "react-router-dom";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { LoadingComponent } from "../../App";
+import CustomAutocomplete from "../Autocomplete/CustomAutocomplete";
+
 
 const datas = rawJsonData.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
 const Register = () => {
+  const location = useLocation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const signupmutation = useSignupMutation();
-  const { mutate } = signupmutation;
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { mutate, isPending } = useSignupMutation();
+  const searchParams = new URLSearchParams(location.search);
+  const planType = searchParams.get("type");
 
-  const [formData, setFormData] = useState({});
+  const [citySuggestions, setCitySuggestions] = useState(datas.cities || []);
+  const [talukSuggestions, setTalukSuggestions] = useState([]);
+  const [occupationSuggestions, setOccupationSuggestions] = useState(datas.occupationValues || []);
+  const [educationSuggestions, setEducationSuggestions] = useState(datas.qualificationValues || []);
+  const [incomeSuggestions, setIncomeSuggestions] = useState(datas.incomeValues || []);
+  const [countrySuggestions, setCountrySuggestions] = useState(datas.countries || []);
+  const [languageSuggestions, setLanguageSuggestions] = useState(datas.languageValues || []);
+  const [casteSuggestions, setCasteSuggestions] = useState(datas.casteValues || []);
+
+  const getUserRole = () => {
+    switch (planType) {
+      case "PremiumUser":
+        return "PremiumUser";
+      case "SilverUser":
+        return "SilverUser";
+      default:
+        return "FreeUser";
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    user_role: getUserRole(),
+  });
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      user_role: getUserRole(),
+    }));
+  }, [planType]);
+
+  useEffect(() => {
+    if (formData.state) {
+      const filteredCities = datas.cities?.filter(city => 
+        city.toLowerCase().includes(formData.state.toLowerCase())
+      ) || [];
+      setCitySuggestions(filteredCities);
+    }
+  }, [formData.state]);
+
+  useEffect(() => {
+    if (formData.district) {
+      const selectedDistrict = datas.districts?.find(
+        (d) => d.name.toLowerCase() === formData.district.toLowerCase()
+      );
+      setTalukSuggestions(selectedDistrict?.taluks || []);
+    }
+  }, [formData.district]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === 'district') {
+      const selectedDistrict = datas.districts?.find(
+        (d) => d.name.toLowerCase() === value.toLowerCase()
+      );
+      setTalukSuggestions(selectedDistrict?.taluks || []);
+    }
+
+    if (name === "date_of_birth") {
+      const age = calculateAge(value);
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+        age: age.toString(),
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const calculateAge = (birthDate) => {
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDiff = today.getMonth() - birthDateObj.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDateObj.getDate())
+    ) {
+      age--;
+    }
+    return age;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error("Passwords do not match");
       return;
     }
-
     try {
       mutate(formData, {
         onSuccess: () => {
           toast.success(formData.message);
         },
       });
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (
     <>
       <Navbar />
-      <Box sx={{ 
-        backgroundColor: '#f5f7fa', 
-        minHeight: '100vh', 
-        py: 4, 
-        px: { xs: 1, sm: 2 }, 
-        mt: '10px', 
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
+      {isPending && <LoadingComponent />}
+      <Box
+        sx={{
+          backgroundColor: "#f5f7fa",
+          minHeight: "100vh",
+          py: 4,
+          px: { xs: 1, sm: 2 },
+          mt: "10px",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <Paper
           component="form"
           onSubmit={handleSubmit}
-          sx={{ 
-            p: { xs: 2, sm: 4, md: 6 }, 
-            borderRadius: 2, 
-            width: '100%', 
-            // maxWidth: '1400px'
+          sx={{
+            p: { xs: 2, sm: 4, md: 6 },
+            borderRadius: 2,
+            width: "100%",
           }}
         >
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            mb: 2, 
-            mt:1.5,          
-             gap: 2,
-            flexDirection: 'row'
-          }}>
-            <Avatar sx={{ bgcolor: 'primary.main' }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              mb: 2,
+              mt: 0.5,
+              gap: 2,
+              flexDirection: "row",
+            }}
+          >
+            <Avatar sx={{ bgcolor: "primary.main" }}>
               <HowToRegIcon />
             </Avatar>
-            <Typography variant={isMobile ? "h5" : "h4"} component="h1" sx={{ fontWeight: 600, textAlign: 'center' }}>
+            <Typography
+              variant={isMobile ? "h5" : "h4"}
+              component="h1"
+              sx={{ fontWeight: 600, textAlign: "center" }}
+            >
               REGISTER HERE!
             </Typography>
+
           </Box>
 
-          <Divider sx={{ height: '1px', mb:isMobile? 1 : 4 }} />
+    <Divider sx={{ height: "1px", mb: isMobile ? 1 : 2 }} />
+  <Box
+  sx={{
+    fontSize: '22px',
+    backgroundColor:"transparent",
+    color: 'black',
+    py: 1,
+    mb: 0,
+    borderRadius: 1,
+    textAlign: 'center',
+    fontWeight: 'bold',
 
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: { xs: 'column', md: 'row' }, 
-            gap: 4 
-          }}>
-            {/* LEFT: Personal + Social */}
+  }}
+>
+  Registering as:{' '}
+  <Box 
+    component="span"
+    sx={{
+      color: theme =>
+        planType === 'SilverUser' ? theme.palette.secondary.main :
+        planType === 'PremiumUser' ? '#FFD700' : 
+        '#000',
+      textTransform: 'capitalize'  
+    }}
+  >
+    {getUserRole()}
+  </Box>
+</Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              gap: 4,
+            }}
+          >
             <Box sx={{ flex: 1 }}>
-              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main', fontWeight: 600 }}>
+              <Typography
+                variant="h6"
+                sx={{ mb: 3, color: "primary.main", fontWeight: 600 }}
+              >
                 PERSONAL DETAILS
               </Typography>
 
@@ -115,8 +245,10 @@ const Register = () => {
                   value={formData.marital_status}
                   onChange={handleChange}
                 >
-                  {datas.marritalStatus.map((item, idx) => (
-                    <MenuItem key={idx} value={item}>{item}</MenuItem>
+                  {datas.marritalStatus?.map((item, idx) => (
+                    <MenuItem key={idx} value={item}>
+                      {item}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -151,17 +283,35 @@ const Register = () => {
                 </Select>
               </FormControl>
 
-              <TextField
-                fullWidth
-                label="Date of Birth"
-                name="date_of_birth"
-                value={formData.date_of_birth}
-                onChange={handleChange}
-                type="date"
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{ mb: 3 }}
-              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Date of Birth"
+                  value={
+                    formData.date_of_birth
+                      ? dayjs(formData.date_of_birth)
+                      : null
+                  }
+                  onChange={(newValue) => {
+                    const dob = newValue
+                      ? newValue.toISOString().split("T")[0]
+                      : "";
+                    const age = dob ? calculateAge(dob) : "";
+                    setFormData((prev) => ({
+                      ...prev,
+                      date_of_birth: dob,
+                      age: age.toString(),
+                    }));
+                  }}
+                  maxDate={dayjs()}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      required: true,
+                      sx: { mb: 3 },
+                    },
+                  }}
+                />
+              </LocalizationProvider>
 
               <TextField
                 fullWidth
@@ -171,96 +321,83 @@ const Register = () => {
                 name="age"
                 value={formData.age}
                 onChange={handleChange}
+                InputLabelProps={{ shrink: !!formData.age }}
               />
 
-              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main', fontWeight: 600 }}>
-                SOCIAL & CAREER DETAILS
+              <Typography
+                variant="h6"
+                sx={{ mb: 2, color: "primary.main", fontWeight: 600 }}
+              >
+               SOCIAL & CAREER DETAILS
               </Typography>
 
-              <Box sx={{ 
-                display: 'flex', 
-                flexWrap: 'wrap', 
-                gap: 2,
-                '& .MuiFormControl-root': {
-                  flex: isMobile ? '1 1 100%' : '1 1 48%',
-                  minWidth: '120px'
-                }
-              }}>
-                <FormControl sx={{ mb: 2 }}>
-                  <InputLabel>Educational Qualification</InputLabel>
-                  <Select
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 2,
+                }}
+              >
+                <Box sx={{ flex: '1 1 48%', minWidth: '200px' }}>
+                  <CustomAutocomplete
+                    options={educationSuggestions}
                     label="Educational Qualification"
                     name="educational_qualification"
                     value={formData.educational_qualification}
                     onChange={handleChange}
-                  >
-                    {datas.qualificationValues.map((item, idx) => (
-                      <MenuItem key={idx} value={item}>{item}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl sx={{ mb: 2 }}>
-                  <InputLabel>Occupation</InputLabel>
-                  <Select
+                    sx={{ width: '100%', mb: 2 }}
+                  />
+                </Box>
+                <Box sx={{ flex: '1 1 48%', minWidth: '200px' }}>
+                  <CustomAutocomplete
+                    options={occupationSuggestions}
                     label="Occupation"
                     name="occupation"
                     value={formData.occupation}
                     onChange={handleChange}
-                  >
-                    {datas.occupationValues.map((item, idx) => (
-                      <MenuItem key={idx} value={item}>{item}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                    sx={{ width: '100%', mb: 2 }}
+                  />
+                </Box>
 
-                <FormControl sx={{ mb: 2 }}>
-                  <InputLabel>Income Per Annum</InputLabel>
-                  <Select
+                <Box sx={{ flex: '1 1 48%', minWidth: '200px' }}>
+                  <CustomAutocomplete
+                    options={incomeSuggestions}
                     label="Income Per Annum"
                     name="income_per_month"
                     value={formData.income_per_month}
                     onChange={handleChange}
-                  >
-                    {datas.incomeValues.map((item, idx) => (
-                      <MenuItem key={idx} value={item}>{item}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl sx={{ mb: 2 }}>
-                  <InputLabel>Country</InputLabel>
-                  <Select
+                    sx={{ width: '100%', mb: 2 }}
+                  />
+                </Box>
+                <Box sx={{ flex: '1 1 48%', minWidth: '200px' }}>
+                  <CustomAutocomplete
+                    options={countrySuggestions}
                     label="Country"
                     name="country"
                     value={formData.country}
                     onChange={handleChange}
-                  >
-                    {datas.countries.map((item, idx) => (
-                      <MenuItem key={idx} value={item}>{item}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                    sx={{ width: '100%', mb: 2 }}
+                  />
+                </Box>
 
-                <FormControl sx={{ mb: 3 }}>
-                  <InputLabel>Mother Tongue</InputLabel>
-                  <Select
+                <Box sx={{ flex: '1 1 48%', minWidth: '200px' }}>
+                  <CustomAutocomplete
+                    options={languageSuggestions}
                     label="Mother Tongue"
                     name="mother_tongue"
                     value={formData.mother_tongue}
                     onChange={handleChange}
-                  >
-                    {datas.languageValues.map((item, idx) => (
-                      <MenuItem key={idx} value={item}>{item}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                    sx={{ width: '100%', mb: 2 }}
+                  />
+                </Box>
               </Box>
             </Box>
 
-            {/* RIGHT: Family + Login */}
             <Box sx={{ flex: 1 }}>
-              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main', fontWeight: 600 }}>
+              <Typography
+                variant="h6"
+                sx={{ mb: 3, color: "primary.main", fontWeight: 600 }}
+              >
                 FAMILY DETAILS
               </Typography>
 
@@ -286,7 +423,7 @@ const Register = () => {
                 value={formData.parent_name}
                 onChange={handleChange}
               />
-              
+
               <TextField
                 fullWidth
                 label="Religion"
@@ -296,19 +433,14 @@ const Register = () => {
                 sx={{ mb: 3 }}
               />
 
-              <FormControl fullWidth sx={{ mb: 3 }}>
-                <InputLabel>Caste</InputLabel>
-                <Select
-                  label="Caste"
-                  name="caste"
-                  value={formData.caste}
-                  onChange={handleChange}
-                >
-                  {datas.casteValues.map((item, idx) => (
-                    <MenuItem key={idx} value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <CustomAutocomplete
+                options={casteSuggestions}
+                label="Caste"
+                name="caste"
+                value={formData.caste}
+                onChange={handleChange}
+                sx={{ mb: 3 }}
+              />
 
               <TextField
                 fullWidth
@@ -321,60 +453,50 @@ const Register = () => {
                 onChange={handleChange}
               />
 
-              <FormControl fullWidth sx={{ mb: 3 }}>
-                <InputLabel>Occupation Country</InputLabel>
-                <Select
-                  label="Country"
-                  name="occupation_country"
-                  value={formData.occupation_country}
-                  onChange={handleChange}
-                >
-                  {datas.countries.map((item, idx) => (
-                    <MenuItem key={idx} value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <CustomAutocomplete
+                options={countrySuggestions}
+                label="Occupation Country"
+                name="occupation_country"
+                value={formData.occupation_country}
+                onChange={handleChange}
+                sx={{ mb: 3 }}
+              />
 
-              <FormControl fullWidth sx={{ mb: 3 }}>
-                <InputLabel>Select State</InputLabel>
-                <Select
-                  label="State"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleChange}
-                >
-                  {datas.states.map((item, idx) => (
-                    <MenuItem key={idx} value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <CustomAutocomplete
+                options={datas.states || []}
+                label="Select State"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                sx={{ mb: 3 }}
+              />
 
-              <FormControl fullWidth sx={{ mb: 3 }}>
-                <InputLabel>Select City</InputLabel>
-                <Select
-                  label="City"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                >
-                  {datas.cities.map((item, idx) => (
-                    <MenuItem key={idx} value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <CustomAutocomplete
+                options={citySuggestions}
+                label="Select City"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                sx={{ mb: 3 }}
+              />
+
             </Box>
           </Box>
 
-          {/* LOGIN DETAILS */}
-          <Typography variant="h6" sx={{ mt: 1, mb: 3, color: 'primary.main', fontWeight: 600 }}>
+          <Typography
+            variant="h6"
+            sx={{ mt: 1, mb: 3, color: "primary.main", fontWeight: 600 }}
+          >
             LOGIN DETAILS
           </Typography>
 
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: { xs: 'column', sm: 'row' }, 
-            gap: 2 
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: 2,
+            }}
+          >
             <Box sx={{ flex: 1 }}>
               <TextField
                 fullWidth
@@ -383,6 +505,7 @@ const Register = () => {
                 sx={{ mb: 3 }}
                 value={formData.first_name}
                 onChange={handleChange}
+                required
               />
               <TextField
                 fullWidth
@@ -391,6 +514,7 @@ const Register = () => {
                 name="last_name"
                 value={formData.last_name}
                 onChange={handleChange}
+                required
               />
             </Box>
             <Box sx={{ flex: 1 }}>
@@ -402,25 +526,29 @@ const Register = () => {
                 sx={{ mb: 3 }}
                 value={formData.username}
                 onChange={handleChange}
+                required
               />
               <TextField
                 fullWidth
                 label="Mobile Number"
-                type="tel"
+                type="number"
                 name="mobile_no"
                 sx={{ mb: 3 }}
                 value={formData.mobile_no}
                 onChange={handleChange}
+                required
               />
             </Box>
           </Box>
 
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: { xs: 'column', sm: 'row' }, 
-            gap: 2, 
-            mb: 4 
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: 2,
+              mb: 4,
+            }}
+          >
             <TextField
               fullWidth
               label="Password"
@@ -438,28 +566,30 @@ const Register = () => {
               onChange={handleChange}
             />
           </Box>
-          
-          <Box sx={{ 
-            width: '100%', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center' 
-          }}>
+
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <input type="hidden" name="user_role" value={formData.user_role} />
             <Button
               type="submit"
               variant="contained"
               size="large"
-              sx={{
-                background:'#63084e',
-                "&:hover": {
-                      backgroundColor: "#aa33a2",
-                    },
+              disabled={isPending}
+              sx={{ 
+                backgroundColor: "#c42fb9",
+                "&:hover": { backgroundColor: "#c42fb9" },
                 fontWeight: 600,
-                width: { xs: '100%', sm: '50%', md: '30%' },
-                textTransform: 'capitalize'
+                width: { xs: "100%", sm: "50%", md: "30%" },
+                textTransform: "capitalize",
               }}
             >
-              Submit Registration
+              Registration Submit
             </Button>
           </Box>
         </Paper>

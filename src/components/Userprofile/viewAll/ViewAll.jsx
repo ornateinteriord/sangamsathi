@@ -1,4 +1,9 @@
-import React, { useState, useMemo, useCallback } from "react";
+import {
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from "react";
 import {
   Box,
   Typography,
@@ -12,11 +17,8 @@ import {
 } from "@mui/material";
 import { FaMapMarkerAlt, FaBriefcase } from "react-icons/fa";
 
-import {
-  useGetAllUsersProfiles,
-} from "../../api/User/useGetProfileDetails";
+import { useGetAllUsersProfiles } from "../../api/User/useGetProfileDetails";
 import TokenService from "../../token/tokenService";
-import { LoadingComponent } from "../../../App";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";
 import GenderFilter from "../../../utils/Filters/GenderFilter";
 import AboutPop from "./popupContent/abouPop/AboutPop";
@@ -24,6 +26,8 @@ import FamilyPop from "./popupContent/familyPop/FamilyPop";
 import EducationPop from "./popupContent/educationPop/EducationPop";
 import LifeStylePop from "./popupContent/lifeStylePop/LifeStylePop";
 import PreferencePop from "./popupContent/preferencePop/PreferencePop";
+import { isSilverOrPremiumUser, LoadingTextSpinner } from "../../../utils/common";
+import OthersPop from "./popupContent/others/OthersPop";
 
 const itemsPerPage = 8;
 
@@ -33,39 +37,37 @@ const ViewAll = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const { data: users = [], isLoading } = useGetAllUsersProfiles();
+
   const loggedInUserId = TokenService.getRegistrationNo();
+
+  const {
+    mutate: fetchProfiles,
+    data,
+    isPending: isLoading,
+  } = useGetAllUsersProfiles();
 
   const handleStatusChange = useCallback((value) => {
     setSelectedStatus(value);
     setCurrentPage(1);
   }, []);
 
+  useEffect(() => {
+    fetchProfiles({ page: currentPage - 1, pageSize: itemsPerPage });
+  }, [currentPage, selectedStatus, fetchProfiles]);
+
   const filteredUsers = useMemo(() => {
-    return users.filter((user) => {
-      if (
-        user.registration_no === loggedInUserId ||
-        user.user_role === "Admin"
-      ) {
-        return false;
-      }
+    if (!data?.content) return [];
 
-      if (selectedStatus !== "all" && user.gender !== selectedStatus) {
+    return data.content.filter((user) => {
+      if (selectedStatus !== "all" && user.gender !== selectedStatus)
         return false;
-      }
-
       return true;
     });
-  }, [users, loggedInUserId, selectedStatus]);
+  }, [data, selectedStatus]);
 
-  const paginatedUsers = useMemo(
-    () =>
-      filteredUsers.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-      ),
-    [filteredUsers, currentPage]
-  );
+  const totalPages = useMemo(() => {
+    return data ? Math.ceil(data.totalRecords / itemsPerPage) : 1;
+  }, [data]);
 
   const handleOpenDialog = useCallback((user) => {
     setSelectedUser(user);
@@ -81,6 +83,7 @@ const ViewAll = () => {
       2: <EducationPop userDetails={selectedUser} />,
       3: <LifeStylePop userDetails={selectedUser} />,
       4: <PreferencePop userDetails={selectedUser} />,
+      5: <OthersPop userDetails={selectedUser} />
     };
 
     return contentMap[currentTab] || null;
@@ -104,7 +107,6 @@ const ViewAll = () => {
         key={user._id}
         sx={{
           width: { xs: 300, sm: 280, md: 260, lg: 280 },
-          height: "auto", // Fixed height
           borderRadius: 4,
           boxShadow: 3,
           overflow: "hidden",
@@ -119,23 +121,21 @@ const ViewAll = () => {
           mx: "auto",
         }}
       >
-        {/* Premium badge */}
-        {user.user_role === "PremiumUser" && (
+        {isSilverOrPremiumUser(user?.type_of_user) && (
           <Chip
             label="PREMIUM"
             size="small"
             sx={{
-              backgroundColor:'gold',
               position: "absolute",
               top: 12,
               right: 12,
               fontWeight: "bold",
               fontSize: { xs: "0.6rem", sm: "0.7rem" },
+              backgroundColor: "#FFD700",
             }}
           />
         )}
 
-        {/* Profile image container */}
         <Box
           sx={{
             pt: 2,
@@ -153,7 +153,6 @@ const ViewAll = () => {
               boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
               mb: 2,
               position: "relative",
-              zIndex: 1,
               padding: "2px",
               background: "linear-gradient(45deg, #87CEEB, #E0F7FA)",
             }}
@@ -161,49 +160,34 @@ const ViewAll = () => {
             <Avatar
               src={user?.image}
               alt="Profile"
-              sx={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
+              sx={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </Box>
         </Box>
 
-        {/* Card content with flex-grow to push button to bottom */}
         <CardContent
           sx={{
-            width: "100%",
             display: "flex",
             flexDirection: "column",
-            flexGrow: 1, // This makes the content take available space
+            flexGrow: 1,
             px: { xs: 1, sm: 2 },
             pt: 0,
             pb: 2,
           }}
         >
-          {/* Name and age */}
           <Box sx={{ textAlign: "center", mb: 0.5 }}>
-            <Typography
-              fontWeight="bold"
-              color="#000"
-              sx={{
-                fontSize: { xs: "16px", sm: "17px", md: "16px", lg: "17px" },
-              }}
-            >
+            <Typography fontWeight="bold" color="#000" sx={{ fontSize: "1rem" }}>
               {user.first_name} {user.last_name}
             </Typography>
             <Typography color="text.secondary">{age || "N/A"} yrs</Typography>
           </Box>
 
-          {/* Occupation */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               mb: 0.5,
-              fontSize: { xs: "0.8rem", sm: "0.9rem" },
             }}
           >
             <FaBriefcase size={14} color="#000" style={{ marginRight: 6 }} />
@@ -212,14 +196,12 @@ const ViewAll = () => {
             </Typography>
           </Box>
 
-          {/* Location */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               mb: 1,
-              fontSize: { xs: "0.8rem", sm: "0.9rem" },
             }}
           >
             <FaMapMarkerAlt size={14} color="#000" style={{ marginRight: 6 }} />
@@ -230,16 +212,14 @@ const ViewAll = () => {
             </Typography>
           </Box>
 
-          <Divider sx={{  my: 1, height:'1px' }} />
+          <Divider sx={{ my: 1, height:'1px' }} />
 
-          {/* Details row */}
-          <Box display="flex" justifyContent="space-around" width="100%" my={2}>
+          <Box display="flex" justifyContent="space-around" mb={1}>
             <ProfileInfo label="Height" value={user.height || "N/A"} />
             <ProfileInfo label="Religion" value={user.religion || "N/A"} />
             <ProfileInfo label="Caste" value={user.caste || "N/A"} />
           </Box>
 
-          {/* Button container with margin-top auto */}
           <Box sx={{ mt: "auto", width: "100%" }}>
             <Button
               fullWidth
@@ -251,7 +231,6 @@ const ViewAll = () => {
                 py: 1,
                 textTransform: "none",
                 fontWeight: "bold",
-                fontSize: { xs: "0.8rem", sm: "0.9rem" },
               }}
             >
               View More
@@ -263,44 +242,31 @@ const ViewAll = () => {
   };
 
   return (
-    <Box
-      sx={{
-        p: { xs: 1, sm: 2 },
-        backgroundColor: "#f9f9f9",
-        maxWidth: "100%",
-        overflowX: "hidden",
-      }}
-    >
+    <Box sx={{ p: { xs: 1, sm: 2 }, backgroundColor: "#f9f9f9" }}>
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          flexDirection: { xs: "column", sm: "row" }, // Stack on mobile, row on desktop
+          flexDirection: { xs: "column", sm: "row" },
           gap: 2,
           mb: 3,
         }}
       >
-        {/* Left-aligned heading */}
         <Typography
           variant="h5"
           fontWeight="bold"
-          sx={{
-            alignSelf: { xs: "flex-start", sm: "center" },
-            fontSize: { xs: "1.5rem", sm: "1.75rem" },
-          }}
+          sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem" } }}
         >
           Profiles
         </Typography>
 
-        {/* Right-aligned filter */}
         <GenderFilter
           selectedStatus={selectedStatus}
           handleStatusChange={handleStatusChange}
         />
       </Box>
 
-      {/* User cards grid */}
       <Box
         sx={{
           display: "grid",
@@ -311,13 +277,11 @@ const ViewAll = () => {
             lg: "repeat(4, 1fr)",
           },
           gap: { xs: 2, sm: 3 },
-          justifyContent: "center",
         }}
       >
-        {paginatedUsers.map(renderUserCard)}
+        {filteredUsers.map(renderUserCard)}
       </Box>
 
-      {/* Profile Dialog */}
       {selectedUser && (
         <ProfileDialog
           openDialog={openDialog}
@@ -331,13 +295,12 @@ const ViewAll = () => {
         />
       )}
 
-      {/* Pagination */}
-      {filteredUsers.length > itemsPerPage && (
-        <Box display="flex" justifyContent={"end"} my={3}>
+      {totalPages > 1 && (
+        <Box display="flex" justifyContent="end" my={3}>
           <Pagination
-            count={Math.ceil(filteredUsers.length / itemsPerPage)}
+            count={totalPages}
             page={currentPage}
-            onChange={(e, page) => setCurrentPage(page)}
+            onChange={( e,page) => setCurrentPage(page)}
             color="primary"
             shape="rounded"
             size={window.innerWidth < 600 ? "small" : "medium"}
@@ -345,34 +308,17 @@ const ViewAll = () => {
         </Box>
       )}
 
-      {/* Loading state */}
-      {isLoading && <LoadingComponent />}
+      {isLoading && <LoadingTextSpinner />}
     </Box>
   );
 };
 
-/**
- * Helper component for profile information display
- */
 const ProfileInfo = ({ label, value }) => (
   <Box textAlign="center" sx={{ px: 1 }}>
-    <Typography
-      variant="caption"
-      color="text.secondary"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      sx={{ fontSize: { xs: "0.7rem", sm: "0.8rem" } }}
-    >
+    <Typography variant="caption" color="text.secondary">
       {label}
     </Typography>
-    <Typography
-      variant="subtitle2"
-      fontWeight="bold"
-      sx={{
-        fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.8rem", lg: "0.85rem" },
-      }}
-    >
+    <Typography variant="subtitle2" fontWeight="bold">
       {value}
     </Typography>
   </Box>

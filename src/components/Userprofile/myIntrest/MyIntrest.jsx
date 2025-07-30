@@ -10,15 +10,15 @@ import { useGetInterestCounts,} from "../../api/User/useGetProfileDetails";
 
 
 const MyInterest = () => {
-  const registrationNo = TokenService.getRegistrationNo()
+  const registrationNo = TokenService.getRegistrationNo();
   const [tabValue, setTabValue] = useState(0);
   const [counts, setCounts] = useState({
     accepted: 0,
     requests: 0,
-    sent: 0
+    sent: 0,
   });
 
-  const { data: countsData } = useGetInterestCounts(registrationNo);
+  const { data: countsData , refetch : refetchCounts} = useGetInterestCounts(registrationNo);
   
  
 
@@ -27,25 +27,28 @@ const MyInterest = () => {
     setCounts({
       requests: countsData.received || 0,
       sent: countsData.sent || 0,
-      accepted: countsData.accepted || 0
+      accepted: countsData.accepted || 0,
     });
   }
 }, [countsData]);
 
-const handleTabChange = (event, newValue) => {
-  setTabValue(newValue);
-};
+  const handleTabChange = (event, newValue) => {
+    if (event && typeof event.preventDefault === 'function') {
+      event.preventDefault();
+    }
+    setTabValue(newValue);
+  };
 
  
 
   const renderContents = () => {
     switch (tabValue) {
       case 0:
-        return <Accepted  />;
+        return <Accepted />;
       case 1:
-        return <Requests />;
+        return <Requests refetchCounts={refetchCounts} />;
       case 2:
-        return <Sent  />;
+        return <Sent refetchCounts={refetchCounts} />;
       default:
         return null;
     }
