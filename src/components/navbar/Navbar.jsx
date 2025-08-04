@@ -311,7 +311,7 @@ const Navbar = () => {
         sx={{
           "& .MuiDrawer-paper": {
             width: "280px",
-            background: '#CE34C2',
+            background: '#1a4f72',
             color: "#fff",
           },
         }}

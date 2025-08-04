@@ -40,7 +40,7 @@ const Members = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "#CE34C2",
+            color: "#1a4f72",
             textTransform: "capitalize",
             fontFamily: "Outfit, sans-serif",
             fontSize: { xs: "1.5rem", sm: "2rem" },
