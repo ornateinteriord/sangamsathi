@@ -1,14 +1,16 @@
 import React from "react";
 import "./Footer.scss";
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Footer() {
+    const navigate = useNavigate();
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-grid">
           <div className="footer-section">
-            <h2 className="footer-heading">Girija Kalyana</h2>
+            <h2 className="footer-heading">Sangam Sathi</h2>
             <p className="footer-text">
               A Superior Matrimony Service. Register and find your special
               someone matches within your community.
@@ -18,19 +20,18 @@ function Footer() {
           <div className="footer-section">
             <h3 className="footer-heading">About Company</h3>
             <ul className="footer-list">
-              <li>About Us</li>
-              <li>Promoter</li>
-              <li>Contact Us</li>
-              <li>Privacy Policy</li>
-              <li>Terms & Conditions</li>
-              <li>Cancellation Policy</li>
+              <li onClick={() => navigate("/")}>Home</li>
+               <li onClick={() => navigate("/service")}>Service</li>
+              <li onClick={() => navigate("/about")}>About Us</li>
+              <li onClick={() => navigate("/privacy-policy")}>Privacy Policy</li>
+               <li onClick={() => navigate("/contact")}>Contact Us</li>
             </ul>
           </div>
 
           <div className="footer-section">
             <h3 className="footer-heading">Contact Us</h3>
-            <p className="footer-text">Email: contactusgirijakalyana@gmail.com</p>
-            <p className="footer-text">Email: enquirygirijakalyana@gmail.com</p>
+            <p className="footer-text">Email: ornateinteriord@gmail.com</p>
+            <p className="footer-text">Email: ornateinteriord@gmail.com</p>
             <p className="footer-text">Call Us: 9148824442</p>
           </div>
 
@@ -45,21 +46,19 @@ function Footer() {
           </div>
         </div>
 
-        <div className="footer-social">
-          <div className="social-icons">
-            <a href="#" target="_blank" rel="noopener noreferrer" className="social-icon facebook">
-              <FaFacebookF />
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="social-icon twitter">
-              <FaTwitter />
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
-              <FaLinkedinIn />
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="social-icon youtube">
-              <FaYoutube />
-            </a>
-          </div>
+           <div className="social-icons">
+          <span className="social-icon facebook" onClick={() => handleSocialClick("facebook")}>
+            <FaFacebookF />
+          </span>
+          <span className="social-icon twitter" onClick={() => handleSocialClick("twitter")}>
+            <FaTwitter />
+          </span>
+          <span className="social-icon linkedin" onClick={() => handleSocialClick("linkedin")}>
+            <FaLinkedinIn />
+          </span>
+          <span className="social-icon youtube" onClick={() => handleSocialClick("youtube")}>
+            <FaYoutube />
+          </span>
         </div>
         
         <div className="footer-copyright">

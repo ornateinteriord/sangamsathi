@@ -7,24 +7,26 @@ import ProfileProvider from './components/usecontext/ProfileProvider';
 import { ToastContainer } from 'react-toastify';
 import ProtectedRoute from './components/roterProtector/RouterProtector';
 import Register from './components/register/Register';
-import MembershipPlane from './components/membershipplan/MembershipPlane';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import MembershipPlan from './components/membershipplan/MembershipPlan';
+import PromotersDashboard from './components/PromotersDash/PromotersDashboard';
+import AdminProfileDialog from './components/Adminprofile/AdminProfile';
+
+import ProfilePage from './components/PromotersDash/ProfilePage/ProfilePage';
+import ReferInvitePage from './components/PromotersDash/RefferInvite/RefferInvitePage';
+
+import Pending from './components/PromotersDash/myReferals/Pending';
+import Success from './components/PromotersDash/myReferals/Success';
+import DashboardContent from './components/PromotersDash/dashboardContent/DashboardContent';
+import sidebarData from './components/PromotersDash/sidebar/data';
+import Expired from './components/PromotersDash/myReferals/Expired';
+import InActive from './components/PromotersDash/myReferals/InActive';
+import TeamUsers from './components/PromotersDash/myReferals/TeamUsers';
+import ActivationPending from './components/activationPending/activationPending';
+
 
 
 // Create a query client with default options
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      refetchOnWindowFocus: false,
-      retry: 1,
-      cacheTime: 1000 * 60 * 30, // 30 minutes
-    },
-    mutations: {
-      retry: 1,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 // Lazy loading components
 const HeroSlider = lazy(() => import('./components/hero/HeroSlider'));
@@ -99,29 +101,7 @@ export const LoadingComponent = () => {
   );
 };
 
-export const TableLoadingComponent = () => {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '200px', // Adjust height as needed
-        backgroundColor: 'transparent',
-      }}
-    >
-      <CircularProgress 
-        size={64}  
-        thickness={3.6} 
-        sx={{
-          color: "1a4f72",
-          animationDuration: '800ms', 
-        }} 
-      />
-    </Box>
-  );
-};
+
 
 const App = () => {
   return (
@@ -141,7 +121,7 @@ const App = () => {
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/register" element={<Register />} />
-             <Route path="/membership" element={<MembershipPlane />} />
+             <Route path="/membership" element={<MembershipPlan />} />
 
             {/* Admin Routes */}
             <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
@@ -168,6 +148,21 @@ const App = () => {
               <Route path="notification" element={<NotificationData />} />
             </Route>
             </Route>
+           
+             {/* <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}> */}
+            <Route element={<ProtectedRoute allowedRoles={["promoter"]} />}>
+              <Route path="/PromotAdmin" element={<PromotersDashboard />}>
+             <Route index element={<DashboardContent sidebarData={sidebarData} />} />
+              <Route path="admin-profile" element={<AdminProfileDialog />} />
+              <Route path="profilepage" element={<ProfilePage/>}/>
+              <Route path="refer" element={<ReferInvitePage/>}/>
+              <Route path="pending" element={<Pending />} />
+              <Route path="success" element={<Success />} />
+              <Route path="expired" element={<Expired />} />
+              <Route path="inactive" element={<InActive />} />
+              <Route path="team-users" element={<TeamUsers />} />
+              </Route>
+            </Route>
 
             {/* User Routes */}
             <Route element={<ProtectedRoute allowedRoles={["FreeUser","PremiumUser","SilverUser"]} />}>
@@ -180,19 +175,15 @@ const App = () => {
               <Route path="search" element={<Search />} />
             </Route>
             </Route>
-
+            
             {/* 404 Route */}
+            <Route path="activation-pending" element={<ActivationPending />} />
             <Route path="*" element={<div>404 Not Found</div>} />
           </Routes>
         </Router>
       
         <ToastContainer position="top-right" autoClose={5000} />
       </Suspense>
-      
-      {/* React Query Devtools - Only in development */}
-      {/* {process.env.NODE_ENV === 'development' && (
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-      )} */}
     </QueryClientProvider>
 
     {/* <ProfileViewer /> */}

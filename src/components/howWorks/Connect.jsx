@@ -1,183 +1,188 @@
 import React from 'react';
-import {
-  Container,
-  Typography,
-  Grid,
-  Box,
-  Paper,
-  Badge,
-  Card,
-  CardContent
-} from '@mui/material';
-import {
-  FaUserEdit,
-  FaUsers,
-  FaComments,
-  FaUserFriends,
-  FaCalendarWeek,
-  FaCalendarAlt
-} from 'react-icons/fa';
+import { Container, Typography, Grid, Box, Paper, Badge, Card, CardContent } from '@mui/material';
+import { FaUserEdit, FaUsers, FaComments, FaUserFriends, FaCalendarWeek, FaCalendarAlt, FaUserPlus } from 'react-icons/fa';
 import { useGetDashboardStats } from '../api/Auth';
 
 const Connect = () => {
   const { data: dashboardstats } = useGetDashboardStats();
-
-  const stats = [
+  
+const stats = [
     {
       id: 1,
-      title: 'Total Profiles',
-      value: `${dashboardstats?.stats?.totalProfiles || 0} +`,
-      icon: <FaUserFriends style={{ fontSize: 40, color: '#6a1b9a' }} />,
-      bgColor: '#ede7f6',
-      textColor: '#6a1b9a'
+      title: 'Profiles',
+      value: `${dashboardstats?.stats?.totalProfiles || 0}`,
+      icon: <FaUserFriends style={{ fontSize: 40, color: '#CE34C2' }} />,
+      color: '#f8f9fa',
+      textColor: 'rgb(192, 9, 88)',
+     
     },
     {
       id: 2,
-      title: 'This Week Registrations',
-      value: `${dashboardstats?.stats?.thisWeekRegistrations || 0} +`,
-      icon: <FaCalendarWeek style={{ fontSize: 40, color: '#00796b' }} />,
-      bgColor: '#e0f2f1',
-      textColor: '#00796b'
+      title: 'This Week',
+      value: `${dashboardstats?.stats?.thisWeekRegistrations || 0}`,
+      icon: <FaCalendarWeek style={{ fontSize: 40, color: '#CE34C2' }} />,
+      color: '#f8f9fa',
+      textColor: '#00bcd4',
+      
     },
     {
       id: 3,
-      title: 'This Month Registrations',
-      value: `${dashboardstats?.stats?.thisMonthRegistrations || 0} +`,
-      icon: <FaCalendarAlt style={{ fontSize: 40, color: '#c62828' }} />,
-      bgColor: '#ffebee',
-      textColor: '#c62828'
-    }
+      title: 'This Month',
+      value: `${dashboardstats?.stats?.thisMonthRegistrations || 0}`,
+      icon: <FaCalendarAlt style={{ fontSize: 40, color: '#CE34C2' }} />,
+      color: '#f8f9fa',
+      textColor: '#ff5a5f',
+     
+    },
   ];
 
   const features = [
     {
       id: 1,
-      title: 'Register',
-      description: 'Create your profile for free and begin your journey.',
-      icon: <FaUserEdit style={{ fontSize: 50, color: '#fff' }} />
+      title: 'Sign Up',
+      description: 'Register for free & put up your Matrimony Profile',
+      icon: <FaUserEdit style={{ fontSize: 50, color: '#fff' }} />,
     },
     {
       id: 2,
       title: 'Connect',
-      description: 'Reach out to like-minded individuals and build connections.',
-      icon: <FaUsers style={{ fontSize: 50, color: '#fff' }} />
+      description: 'Select & Connect with Matches you like',
+      icon: <FaUsers style={{ fontSize: 50, color: '#fff' }} />,
     },
     {
       id: 3,
-      title: 'Communicate',
-      description: 'Start meaningful conversations and explore possibilities.',
-      icon: <FaComments style={{ fontSize: 50, color: '#fff' }} />
-    }
+      title: 'Interact',
+      description: 'Become a Premium Member & Start a Conversation',
+      icon: <FaComments style={{ fontSize: 50, color: '#fff' }} />,
+    },
   ];
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ py: 6, fontFamily: 'Outfit' }}>
-        <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3 }}>
-          <Typography
-            variant="h4"
-            sx={{
-              textAlign: 'center',
-              color: '#4a148c',
-              fontWeight: 600,
-              mb: 4
-            }}
-          >
-            Platform Overview
-          </Typography>
+     <Container maxWidth="xl" sx={{ 
+  py: { xs: 4, md: 4 },
+  fontFamily: "Outfit",
+}}>
+  <Box sx={{
+    maxWidth: "100%",
+    mx: 'auto',
+    px: { xs: 2, sm: 4 },
+  }}>
+    <Typography variant="h4" sx={{ 
+     
+      color: '#CE34C2', 
+      textAlign: 'center',
+      fontSize: { xs: '1.75rem', md: '2.125rem' }
+    }}>
+      Platform Statistics
+    </Typography>
+    
+    <Grid container spacing={{ xs: 2, md: 5 }} justifyContent="center">
+      {stats.map((stat) => (
+        <Grid item xs={12} sm={6} md={4} key={stat.id} sx={{
+          display: 'flex',
+        }}>
+          <Card sx={{ 
+             width: { xs: '100%', sm: '280px' }, 
+             maxWidth: 340,
+            height: '100%',
+            minHeight: 220,
+            borderRadius: 3,
+            backgroundColor: 'transparent', 
+            boxShadow: 'none', 
+            display: 'flex',
+            flexDirection: 'column',
+            border: 'none',
+            
+          }}>
+            <CardContent sx={{ 
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              p: { xs: 3, md: 3 },
+            }}>
+              <Box sx={{ 
+                display: 'inline-flex',
+                p: 2,
+                mb: 2,
+                borderRadius: '50%',
+                color: "#CE34C2"
+              }}>
+                {stat.icon}
+              </Box>
+              <Typography variant="h6" sx={{ 
+                color: "gray",
+                fontWeight: 600,
+                mb: 1.5,
+                fontSize: { xs: '1.1rem', md: '1.30rem' }
+              }}>
+                {stat.title}
+              </Typography>
+              <Typography variant="h4" sx={{ 
+                color: "#000",
+                fontWeight: 700,
+                fontSize: { xs: '1.5rem', md: '1.7rem' },
+                lineHeight: 1.2
+              }}>
+                {stat.value}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  </Box>
+</Container>
 
-          <Grid container spacing={4} justifyContent="center">
-            {stats.map((stat) => (
-              <Grid item xs={12} sm={6} md={4} key={stat.id}>
-                <Card
-                  sx={{
-                    backgroundColor: stat.bgColor,
-                    borderRadius: 4,
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                    p: '20px 40px',
-                    textAlign: 'center'
-                  }}
-                >
-                  <Box
-                    sx={{
-                      mb: 2,
-                      display: 'inline-flex',
-                      p: 2,
-                      borderRadius: '50%',
-                      backgroundColor: `${stat.textColor}22`
-                    }}
-                  >
-                    {stat.icon}
-                  </Box>
-                  <Typography
-                    variant="h6"
-                    sx={{ color: stat.textColor, fontWeight: 600, mb: 1 }}
-                  >
-                    {stat.title}
-                  </Typography>
-                  <Typography
-                    variant="h4"
-                    sx={{ color: stat.textColor, fontWeight: 700 }}
-                  >
-                    {stat.value}
-                  </Typography>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      </Container>
-
-      <Container sx={{ textAlign: 'center', my: 6 }}>
-        <Typography
-          variant="h4"
-          sx={{ color: '#00796b', fontWeight: 600, mb: 4 }}
-        >
-          Your Journey Begins Here
+      <Container sx={{ textAlign: 'center', marginTop: {xs:0,md:5}, fontFamily: "Outfit" }}>
+        <Typography variant="h4" sx={{ marginBottom: 4, color: '#CE34C2', fontFamily: "Outfit sans-serif" }}>
+          Find your Special Someone
         </Typography>
-
         <Grid container spacing={4} justifyContent="center">
           {features.map((feature) => (
             <Grid item xs={12} sm={4} key={feature.id}>
               <Badge
                 badgeContent={feature.id}
-                color="secondary"
+                color="error"
+                overlap="circular"
                 sx={{
                   '& .MuiBadge-badge': {
+                    fontSize: '1rem',
+                    height: '24px',
+                    minWidth: '24px',
+                    borderRadius: '50%',
+                    top: 10,
+                    right: 10,
                     backgroundColor: '#fff',
-                    color: '#00796b',
-                    fontWeight: 700,
-                    border: '2px solid #4db6ac'
-                  }
+                    color: '#000',
+                    border: '2px solid #00bcd4',
+                  },
                 }}
               >
                 <Paper
-                  elevation={4}
+                  elevation={3}
                   sx={{
-                    backgroundColor: '#4a148c',
-                    width: 100,
-                    height: 100,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    padding: 3,
                     borderRadius: '50%',
-                    margin: '0 auto'
+                    backgroundColor: '#CE34C2',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 90,
+                    height: 90,
+                    margin: '0 auto',
                   }}
                 >
                   {feature.icon}
                 </Paper>
               </Badge>
-              <Box sx={{ mt: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{ color: '#4a148c', fontWeight: 600 }}
-                >
+              <Box sx={{ marginTop: 2 }}>
+                <Typography variant="h6" sx={{ color: '#00bcd4', fontFamily: "Outfit sans-serif" }}>
                   {feature.title}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: '#555', mt: 1 }}
-                >
+                <Typography variant="body2" sx={{ color: '#777', fontFamily: "Outfit sans-serif" }}>
                   {feature.description}
                 </Typography>
               </Box>
@@ -187,6 +192,6 @@ const Connect = () => {
       </Container>
     </>
   );
-};
+}
 
 export default Connect;

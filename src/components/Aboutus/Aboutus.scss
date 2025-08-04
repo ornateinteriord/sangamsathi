@@ -1,21 +1,20 @@
-
 .about-us-container {
-  font-family: 'Poppins', sans-serif;
-  max-width: "100%";
-  margin: 60px auto;
-  padding: 2rem;
-  // background-color: #f5f5f5;
-  border-radius: 12px;
   display: flex;
   flex-direction: column;
   gap: 50px;
-  margin-top: 70px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 3.125rem); // Responsive padding
+  max-width: 1500px;
+  margin-top: 80px;
+  font-family: "Outfit sans-serif";
 
+  /* Section 1: Intro About Us */
   .about-us-intro {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
-    gap: 40px;
+    justify-content: space-between;
+    gap: 30px;
 
     @media (min-width: 768px) {
       flex-direction: row;
@@ -23,54 +22,58 @@
 
     .about-us-text {
       flex: 1;
+      order: 1;
       text-align: center;
 
       @media (min-width: 768px) {
         text-align: left;
+        order: 0;
       }
 
       .highlight-text {
-        font-size: 1.5rem;
-        color: #4a47a3;
+        font-size: clamp(1rem, 2vw, 1.375rem);
+        color: #013345 !important;
+        font-weight: bold;
         text-transform: uppercase;
-        font-weight: 600;
-        margin-bottom: 4px;
       }
 
       .main-heading {
-        font-size: clamp(2rem, 5vw, 2.5rem);
+        font-size: 30px;
         font-weight: 700;
-        color: #222;
-        margin-bottom: 12px;
+        margin: 10px 0;
+        color: #337a96;
+        line-height: 1.2;
       }
 
       .headingh3 {
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: #4a47a3;
-        margin-bottom: 15px;
+        color: rgb(105, 44, 44) !important;
+        margin: 5px 0;
+        font-size: clamp(1.125rem, 2vw, 1.25rem);
+        text-align: inherit;
       }
 
       p {
-        color: #555;
-        font-size: 1rem;
-        line-height: 1.6;
+        text-align: left;
+        font-size: clamp(0.875rem, 2vw, 1rem);
         margin-bottom: 20px;
-        text-align: start;
+        color: #6c757d !important;
+        line-height: 1.6;
       }
 
       .learn-more-btn {
-        background-color: #4a47a3;
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 500;
         color: #fff;
+        background-color: #CE34C2;
         border: none;
-        padding: 10px 20px;
-        border-radius: 6px;
-        font-weight: 600;
+        border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        display: inline-block;
 
         &:hover {
-          background-color: #363179;
+          background-color: #245a7e;
         }
       }
     }
@@ -78,63 +81,84 @@
     .about-us-image {
       flex: 1;
       text-align: center;
+      order: 0;
+
+      @media (min-width: 768px) {
+        order: 1;
+      }
 
       img {
         width: 100%;
         max-width: 400px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        height: auto;
       }
     }
   }
 
+  /* Section 2: What We Do */
   .about-us-services {
     text-align: center;
 
     .section-title {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #222;
+      font-size: clamp(1.5rem, 3vw, 1.75rem);
+      font-weight: 500;
       margin-bottom: 30px;
+      color: #264653;
+      @media (max-width: 900px){
+        text-align: center;
+      }
+
     }
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
       gap: 20px;
 
       .service-card {
-        background-color:rgb(239, 239, 227);
+        background: #f4f4f4;
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-        transition: transform 0.3s ease;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        min-height: 100%;
 
         h4 {
-          color: #4a47a3;
-          font-size: 1.1rem;
+          font-size: 19px;
+          font-weight: 400;
+          color: #264653;
           margin-bottom: 10px;
         }
 
         p {
-          color: #555;
-          font-size: 0.95rem;
+          font-size: clamp(0.8125rem, 1.5vw, 0.875rem);
+          color: #6c757d;
           line-height: 1.5;
         }
 
         &:hover {
-          transform: translateY(-3px);
+          background: #e9ecef;
+          transform: translateY(-5px);
         }
       }
     }
   }
 
+  // Mobile-specific adjustments
   @media (max-width: 480px) {
-    margin: 70px 10px;
+    gap: 30px;
     padding: 1rem;
+    margin-top: 60px;
 
     .about-us-intro {
-      gap: 25px;
+      gap: 20px;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr !important;
     }
   }
 }

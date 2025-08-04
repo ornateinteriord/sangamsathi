@@ -1,5 +1,5 @@
 .footer {
-  background: linear-gradient(to right, #63084e, #da39cf);
+  background: #CE34C2;
   color: #fff;
   padding: 40px 0 20px;
   font-family: "Outfit", sans-serif;
@@ -22,12 +22,14 @@
   }
 
   &-heading {
+    font-weight: 400;
     font-size: 1.5rem;
     margin-bottom: 15px;
     color: #fff;
   }
 
   &-subheading {
+    font-weight: 250;
     font-size: 1.2rem;
     margin-bottom: 15px;
     color: #fff;
@@ -72,7 +74,7 @@
   }
 
   &-button {
-    background-color: #433ee8;
+    background-color: #27ae60;
     color: #fff;
     padding: 12px 25px;
     border: none;
@@ -84,7 +86,7 @@
     width: 100%;
 
     &:hover {
-      background-color: #120bd2;
+      background-color: #1e8449;
     }
   }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { List, ListItem, Box, Button, Typography } from "@mui/material";
+import { List, ListItem, Box, Button, Typography, Chip } from "@mui/material";
 import {
   FaTachometerAlt,
   FaUser,
@@ -8,7 +8,8 @@ import {
   FaSearch,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { FaDashcube, FaUsersViewfinder } from "react-icons/fa6";
+import { FaUsersViewfinder } from "react-icons/fa6";
+import { Dashboard } from "@mui/icons-material";
 
 const SidebarMenu = ({
   selectedItem,
@@ -24,7 +25,7 @@ const SidebarMenu = ({
   const menuItems = [
     {
       text: "Dashboard",
-      icon: <FaTachometerAlt />,
+      icon: <Dashboard />,
       onClick: handleDashboardClick,
     },
     {
@@ -68,9 +69,27 @@ const SidebarMenu = ({
               variant="h5"
               marginLeft={2}
               textTransform={"capitalize"}
+              sx={{fontSize:"2rem"}}
             >
               {userProfile?.first_name}
             </Typography>
+             <Chip
+                  label={userProfile?.type_of_user || "FreeUser"}
+                  size="small"
+                  sx={{
+                    mt: 1,
+                    fontSize: { xs: "0.7rem", sm: "0.8rem" },
+                    backgroundColor:
+                      userProfile?.type_of_user === "PremiumUser" ||
+                      userProfile?.type_of_user === "SilverUser"
+                        ? "#FFD700"
+                        : userProfile?.type_of_user === "FreeUser"
+                        ? "#87CEEB"
+                        : "gray",
+                    color: "black",
+                    fontWeight: "bold",
+                  }}
+                />
           </Box>
         </ListItem>
 
@@ -81,7 +100,7 @@ const SidebarMenu = ({
             onClick={item.onClick}
             sx={{
               backgroundColor:
-                selectedItem === item.text ? "#c065a0" : "transparent",
+                selectedItem === item.text ? "#1976d2" : "transparent",
               "&:hover": {
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
               },

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { FaBars } from "react-icons/fa";
 import {
   Avatar,
   AppBar,
   Toolbar,
   Typography,
   Drawer,
-  List,
-  ListItem,
   Box,
   CssBaseline,
   Menu,
@@ -23,6 +22,7 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import convertFromBase64 from "../profile/photo/Photos";
 import useStore from "../../../store";
 import TokenService from "../../token/tokenService";
 import { useChangePassword, useGetMemberDetails } from "../../api/User/useGetProfileDetails";
@@ -39,12 +39,12 @@ const theme = createTheme({
 });
 
 const UserNavBar = () => {
-  const { profileImage, firstName, setFirstName, setProfileImage } = useStore();
+  const { setFirstName, setProfileImage } = useStore();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false);
-  const isLargeScreen = useMediaQuery('(min-width:790px)');
+  const isLargeScreen = useMediaQuery('(min-width:900px)');
   const location = useLocation();
   const navigation = useNavigate();
 
@@ -95,7 +95,6 @@ const UserNavBar = () => {
       setFirstName(userProfile.firstName || "");
       if (userProfile.profileImage) {
         const url = convertFromBase64(userProfile.profileImage);
-        setImageUrl(url);
         setProfileImage(url);
       }
     }
@@ -201,10 +200,12 @@ const UserNavBar = () => {
   };
 
   const toggleSidebar = () => {
-    if (!isLargeScreen) {
-      setIsSidebarOpen(!isSidebarOpen);
-    }
+    setIsSidebarOpen(!isSidebarOpen);
   };
+
+  useEffect(()=>{
+    setIsSidebarOpen(isLargeScreen)
+  },[isLargeScreen])
 
   // On first render, ensure we're on the dashboard if no specific route is set
   useEffect(() => {
@@ -212,6 +213,14 @@ const UserNavBar = () => {
       navigation("/user/userdashboard");
     }
   }, [location.pathname, navigation]);
+
+  // Close sidebar on small screens when a menu item is clicked
+  const handleMenuItemClick = (handler) => {
+    if (!isLargeScreen) {
+      setIsSidebarOpen(false);
+    }
+    handler();
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -222,7 +231,7 @@ const UserNavBar = () => {
           position="fixed"
           sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            background: 'linear-gradient(to right, #63084e, #da39cf)',
+            background: "#CE34C2",
             height: "60px",
           }}
         >
@@ -235,8 +244,8 @@ const UserNavBar = () => {
 
             <Box sx={{ textAlign: "left", width: "100%" }}>
               <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-                <Typography variant="h5" noWrap component="div0" sx={{fontSize:'27px'}}>
-                  Sangam❤️Sathi
+                <Typography variant="h5" noWrap component="div">
+                  Sangam ❤️ Sathi
                 </Typography>
               </Link>
             </Box>
@@ -255,7 +264,7 @@ const UserNavBar = () => {
                 src={userProfile?.image}
                 sx={{
                   color: "black",
-                  fontWeight: "bold",
+                  fontWeight: "500px",
                   textTransform: "uppercase",
                 }}
               >
@@ -276,7 +285,7 @@ const UserNavBar = () => {
                 horizontal: "right",
               }}
             >
-              <MenuItem onClick={handleProfileClick}>My Profile</MenuItem>
+              <MenuItem onClick={() => handleMenuItemClick(handleProfileClick)}>My Profile</MenuItem>
               <MenuItem onClick={handleOpenChangePassword}>
                 <Box display="flex" alignItems="center">
                   Change Password
@@ -296,7 +305,7 @@ const UserNavBar = () => {
             [`& .MuiDrawer-paper`]: {
               width: isSidebarOpen ? drawerWidth : 0,
               boxSizing: "border-box",
-              background: '#63084e',
+              background: "#CE34C2",
               color: "#fff",
               transition: "width 0.6s ease, opacity 0.6s ease",
               opacity: isSidebarOpen ? 1 : 0,
@@ -306,12 +315,12 @@ const UserNavBar = () => {
           <Toolbar />
           <SidebarMenu
             selectedItem={selectedItem}
-            handleDashboardClick={handleDashboardClick}
-            handleProfileClick={handleProfileClick}
-            handleMatchesClick={handleMatchesClick}
-            handleInterestClick={handleInterestClick}
-            handleViewAllClick={handleViewAllClick}
-            handleSearchClick={handleSearchClick}
+            handleDashboardClick={() => handleMenuItemClick(handleDashboardClick)}
+            handleProfileClick={() => handleMenuItemClick(handleProfileClick)}
+            handleMatchesClick={() => handleMenuItemClick(handleMatchesClick)}
+            handleInterestClick={() => handleMenuItemClick(handleInterestClick)}
+            handleViewAllClick={() => handleMenuItemClick(handleViewAllClick)}
+            handleSearchClick={() => handleMenuItemClick(handleSearchClick)}
             handleOpenLogoutDialog={handleOpenLogoutDialog}
             userProfile={userProfile}
           />
@@ -336,7 +345,7 @@ const UserNavBar = () => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle sx={{fontWeight:'bold'}} id="alert-dialog-title">{"Confirm Logout"}</DialogTitle>
+          <DialogTitle sx={{fontWeight:'500px'}} id="alert-dialog-title">{"Confirm Logout"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Are you sure you want to logout from your account?
@@ -345,11 +354,11 @@ const UserNavBar = () => {
           <DialogActions>
             <Button onClick={handleCloseLogoutDialog} 
             sx={{textTransform:'capitalize',fontSize:'18px',
-            fontWeight:'bold',"&:hover": {
+            fontWeight:'500px',"&:hover": {
         backgroundColor: "transparent"}}}>Cancel</Button>
             <Button onClick={handleConfirmLogout} 
             sx={{textTransform:'capitalize',fontSize:'18px',
-            fontWeight:'bold',"&:hover": {
+            fontWeight:'500px',"&:hover": {
         backgroundColor: "transparent"}}} autoFocus color="error">
               Logout
             </Button>

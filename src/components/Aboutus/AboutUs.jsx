@@ -12,10 +12,12 @@ const AboutUs = () => {
         <section className="about-us-intro">
           <div className="about-us-text">
             <h4 className="highlight-text">About Us</h4>
-            <h2 className="main-heading">GIRIJA KALYANA</h2>
-            <h3 className="headingh3">Established in March 26th 2012</h3>
+            <h2 className="main-heading">Sangam Sathi</h2>
+          <h3 className="headingh3">
+  Established in March 26<sup>th</sup> 2012
+</h3>
             <p>
-              At Ornate Pvt Ltd, we specialize in delivering state-of-the-art IT
+              At Ornate Pvt Ltd, we specialize in delivering state-of-the-art IT          
               solutions tailored to businesses of all sizes. With over a decade of experience,
               we've built trust and innovation as our cornerstones.
             </p>

@@ -3,6 +3,7 @@ import "./ContactUs.scss";
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { motion } from "framer-motion";
+import { FaMapMarkerAlt, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
 const ContactUs = () => {
   useEffect(() => {
@@ -21,13 +22,11 @@ const ContactUs = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="header-content">
-            <h2>Get In Touch</h2>
-            <p>
-              We're here to assist you! Feel free to reach out with any
-              questions, concerns, or feedback.
-            </p>
-          </div>
+          <h2>Get In Touch</h2>
+          <p>
+            We're here to assist you! Feel free to reach out to us with any
+            questions, concerns, or feedback.
+          </p>
         </motion.div>
 
         {/* Main Content */}
@@ -42,11 +41,11 @@ const ContactUs = () => {
             >
               <motion.div 
                 className="contact-card"
-                whileHover={{ y: -5 }}
+                whileHover={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="icon-wrapper">
-                  <i className="fas fa-map-marker-alt" style={{color:'#fff'}}></i>
+                   <FaMapMarkerAlt className="icon" />
                 </div>
                 <h3>Our Office</h3>
                 <p>#148/E, 2nd Floor, 17th Main Vijaynagar,</p>
@@ -55,24 +54,24 @@ const ContactUs = () => {
 
               <motion.div 
                 className="contact-card"
-                whileHover={{ y: -5 }}
+                whileHover={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="icon-wrapper">
-                  <i className="fas fa-envelope"></i>
+                  <FaEnvelope className="icon" /> 
                 </div>
                 <h3>Email Us</h3>
-                <p>contactusgirijakalyana@gmail.com</p>
-                <p>enquirygirijakalyana@gmail.com</p>
+                <p>ornateinteriord@gmail.com</p>
+                <p>ornateinteriord@gmail.com</p>
               </motion.div>
 
               <motion.div 
                 className="contact-card"
-                whileHover={{ y: -5 }}
+                whileHover={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="icon-wrapper">
-                  <i className="fas fa-phone-alt"></i>
+                <FaPhoneAlt className="icon" />
                 </div>
                 <h3>Call Us</h3>
                 <p>+91 9148824442</p>
@@ -128,16 +127,14 @@ const ContactUs = () => {
                   <motion.button 
                     type="submit" 
                     className="subbtn"
-                    whileHover={{ scale: 1.03, boxShadow: "0 5px 15px rgba(79, 70, 229, 0.3)" }}
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     Send Message
                   </motion.button>
                   <motion.button 
                     type="reset" 
                     className="subbtn clear-btn"
-                    whileHover={{ scale: 1.03, boxShadow: "0 5px 15px rgba(220, 38, 38, 0.3)" }}
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     Clear Form
                   </motion.button>

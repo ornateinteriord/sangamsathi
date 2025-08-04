@@ -1,111 +1,132 @@
 .servicebody {
-  width: 100%;
-  padding: 4.1rem 1rem;
-  background: "#ffffff";
-  font-family: 'Poppins', sans-serif;
-  color: #1e293b;
+  margin-top: 40px;
   text-align: center;
+  padding: 2rem;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
 
   h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    color: #e93c9b;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 1.5rem;
+    margin-top: 1.0rem;
+    color: #2c3e50 !important;
+    font-family: "Outfit sans-serif";
+    padding: 0 1rem;
   }
 
   .service-grid {
     display: grid;
-    gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    max-width: 1400px;
-    margin: 0 auto;
-    justify-items: center;
+    gap: 1.5rem;
+    font-family: "Outfit sans-serif";
+    padding: 0 1rem;
   }
 
   .service-card {
-    background-color: #ffffff;
-    border-radius: 20px;
-    padding: 1rem;
+    background: #CE34C2;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    width: 100%;
-    max-width: 360px;
-    color: #334155;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 24px rgba(218, 44, 194, 0.3);
+      transform: translateY(-5px);
     }
 
     .icon-wrapper {
-      background: #14b8a6;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      color: #fff;
-      margin: 0 auto 1.5rem auto;
+      margin-bottom: 1rem;
     }
 
     h3 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: #7c3aed;
-        font-family: 'Poppins', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      margin-bottom: 0.5rem;
+      font-family: "Outfit sans-serif";
+      padding: 0 0.5rem;
+      text-align: center;
+      width: 100%;
     }
 
     p {
-      font-size: 0.95rem;
-      color: #475569;
-      padding: 0 1rem;
-      font-family: 'Poppins', sans-serif;
+      font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+      line-height: 1.4;
+      font-family: "Outfit sans-serif";
+      margin-bottom: 1rem;
+      padding: 0 0.5rem;
+      text-align: center;
+      width: 100%;
     }
 
     .arrow-icon {
-      font-size: 22px;
-      color: #14b8a6;
-      margin-top: 1.2rem;
-      display: inline-block;
-      transition: transform 0.3s ease;
-
-      &:hover {
-        transform: translateX(6px);
-      }
+      font-size: 24px;
+      color: #fff;
+      margin-top: 1rem;
+      align-self: center;
+      position: static; // Remove absolute positioning
+      display: block !important; // Always show on all screens
     }
   }
 
   .happydiv {
-    margin-top: 4rem;
+    margin-top: 2rem;
+    padding: 0 1rem;
 
     #happy {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #000;
+      font-size: 20px;
+      font-weight: 400;
       margin-bottom: 0.5rem;
+      color: #CE34C2;
+      font-family: "Outfit sans-serif";
     }
 
     p {
-      font-size: 1.1rem;
-      color: #000;
-        font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      font-family: "Outfit sans-serif";
+      color: #CE34C2;
     }
   }
 
+  // Responsive adjustments
   @media (max-width: 768px) {
-    h2 {
-      font-size: 2rem;
+    padding: 1rem;
+
+    .service-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
 
     .service-card {
-      padding: 1.5rem;
+      min-height: auto;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      h3, p {
+        padding: 0;
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .service-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .service-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

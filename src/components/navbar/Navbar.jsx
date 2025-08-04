@@ -190,38 +190,69 @@ const Navbar = () => {
               }
             }}
           >
-            Sangam❤️Sathi
+            Sangam ❤️ Sathi
           </Typography>
 
           {/* Desktop Menu */}
-          <Box 
-            sx={{ 
-              display: { xs: "none", md: "flex" },
-              flexGrow: 1,
-              justifyContent: "center",
-              marginLeft: "20px"
-            }}
-          >
-            {menuItems.map((item) => (
-              <Button
-                key={item.text}
-                component={Link}
-                to={item.path}
-                sx={{
-                  color: "#fff",
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  textTransform: "capitalize",
-                  margin: "0 8px",
-                  "&:hover": {
-                  color:"rgb(240, 236, 44)",
-                  },
-                }}
-              >
-                {item.text}
-              </Button>
-            ))}
-          </Box>
+       <Box 
+  sx={{ 
+    display: { xs: "none", md: "flex" },
+    flexGrow: 1,
+    justifyContent: "center",
+    marginLeft: "20px"
+  }}
+>
+  {menuItems.map((item) => {
+    // Get the current path (assuming you're using React Router)
+    const currentPath = window.location.pathname;
+    // Check if this item is active
+    const isActive = currentPath === item.path;
+    
+    return (
+      <Button
+        key={item.text}
+        component={Link}
+        to={item.path}
+        sx={{
+          color: "#fff",
+          fontWeight: 600,  
+          fontSize: "1rem",
+          textTransform: "capitalize",
+          margin: "0 8px",
+          position: "relative",
+          "&:hover": {
+            color: "#fff",  
+            backgroundColor: "transparent",  
+            "&::after": { 
+              content: '""',
+              position: "absolute",
+              bottom: "4px",
+              left: "8px",
+              right: "8px",
+              height: "2px",
+              backgroundColor: "aqua",  
+              transform: "scaleX(1)",  
+              transition: "transform 0.3s ease"
+            }
+          },
+          "&::after": {  
+            content: '""',
+            position: "absolute",
+            bottom: "4px",
+            left: "8px",
+            right: "8px",
+            height: "2px",
+            backgroundColor: "aqua",
+            transform: isActive ? "scaleX(1)" : "scaleX(0)",  
+            transition: "transform 0.3s ease"
+          }
+        }}
+      >
+        {item.text}
+      </Button>
+    );
+  })}
+</Box>
 
           {/* Auth Buttons */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -230,22 +261,17 @@ const Navbar = () => {
                 variant="contained"
                 size={isMobile ? "medium" : "large"}
                 onClick={handleLogout}
-                           sx={{
-                    minWidth: "120px",
-    color: "#000", 
-    fontWeight:700,
-    fontSize:{xs:"20px", md:'18px'},
-    height: { xs: "36px", md: "42px" },
-    textTransform: "capitalize",
-    backgroundColor: "#ffff", 
-    boxShadow: "none",
-    fontFamily: "'Poppins', sans-serif",
-    display: { xs: "none", sm: "inline-flex" },
-    "&:hover": {
-      backgroundColor: "#cde3f9", 
-      color: "#000", 
-      boxShadow: "none",
-    },
+                sx={{
+                  backgroundColor: "black",
+                  minWidth: "120px",
+                  color: "#fff",
+                  fontWeight: 700,
+                  height: { xs: "36px", md: "42px" },
+                  textTransform: "capitalize",
+                  display: { xs: "none", sm: "inline-flex" },
+                  "&:hover": {
+                    backgroundColor: "#333333",
+                  },
                 }}
               >
                 Logout
@@ -257,21 +283,16 @@ const Navbar = () => {
                   size={isMobile ? "medium" : "large"}
                   onClick={handleOpen}
                   sx={{
+                    backgroundColor: "#FFFF",
                     minWidth: "120px",
-    color: "#000", 
-    fontWeight:700,
-    fontSize:{xs:"20px", md:'18px'},
-    height: { xs: "36px", md: "42px" },
-    textTransform: "capitalize",
-    backgroundColor: "#ffff", 
-    boxShadow: "none",
-    fontFamily: "'Poppins', sans-serif",
-    display: { xs: "none", sm: "inline-flex" },
-    "&:hover": {    
-      backgroundColor: "#cde3f9", 
-     color: "#000", 
-      boxShadow: "none",
-    },
+                    color: "#000",
+                    fontWeight: 700,
+                    height: { xs: "36px", md: "42px" },
+                    textTransform: "capitalize",
+                    display: { xs: "none", sm: "inline-flex" },
+                    "&:hover": {
+                      backgroundColor: "#eee",
+                    },
                   }}
                 >
                   Login
@@ -290,7 +311,7 @@ const Navbar = () => {
         sx={{
           "& .MuiDrawer-paper": {
             width: "280px",
-             background: 'linear-gradient(to right, #63084e, #da39cf)', 
+            background: '#CE34C2',
             color: "#fff",
           },
         }}
@@ -311,7 +332,7 @@ const Navbar = () => {
               component="div"
               sx={{ fontWeight: "bold", fontSize: "1.3rem" }}
             >
-              Sangam❤️Sathi
+              Sangam ❤️ Sathi
             </Typography>
             <IconButton onClick={toggleMobileMenu} sx={{ color: "#fff" }}>
               <CloseIcon />
@@ -358,14 +379,13 @@ const Navbar = () => {
                   toggleMobileMenu();
                 }}
                 sx={{
-                  backgroundColor: "#ffff",
-                  color: "black",
+                  backgroundColor: "#fff",
+                  color: "#000",
                   fontWeight: 700,
                   height: "42px",
-                  fontFamily: "'Poppins', sans-serif",
                   textTransform: "capitalize",
                   "&:hover": {
-                    backgroundColor: "#ffff",
+                    backgroundColor: "#eee",
                   },
                 }}
               >
@@ -381,14 +401,13 @@ const Navbar = () => {
                     toggleMobileMenu();
                   }}
                   sx={{
-                    backgroundColor: "#ffff",
-                    color: "black",
+                    backgroundColor: "#fff",
+                    color: "#000",
                     fontWeight: 700,
                     height: "42px",
-                    fontFamily: "'Poppins', sans-serif",
                     textTransform: "capitalize",
                     "&:hover": {
-                      backgroundColor: "#ffff",
+                      backgroundColor: "#eee",
                     },
                   }}
                 >
@@ -419,7 +438,6 @@ const Navbar = () => {
             fontWeight: "bold",
             fontSize: "1.5rem",
             paddingBottom: "20px",
-            fontFamily: "'Poppins', sans-serif",
           }}
         >
           Login
@@ -460,7 +478,6 @@ const Navbar = () => {
               variant="outlined"
               required
               sx={{
-                fontFamily: "'Poppins', sans-serif",
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "5px",
                 },
@@ -469,7 +486,6 @@ const Navbar = () => {
             <Typography
               variant="body2"
               sx={{
-                fontFamily: "'Poppins', sans-serif",
                 color: theme.palette.primary.main,
                 cursor: "pointer",
                 textAlign: "center",
@@ -502,15 +518,10 @@ const Navbar = () => {
               fontWeight: "bold",
               textTransform: "capitalize",
               fontSize: "1rem",
-              fontFamily: "'Poppins', sans-serif",
-               background:'#63084e',
-                "&:hover": {
-                      backgroundColor: "#aa33a2",
-                    },
             }}
           >
             {isLoginPending ? (
-              <CircularProgress size={24}  />
+             <CircularProgress size={24} color="inherit" /> 
             ) : (
               "Login"
             )}
@@ -518,7 +529,6 @@ const Navbar = () => {
           <Typography
             variant="body2"
             sx={{
-              fontFamily: "'Poppins', sans-serif",
               textAlign: "center",
               color: theme.palette.text.secondary,
             }}
@@ -526,7 +536,6 @@ const Navbar = () => {
             Don't have an account?{" "}
             <span
               style={{
-                fontFamily: "'Poppins', sans-serif",
                 color: theme.palette.primary.main,
                 cursor: "pointer",
                 fontWeight: "bold",
@@ -561,7 +570,6 @@ const Navbar = () => {
             fontWeight: "bold",
             fontSize: "1.5rem",
             paddingBottom: "8px",
-            fontFamily: "'Poppins', sans-serif",
           }}
         >
           {otpSent ? "Reset Password" : "Forgot Password"}
@@ -574,12 +582,11 @@ const Navbar = () => {
               flexDirection: "column",
               gap: 2,
               paddingTop: "16px",
-              fontFamily: "'Poppins', sans-serif",
             }}
           >
             {!otpSent ? (
               <>
-                <Typography variant="body2" fontFamily={ "'Poppins', sans-serif"} color="text.secondary">
+                <Typography variant="body2" color="text.secondary">
                   Enter your registered email to receive a password reset OTP.
                 </Typography>
                 <TextField
@@ -598,7 +605,7 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Typography variant="body2"  fontFamily={ "'Poppins', sans-serif"} color="text.secondary">
+                <Typography variant="body2" color="text.secondary">
                   Enter the OTP sent to your email and your new password.
                 </Typography>
                 <TextField
