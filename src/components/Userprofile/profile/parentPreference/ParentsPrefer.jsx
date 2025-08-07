@@ -132,26 +132,11 @@ const ParentsPrefer = () => {
   return (
     <Box
       sx={{
-        padding: isMobile ? 1 : 3,
-        borderRadius: "12px",
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-        fontFamily: "Roboto, sans-serif",
+        padding: isMobile ? 0 : 3,
         width: { xs: "100%", md: "100%" },
         maxWidth: "100%"
       }}
     >
-      <Typography
-        variant="h6"
-        sx={{
-          textAlign: "start",
-          fontWeight: 500,
-          fontSize: { xs: "23px", sm: "22px" },
-          color: "#34495e",
-          marginBottom: { xs: "16px", sm: "24px" },
-        }}
-      >
-        Partner Preference
-      </Typography>
 
       <Box
         sx={{
@@ -161,7 +146,8 @@ const ParentsPrefer = () => {
             md: 'repeat(2, 1fr)',
             lg: 'repeat(2, 1fr)'
           },
-          gap: 3.5
+          gap: 3.5,
+          mt:2
         }}
       >
         {formFields.map((field, index) => (
@@ -192,6 +178,7 @@ const ParentsPrefer = () => {
           variant="outlined"
           sx={{
             color: "black",
+             border:'1px solid #5e0476',
             backgroundColor: "#fff",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#fff" },
@@ -205,7 +192,7 @@ const ParentsPrefer = () => {
           variant="contained"
           disabled={isUpdating}
           sx={{
-            backgroundColor: "#34495e",
+            backgroundColor: "#5e0476",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#2c3e50" },
             width: { xs: "100%", sm: "130px" }

@@ -71,33 +71,14 @@ const About = () => {
   return (
     <Box
       sx={{
-        bgcolor: 'background.paper',
         borderRadius: 2,
-        boxShadow: 1,
-        p: { xs: 1, sm: 3, md: 2 },
-        maxWidth: 1200,
+        p: { xs: 0, sm: 2, md: 2 },
+        maxWidth: '100%',
         mx: 'auto',
         width: '100%',
+        mt:2
       }}
     >
-      {/* Header */}
-      <Box
-        display="flex"
-        flexDirection={{ xs: "row", sm: "row" }}
-        justifyContent="space-between"
-        alignItems={{ xs: "center", sm: "center" }}
-        mb={3}
-        gap={2}
-      >
-        <Typography
-          variant="h5"
-          fontWeight="500px"
-          fontSize={{ xs: '1.3rem', sm: '1.7rem' }}
-          sx={{color:'#34495e'}}
-        >
-          Profile Information
-        </Typography>
-      </Box>
 
       {/* Form Sections */}
       <Box display="flex" flexDirection="column" gap={4}>
@@ -191,8 +172,7 @@ const About = () => {
         </Box>
       </Box>
 
-      {/* Buttons */}
-      <Box
+     <Box
         display="flex"
         justifyContent={{ xs: 'space-evenly', sm: 'flex-end' }}
         gap={2}
@@ -205,6 +185,7 @@ const About = () => {
           fullWidth={true}
           sx={{ 
             color: "black",
+            border:'1px solid #5e0476',
             maxWidth: { xs: '160px', sm: 180 },
             textTransform: 'capitalize',
             "&:hover": {
@@ -222,10 +203,10 @@ const About = () => {
           sx={{ 
             maxWidth: { xs: '160px', sm: 200 },
             textTransform: 'capitalize', 
-            backgroundColor: "#34495e",
+            backgroundColor: "#5e0476",
             color: "#fff",
             "&:hover": {
-              backgroundColor: "#4b6074"
+              backgroundColor: "#6d2980ff"
             } 
           }}
           startIcon={isUpdating ? <CircularProgress size={20} /> : null}
@@ -233,6 +214,8 @@ const About = () => {
           {isUpdating ? 'Saving...' : 'Save Changes'}
         </Button>
       </Box>
+
+
 
       {isLoading && <LoadingComponent />}
     </Box>

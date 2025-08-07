@@ -15,14 +15,14 @@
     h2 {
       margin-top: 50px;
       font-size: 2.5rem;
-      color: #CE34C2;
+      color: #5e0476;
       margin-bottom: 1rem;
       font-weight: 500;
     }
     
     p {
       font-size: 1.1rem;
-      color: #CE34C2;
+      color: #5e0476;
       max-width: 500px;
       margin: 0 auto;
       line-height: 1;
@@ -53,12 +53,12 @@
           padding: 1rem;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
           transition: all 0.3s ease;
-          border-left: 4px solid #CE34C2;
+          border-left: 4px solid #5e0476;
 
           .icon-wrapper {
             width: 60px;
             height: 60px;
-            background: #CE34C2;
+            background: #5e0476;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -96,7 +96,7 @@
 
         .form-header {
           height: 70px;
-          background: #CE34C2;
+          background: #5e0476;
           color: white;
           padding: 0.2rem;
           text-align: center;
@@ -181,19 +181,19 @@
               font-weight: 500;
               cursor: pointer;
               transition: all 0.3s ease;
-              background:#27ae60;
+              background:#5e0476;
                &:hover {
-             background-color: #1e8449;
+             background-color: #5e0476;
               }
               color: white;
               letter-spacing: 0.5px;
             }
 
-            .clear-btn {
-              background:#CE34C2;
+            .subbtn .clear-btn {
               text-transform: capitalize;
               &:hover {
-             background-color: #245a7e;
+             background-color: #5e0476;
+             color:'#fff';
               }
               width: 100%; // Full width clear button
             }
@@ -214,7 +214,7 @@
         font-weight: 500;
         font-size: 1.5rem;
         margin-bottom: 1.2rem;
-        color: #2c3e50;
+        color: #5e0476;
         text-align: center;
       }
 

@@ -32,22 +32,23 @@
 
       .highlight-text {
         font-size: clamp(1rem, 2vw, 1.375rem);
-        color: #013345 !important;
-        font-weight: bold;
+        color: #5e0476 !important;
+        font-weight: 500;
         text-transform: uppercase;
       }
 
       .main-heading {
         font-size: 30px;
-        font-weight: 700;
+        font-weight: 500;
         margin: 10px 0;
-        color: #337a96;
+        // color: #000;
         line-height: 1.2;
       }
 
       .headingh3 {
-        color: rgb(105, 44, 44) !important;
+        color:#000 !important;
         margin: 5px 0;
+        font-weight: 400;
         font-size: clamp(1.125rem, 2vw, 1.25rem);
         text-align: inherit;
       }
@@ -65,7 +66,7 @@
         font-size: 0.875rem;
         font-weight: 500;
         color: #fff;
-        background-color: #CE34C2;
+        background-color: #5e0476;
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -105,7 +106,7 @@
       font-size: clamp(1.5rem, 3vw, 1.75rem);
       font-weight: 500;
       margin-bottom: 30px;
-      color: #264653;
+      color: #5e0476;
       @media (max-width: 900px){
         text-align: center;
       }

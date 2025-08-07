@@ -117,7 +117,7 @@ const ProfileDialog = ({
     }
     if (loggedInUserRole === "FreeUser") {
       return {
-        color: "gold", // This won't be used since we're using customStyle
+        color: "gold", 
         text: "Upgrade",
         disabled: false,
         isPremiumAction: true,
@@ -156,6 +156,12 @@ const ProfileDialog = ({
           color: "primary",
           text: "Express Interest",
           disabled: false,
+            customStyle: {
+            backgroundColor: "#5e0476",
+            "&:hover": {
+              backgroundColor: "#7a1c9a",
+            },
+          },
         };
     }
   };
@@ -229,7 +235,7 @@ const ProfileDialog = ({
               p: { xs: 1.5, sm: 3 },
             }}
           >
-            {/* Left side - Profile image and basic info */}
+
             <Box
               sx={{
                 flex: 1,
@@ -280,14 +286,14 @@ const ProfileDialog = ({
                         : selectedUser?.type_of_user === "FreeUser"
                         ? "#87CEEB"
                         : "gray",
-                    color: "#fff",
+                    color: "#000",
                     fontWeight: "500px",
                   }}
                 />
               </Box>
             </Box>
 
-            {/* Right side - Tabbed content */}
+
             <Box
               sx={{
                 flex: 2,
@@ -295,27 +301,44 @@ const ProfileDialog = ({
                 width: { xs: "100%", md: "auto" },
               }}
             >
-              <Tabs
-                value={currentTab}
-                onChange={(e, val) => setCurrentTab(val)}
-                variant="scrollable"
-                scrollButtons="auto"
-                sx={{
-                  mb: 2,
-                  "& .MuiTab-root": {
-                    fontSize: { xs: "0.7rem", sm: "0.8rem" },
-                    minWidth: "unset",
-                    padding: { xs: "6px 8px", sm: "12px 16px" },
-                    "&:hover": {
-                      backgroundColor: "transparent",
-                    },
-                  },
-                }}
-              >
-                {tabLabels.map((label, index) => (
-                  <Tab key={index} label={label} />
-                ))}
-              </Tabs>
+             <Tabs
+  value={currentTab}
+  onChange={(e, val) => setCurrentTab(val)}
+  variant="scrollable"
+  scrollButtons="auto"
+  sx={{
+    mb: 2,
+    "& .MuiTabs-indicator": {
+      backgroundColor: "#5e0476", 
+      height: 3,
+    },
+    "& .MuiTab-root": {
+      fontSize: { xs: "0.7rem", sm: "0.8rem" },
+      minWidth: "unset",
+      padding: { xs: "6px 12px", sm: "12px 16px" },
+      textTransform: "none", 
+      fontWeight: 500,
+      color: "text.secondary",
+      "&.Mui-selected": {
+        color: "#5e0476",
+        fontWeight: 600,
+      },
+      "&:hover": {
+        backgroundColor: "rgba(94, 4, 118, 0.08)", 
+        color: "#5e0476",
+      },
+    },
+  }}
+>
+  {tabLabels.map((label, index) => (
+    <Tab 
+      key={index} 
+      label={label}
+      sx={{
+      }}
+    />
+  ))}
+</Tabs>
               <Box
                 sx={{
                   p: { xs: 1, sm: 2 },

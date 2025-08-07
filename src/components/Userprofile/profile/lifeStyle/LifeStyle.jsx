@@ -77,24 +77,12 @@ const LifeStyle = () => {
 
   return (
     <Box sx={{ 
-      fontFamily: "Outfit, sans-serif", 
-      padding: isMobile ? 1 : 3,
+      padding: isMobile ? 0 : 3,
       width: "100%",
-      maxWidth: "1200px",
+      maxWidth: "100%",
       margin: "0 auto"
     }}>
-      <Box mb={3}>
-        <Typography 
-          variant="h5" 
-          sx={{
-            fontSize: isMobile ? "1.4rem" : "1.7rem",
-            color: "#34495e", 
-            fontWeight: 500
-          }}
-        >
-          Life Style & Appearance
-        </Typography>
-      </Box>
+
 
       <Box sx={{
         display: 'grid',
@@ -102,7 +90,8 @@ const LifeStyle = () => {
           xs: '1fr',
           sm: 'repeat(2, 1fr)'
         },
-        gap: isMobile ? 3 : 4
+        gap: isMobile ? 3 : 4,
+        mt:2
       }}>
         {/* Drink */}
         <TextField
@@ -220,6 +209,7 @@ const LifeStyle = () => {
           fullWidth={isMobile}
           sx={{
             color: "black",
+             border:'1px solid #5e0476',
             backgroundColor: "#fff",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#fff" },
@@ -234,7 +224,7 @@ const LifeStyle = () => {
           disabled={isUpdating}
           fullWidth={isMobile}
           sx={{
-            backgroundColor: "#34495e",
+            backgroundColor: "#5e0476",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#2c3e50" },
             width: isMobile ? "100%" : "130px"

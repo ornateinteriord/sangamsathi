@@ -62,18 +62,21 @@ const ViewAll = () => {
   }, []);
 
   return (
-    <Box sx={{ p: { xs: 1, sm: 2 }, backgroundColor: "#f9f9f9" }}>
+    <Box sx={{ p: { xs: 2, sm: 2 } }}>
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          justifyContent: {xs:"flex-start", sm: "space-between"},
+          alignItems: {xs: "flex-start", sm: "center"},
           flexDirection: { xs: "column", sm: "row" },
           gap: 2,
           mb: 3,
         }}
       >
-        <PageTitle title="Profiles" />
+        <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: '#5e0476',
+                   mt:{xs:0},mb:{xs:1,md:2},textAlign:'left' }} fontWeight="500px">
+                       Profiles
+                     </Typography>
 
         <GenderFilter
           selectedStatus={selectedStatus}
@@ -88,6 +91,8 @@ const ViewAll = () => {
       <Box
         sx={{
           display: "grid",
+          placeItems: "center",
+          mr:2,
           gridTemplateColumns: {
             xs: "1fr",
             sm: "repeat(2, 1fr)",

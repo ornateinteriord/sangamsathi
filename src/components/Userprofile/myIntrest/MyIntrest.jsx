@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import Accepted from "./insidepage/accepted/Accepted";
 import Requests from "./insidepage/requests/Request";
 import Sent from "./sent/Sent";
@@ -52,22 +52,44 @@ const MyInterest = () => {
   return (
     <Box
       sx={{
-        p: { xs: 1, sm: 3, md: 2 },
-        backgroundColor: "#f9f9f9",
+        p: { xs: 0, sm: 3, md: 2 },
         minHeight: "100vh",
       }}
     >
-      <PageTitle title="Interested Profiles" />
-      {/* Tabs Section */}
+      <Typography
+        variant="h5"
+        sx={{
+          fontSize: { xs: "21px", sm: "25px" },
+          color: "#5e0476",
+          mt: { xs: 1 },
+          mb: { xs: 1, md: 2 },
+        }}
+        fontWeight="500px"
+      >
+        Interested Profiles
+      </Typography>
+
       <Tabs
         value={tabValue}
         onChange={handleTabChange}
         variant="scrollable"
         scrollButtons="auto"
         sx={{
-          mb: 2,
-          "& .MuiTab-root:hover": {
-            backgroundColor: "rgba(0, 0, 0, 0.04)",
+          mb: { xs: 1, sm: 2 },
+          "& .MuiTab-root": {
+            textTransform: "capitalize",
+            fontWeight: 600,
+            color: "#444",
+            "&:hover": {
+              backgroundColor: "rgba(94, 4, 118, 0.1)",
+              color: "#5e0476",
+            },
+          },
+          "& .Mui-selected": {
+            color: "#5e0476 !important",
+          },
+          "& .MuiTabs-indicator": {
+            backgroundColor: "#5e0476",
           },
         }}
       >
@@ -76,7 +98,6 @@ const MyInterest = () => {
         <Tab label={`Sent (${counts.sent})`} />
       </Tabs>
 
-      {/* Content Section */}
       <Box
         sx={{
           padding: 0,

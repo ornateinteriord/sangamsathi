@@ -78,26 +78,17 @@ const FamilyReligious = () => {
   return (
     <Box
       sx={{
-        bgcolor: '#fff',
-        p: { xs: 1, sm: 3, md: 2 },
+        p: { xs: 0, sm: 3, md: 2 },
         borderRadius: 2,
-        boxShadow: 1,
-        maxWidth: 1200,
+        maxWidth: "100%",
         mx: 'auto'
       }}
     >
-      {/* Header */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: '#34495e' }} fontWeight="500px">
-          Family & Religious Information
-        </Typography>
-      </Box>
 
-      {/* Sections */}
       <Stack spacing={4}>
-        {/* Religious Section */}
+
         <Box>
-          <Typography variant="h6" fontWeight={500} gutterBottom>
+          <Typography variant="h6" fontWeight={500} gutterBottom mt={1}>
             Religious Details
           </Typography>
 
@@ -193,10 +184,10 @@ const FamilyReligious = () => {
           sx={{ 
             maxWidth: { xs: '160px', sm: 200 },
             textTransform: 'capitalize', 
-            backgroundColor: "#34495e",
+            backgroundColor: "#5e0476",
             color: "#fff",
             "&:hover": {
-              backgroundColor: "#4b6074"
+              backgroundColor: "#5e0476"
             } 
           }}
           startIcon={isUpdating ? <CircularProgress size={20} /> : null}
