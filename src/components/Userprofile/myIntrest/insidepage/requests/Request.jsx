@@ -65,7 +65,8 @@ const Requests = ({refetchCounts}) => {
           display: "flex",
           flexWrap: "wrap",
           gap: 3,
-          justifyContent: interests.length > 0 ? "flex-start" : "center",
+          justifyContent: {xs: "center", sm: "flex-start"},
+          mr:2,
           marginTop: 1,
         }}
       >
@@ -93,6 +94,7 @@ const Requests = ({refetchCounts}) => {
             onChange={(_, page) => setCurrentPage(page)}
             shape="rounded"
             color="primary"
+            size={window.innerWidth < 600 ? "small" : "medium"}
           />
         </Box>
       )}

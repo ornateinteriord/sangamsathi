@@ -95,11 +95,10 @@ const UserCard = ({
           width: { xs: 100, sm: 120 },
           height: { xs: 100, sm: 120 },
           borderRadius: "50%",
-          border: "3px solid #87CEEB",
           boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
           mb: 2,
-          padding: "2px",
-          background: "linear-gradient(45deg, #87CEEB, #E0F7FA)",
+          padding: "3px",
+          background: "linear-gradient(45deg,  #5e0476)",
         }}
       >
         <Avatar
@@ -168,7 +167,7 @@ const UserCard = ({
           <ProfileInfo label="Caste" value={profile?.caste || "N/A"} />
         </Box>
 
-        <Box display="flex" flexDirection="row" gap={1} width="100%" mt="auto">
+        <Box display="flex" justifyContent="center"  gap={1}  width="100%" mt="auto">
           {showResponseButtons ? (
             <>
               <Button
@@ -180,6 +179,9 @@ const UserCard = ({
                   fontWeight: 500,
                   borderColor: "red",
                   textTransform: "capitalize",
+                  "&:hover":{
+                    backgroundColor:'unset'
+                  }
                 }}
                 onClick={() => onResponse(profile?.registration_no, false)}
               >
@@ -188,8 +190,11 @@ const UserCard = ({
               <Button
                 fullWidth
                 variant="contained"
-                color="primary"
                 sx={{
+                  backgroundColor:'#5e0476',
+                   "&:hover":{
+                    backgroundColor:'#6c2780ff'
+                  },
                   color: "#fff",
                   textTransform: "capitalize",
                 }}
@@ -203,7 +208,6 @@ const UserCard = ({
               <Button
                 fullWidth
                 variant="contained"
-                color="primary"
                 onClick={() => onViewMore(profile)}
                 sx={{
                   flex: 1,
@@ -212,6 +216,8 @@ const UserCard = ({
                   textTransform: "none",
                   fontWeight: 500,
                   fontSize: { xs: "0.8rem", sm: "0.9rem" },
+                  backgroundColor:'#5e0476',
+                  "&:hover": { backgroundColor: "#8d37a4ff" },
                 }}
               >
                 View More

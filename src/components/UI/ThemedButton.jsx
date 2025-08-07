@@ -13,8 +13,8 @@ const ThemedButton = ({
       onClick={onClick}
       sx={{
         color:'#fff',
-        backgroundColor: '#CE34C2',
-        '&:hover': { backgroundColor: '#CE34C2' },
+        backgroundColor: '#5e0476',
+        '&:hover': { backgroundColor: '#5e0476' },
         borderRadius: '8px',
         textTransform: 'capitalize',
         ...sx,

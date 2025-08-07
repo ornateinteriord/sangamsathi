@@ -17,7 +17,6 @@ import LifeStylePop from "../viewAll/popupContent/lifeStylePop/LifeStylePop";
 import PreferencePop from "../viewAll/popupContent/preferencePop/PreferencePop";
 import { LoadingTextSpinner } from "../../../utils/common";
 import OthersPop from "../viewAll/popupContent/others/OthersPop";
-import PageTitle from "../../UI/PageTitle";
 import UserCard from "../../common/UserCard";
 
 const itemsPerPage = 8;
@@ -29,7 +28,7 @@ const Search = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data = [], isFetching,refetch,isError, } = useGetSearchProfiles(searchTerm);
+  const { data = [], isFetching,refetch,isFetched } = useGetSearchProfiles(searchTerm);
 
   const handleSearch = () => {
    refetch()
@@ -65,8 +64,11 @@ const Search = () => {
   };
 
   return (
-    <Box sx={{ p: { xs: 1, sm: 2 }, backgroundColor: "#f9f9f9" }}>
-      <PageTitle title="Search Profiles" />
+    <Box sx={{ p: { xs: 1, sm: 2 },  }}>
+         <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: '#5e0476',
+                         mt:{xs:0},mb:{xs:1,md:2} }} fontWeight="500px">
+                             Search Profiles
+                           </Typography>
       <Box
         sx={{
           display: "flex",
@@ -91,13 +93,16 @@ const Search = () => {
           />
           <Button
             variant="contained"
-            color="primary"
             onClick={handleSearch}
             disabled={isFetching || !searchTerm.trim()}
             sx={{ 
+              backgroundColor:'#5e0476',
+              "&:hover":{
+                 backgroundColor:'#742989ff',
+              },
               whiteSpace: "nowrap", 
               textTransform: "capitalize", 
-              width: "150px", 
+              width: "170px", 
               fontSize: "18px",
               position: 'relative'
             }}
@@ -116,6 +121,8 @@ const Search = () => {
           <Box
             sx={{
               display: "grid",
+              placeItems: "center",
+              mr:2,
               gridTemplateColumns: {
                 xs: "1fr",
                 sm: "repeat(2, 1fr)",
@@ -125,7 +132,7 @@ const Search = () => {
               gap: { xs: 2, sm: 3 },
             }}
           >
-            {paginatedUsers.map((user)=>{
+            {paginatedUsers?.length > 0 && paginatedUsers.map((user)=>{
               return (
                 <UserCard
                   key={user._id}
@@ -155,14 +162,15 @@ const Search = () => {
                 count={Math.ceil(data.length / itemsPerPage)}
                 page={currentPage}
                 shape="rounded"
-                onChange={(e, page) => setCurrentPage(page)}
+                onChange={(_e, page) => setCurrentPage(page)}
                 color="primary"
+                  size={window.innerWidth < 600 ? "small" : "medium"}
               />
             </Box>
           )}
 
           {/* Show message if no results found */}
-          {isError && data.length === 0 && (
+          {isFetched && paginatedUsers?.length === 0 && (
             <Box mt={4} textAlign="center">
               <Typography color="red">No users found matching the input</Typography>
             </Box>

@@ -86,14 +86,13 @@ const Education = () => {
       sx={{
         borderRadius: "8px",
         width: { xs: "100%", sm: "90%", md: "85%", lg: "100%" },
-        p: { xs: 1, sm: 4 },
-        boxSizing: 'border-box'
+        p: { xs: 0, sm: 3, md: 2 },
+        boxSizing: 'border-box',
+         mt:{xs:2},
+    
       }}
     >
-      <Stack spacing={3}>
-        <Typography variant="h5" gutterBottom sx={{ color: "#34495e", fontWeight: '500px' }}>
-          Education & Occupation
-        </Typography>
+      <Stack spacing={3} mt={1}>
         <form>
           <Stack spacing={3}>
             <Stack
@@ -167,6 +166,7 @@ const Education = () => {
                 variant="outlined"
                 sx={{
                   color: "black",
+                  border:'1px solid #5e0476',
                   backgroundColor: "#fff",
                   textTransform: "capitalize",
                   "&:hover": { backgroundColor: "#fff" },
@@ -180,9 +180,9 @@ const Education = () => {
                 variant="contained"
                 disabled={isUpdating}
                 sx={{
-                  backgroundColor: "#34495e",
+                  backgroundColor: "#5e0476",
                   textTransform: "capitalize",
-                  "&:hover": { backgroundColor: "#2c3e50" },
+                  "&:hover": { backgroundColor: "#5e0476" },
                   width: isMobile ? '100%' : '130px'
                 }}
               >

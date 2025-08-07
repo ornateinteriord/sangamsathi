@@ -226,7 +226,7 @@ const Register = () => {
                 mt: isMobile ? "15px" : "",
               }}
             >
-              <Avatar sx={{ bgcolor: "primary.main" }}>
+              <Avatar sx={{ bgcolor: "#5e0476" }}>
                 <HowToRegIcon />
               </Avatar>
               <Typography
@@ -252,7 +252,7 @@ const Register = () => {
               <Box
                 component="span"
                 sx={{
-                  color: "primary.main",
+                  color: "#5e0476",
                 }}
               >
                 {getUserRole()}
@@ -272,7 +272,7 @@ const Register = () => {
             <Box sx={{ flex: 1 }}>
               <Typography
                 variant="h6"
-                sx={{ mb: 3, color: "primary.main", fontWeight: 600 }}
+                sx={{ mb: 3, color: "#5e0476", fontWeight: 600 }}
               >
                 PERSONAL DETAILS
               </Typography>
@@ -368,7 +368,7 @@ const Register = () => {
               />
               <Typography
                 variant="h6"
-                sx={{ mb: 2, color: "primary.main", fontWeight: 600 }}
+                sx={{ mb: 2, color: "#5e0476", fontWeight: 600 }}
               >
                 SOCIAL & CAREER DETAILS
               </Typography>
@@ -438,7 +438,7 @@ const Register = () => {
             <Box sx={{ flex: 1 }}>
               <Typography
                 variant="h6"
-                sx={{ mb: 3, color: "primary.main", fontWeight: 600 }}
+                sx={{ mb: 3, color: "#5e0476", fontWeight: 600 }}
               >
                 FAMILY DETAILS
               </Typography>
@@ -526,7 +526,7 @@ const Register = () => {
 
           <Typography
             variant="h6"
-            sx={{ mt: 1, mb: 3, color: "primary.main", fontWeight: 600 }}
+            sx={{ mt: 1, mb: 3, color: "#5e0476", fontWeight: 600 }}
           >
             LOGIN DETAILS
           </Typography>
@@ -638,25 +638,30 @@ const Register = () => {
               onClick={handleClear}
               sx={{
                 fontWeight: 600,
+                color: "#000",
+                border:'1px solid #5e0476',
                 width: { xs: "100%", sm: "50%", md: "20%" },
                 textTransform: "capitalize",
-                color: "#fff",
-                background: "#CE34C2",
                 "&:hover": {
-                  background: "#245a7e",
+                  backgroundColor: "#5e0476",
+                  color: "#fff",
                 },
               }}
             >
               Clear
             </Button>
+
             <Button
               type="submit"
               variant="contained"
               size="large"
               disabled={isPending}
               sx={{
-                backgroundColor: "#27ae60",
-                "&:hover": { backgroundColor: "#1e8449" },
+                backgroundColor: "#5e0476",
+                "&:hover": {
+                  backgroundColor: "#5e0476",
+                },
+                color: "white",
                 fontWeight: 600,
                 width: { xs: "100%", sm: "50%", md: "20%" },
                 textTransform: "capitalize",

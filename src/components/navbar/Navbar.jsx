@@ -230,7 +230,7 @@ const Navbar = () => {
               left: "8px",
               right: "8px",
               height: "2px",
-              backgroundColor: "aqua",  
+              backgroundColor: "#fff",  
               transform: "scaleX(1)",  
               transition: "transform 0.3s ease"
             }
@@ -242,7 +242,7 @@ const Navbar = () => {
             left: "8px",
             right: "8px",
             height: "2px",
-            backgroundColor: "aqua",
+            backgroundColor: "#fff",
             transform: isActive ? "scaleX(1)" : "scaleX(0)",  
             transition: "transform 0.3s ease"
           }
@@ -311,7 +311,7 @@ const Navbar = () => {
         sx={{
           "& .MuiDrawer-paper": {
             width: "280px",
-            background: '#1a4f72',
+            background: '#5e0476',
             color: "#fff",
           },
         }}
@@ -486,7 +486,7 @@ const Navbar = () => {
             <Typography
               variant="body2"
               sx={{
-                color: theme.palette.primary.main,
+                color: "#5e0476",
                 cursor: "pointer",
                 textAlign: "center",
                 "&:hover": {
@@ -518,6 +518,10 @@ const Navbar = () => {
               fontWeight: "bold",
               textTransform: "capitalize",
               fontSize: "1rem",
+              backgroundColor: "#5e0476",
+              "&:hover": {
+                  backgroundColor: "#6c1b83ff",
+              }
             }}
           >
             {isLoginPending ? (
@@ -530,13 +534,13 @@ const Navbar = () => {
             variant="body2"
             sx={{
               textAlign: "center",
-              color: theme.palette.text.secondary,
+              color:  "#5e0476",
             }}
           >
             Don't have an account?{" "}
             <span
               style={{
-                color: theme.palette.primary.main,
+                color:  "#5e0476",
                 cursor: "pointer",
                 fontWeight: "bold",
               }}
@@ -567,7 +571,7 @@ const Navbar = () => {
         <DialogTitle
           sx={{
             textAlign: "center",
-            fontWeight: "bold",
+            fontWeight: 500,
             fontSize: "1.5rem",
             paddingBottom: "8px",
           }}
@@ -682,49 +686,61 @@ const Navbar = () => {
             )}
           </Box>
         </DialogContent>
-        <DialogActions
-          sx={{
-            padding: "16px 24px",
-            flexDirection: "column",
-            gap: "12px",
-          }}
-        >
-          <Button
-            variant="contained"
-            fullWidth
-            onClick={otpSent ? handleResetPassword : handleSendOtp}
-            disabled={isResettingPassword}
-            sx={{
-              height: "44px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              textTransform: "capitalize",
-              fontSize: "1rem",
-            }}
-          >
-            {isResettingPassword ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : otpSent ? (
-              "Reset Password"
-            ) : (
-              "Send OTP"
-            )}
-          </Button>
-          <Button
-            variant="outlined"
-            fullWidth
-            onClick={handleCloseForgotPassword}
-            sx={{
-              height: "44px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              textTransform: "capitalize",
-              fontSize: "1rem",
-            }}
-          >
-            Cancel
-          </Button>
-        </DialogActions>
+  <DialogActions
+  sx={{
+    padding: "16px 24px",
+    flexDirection: "column",
+    gap: "12px",
+  }}
+>
+  <Button
+    variant="contained"
+    fullWidth
+    onClick={otpSent ? handleResetPassword : handleSendOtp}
+    disabled={isResettingPassword}
+    sx={{
+      height: "44px",
+      borderRadius: "8px",
+      fontWeight: 500,
+      textTransform: "capitalize",
+      fontSize: "1rem",
+      backgroundColor: "#5e0476",
+      "&:hover": {
+        backgroundColor: "#6c1b83",
+      },
+    }}
+  >
+    {isResettingPassword ? (
+      <CircularProgress size={24} color="inherit" />
+    ) : otpSent ? (
+      "Reset Password"
+    ) : (
+      "Send OTP"
+    )}
+  </Button>
+
+  <Button
+    variant="outlined"
+    fullWidth
+    onClick={handleCloseForgotPassword}
+    sx={{
+      height: "44px",
+      borderRadius: "8px",
+      fontWeight: 500,
+      textTransform: "capitalize",
+      fontSize: "1rem",
+      color: "#5e0476",
+      borderColor: "#5e0476",
+      "&:hover": {
+        borderColor: "#6c1b83",
+        color: "#6c1b83",
+      },
+    }}
+  >
+    Cancel
+  </Button>
+</DialogActions>
+
       </Dialog>
     </div>
   );

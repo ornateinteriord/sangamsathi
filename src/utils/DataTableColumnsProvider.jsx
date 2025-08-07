@@ -235,7 +235,7 @@ export const getResetPasswordColumns = (handleOpenDialog) =>  [
           color="primary"
           sx={{
             textTransform: "capitalize",
-            background: "#34495e",
+            background: "#5e0476",
           }}
           onClick={() => handleOpenDialog(row)}
         >
@@ -280,7 +280,7 @@ export const getResetPasswordColumns = (handleOpenDialog) =>  [
           color="primary"
           sx={{
             textTransform: "capitalize",
-            background: "#34495e",
+            background: "#5e0476",
           }}
           onClick={() => handleAction(row)}
         >

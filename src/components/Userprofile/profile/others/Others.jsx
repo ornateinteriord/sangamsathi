@@ -70,28 +70,16 @@ const Others = () => {
   return (
     <Box sx={{ 
       fontFamily: "Outfit, sans-serif", 
-      padding: isMobile ? 1 : 3,
+      padding: isMobile ? 0 : 3,
       width: "100%",
-      maxWidth: "50%",
+      maxWidth: {xs:'100%',md:'50%'},
       margin: "0 auto",
-      backgroundColor: "#f5f5f5",
        borderRadius: 2,
        mb: 3,
     }}>
-      <Box mb={3}>
-        <Typography 
-          variant="h5" 
-          sx={{
-            fontSize: isMobile ? "1.4rem" : "1.7rem",
-            color: "#34495e", 
-            fontWeight: 500
-          }}
-        >
-          Other Information
-        </Typography>
-      </Box>
 
-      <Box sx={{ mb: 3 }}>
+
+      <Box sx={{ mb: 3,mt:2 }}>
         <TextField
           multiline
           minRows={5}
@@ -127,6 +115,7 @@ const Others = () => {
           fullWidth={isMobile}
           sx={{
             color: "black",
+             border:'1px solid #5e0476',
             backgroundColor: "#fff",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#fff" },
@@ -141,7 +130,7 @@ const Others = () => {
           disabled={isUpdating}
           fullWidth={isMobile}
           sx={{
-            backgroundColor: "#34495e",
+            backgroundColor: "#5e0476",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#2c3e50" },
             width: isMobile ? "100%" : "130px"
