@@ -98,6 +98,47 @@ const Requests = ({refetchCounts}) => {
           />
         </Box>
       )}
+       <Dialog open={rejectDialogOpen} onClose={handleRejectDialogClose}>
+        <DialogTitle sx={{ fontWeight: 600, color: "black" }}>
+          Reject Profile
+        </DialogTitle>
+        <DialogContent>
+          <Typography sx={{ color: "black" }}>
+            Are you sure you want to reject this interest request?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleRejectDialogClose}
+            variant="outlined"
+            sx={{
+              textTransform: "capitalize",
+              color: "black",
+              borderColor: "black",
+              "&:hover": {
+                backgroundColor: "#f0f0f0",
+                borderColor: "black",
+              },
+            }}
+          >
+            No
+          </Button>
+          <Button
+            onClick={handleConfirmReject}
+            color="error"
+            variant="contained"
+            disabled={isRejecting}
+            sx={{
+              textTransform: "capitalize",
+              "&:hover": {
+                backgroundColor: "#d32f2f",
+              },
+            }}
+          >
+            {isRejecting ? "Rejecting..." : "Reject"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

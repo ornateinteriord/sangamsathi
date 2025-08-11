@@ -428,7 +428,7 @@ const Navbar = () => {
         PaperProps={{
           sx: {
             borderRadius: "12px",
-            padding: "10px",
+            padding: "0px",
           }
         }}
       >
@@ -437,7 +437,7 @@ const Navbar = () => {
             textAlign: "center",
             fontWeight: "bold",
             fontSize: "1.5rem",
-            paddingBottom: "20px",
+            paddingBottom: "0px",
           }}
         >
           Login
@@ -501,7 +501,7 @@ const Navbar = () => {
         </DialogContent>
         <DialogActions
           sx={{
-            padding: "16px 24px",
+            padding: "6px 24px",
             flexDirection: "column",
             gap: "12px",
           }}
@@ -564,7 +564,7 @@ const Navbar = () => {
         PaperProps={{
           sx: {
             borderRadius: "12px",
-            padding: "20px",
+            padding: "0px",
           }
         }}
       >
@@ -688,7 +688,7 @@ const Navbar = () => {
         </DialogContent>
   <DialogActions
   sx={{
-    padding: "16px 24px",
+    padding: "6px 24px",
     flexDirection: "column",
     gap: "12px",
   }}
@@ -725,6 +725,8 @@ const Navbar = () => {
     onClick={handleCloseForgotPassword}
     sx={{
       height: "44px",
+      mb:2.4,
+      mr:1,
       borderRadius: "8px",
       fontWeight: 500,
       textTransform: "capitalize",
@@ -733,6 +735,7 @@ const Navbar = () => {
       borderColor: "#5e0476",
       "&:hover": {
         borderColor: "#6c1b83",
+        backgroundColor: "#e3d2e7ff",
         color: "#6c1b83",
       },
     }}
