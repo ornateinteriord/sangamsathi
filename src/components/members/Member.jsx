@@ -18,7 +18,7 @@ const Members = () => {
   const isLargeScreen = useMediaQuery("(min-width:1200px)");
   const isMediumScreen = useMediaQuery("(min-width:900px)");
   const isSmallScreen = useMediaQuery("(min-width:600px)");
-  const { data: recentregisters } = useGetRecentRegisters();
+  const { data: recentregisters = [] } = useGetRecentRegisters();
 
   const getSlidesPerView = () => {
     if (isLargeScreen) return 3;
@@ -40,7 +40,7 @@ const Members = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "#5e0476",
+            color: "#1a4f72",
             textTransform: "capitalize",
             fontFamily: "Outfit, sans-serif",
             fontSize: { xs: "1.5rem", sm: "2rem" },
@@ -101,7 +101,7 @@ const Members = () => {
                         textShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
                       }}
                     >
-                      Sangam ❤️ Sathi
+                      Girija ❤️ Kalyana
                     </Typography>
 
                     <Box

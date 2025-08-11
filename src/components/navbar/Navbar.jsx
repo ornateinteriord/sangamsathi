@@ -428,7 +428,7 @@ const Navbar = () => {
         PaperProps={{
           sx: {
             borderRadius: "12px",
-            padding: "0px",
+            padding: {xs: "0px", sm: "10px"},
           }
         }}
       >
@@ -564,7 +564,7 @@ const Navbar = () => {
         PaperProps={{
           sx: {
             borderRadius: "12px",
-            padding: "0px",
+             padding: {xs: "0px", sm: "10px"},
           }
         }}
       >
