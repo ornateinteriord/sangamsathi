@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 import TokenService from "../../token/tokenService";
 import HomeUserTable from "../../userupgrade/HomeUserTable";
-import { useGetConnections, useGetMemberDetails } from "../../api/User/useGetProfileDetails";
+import { useGetConnections, useGetMemberDetails } from "../../api/User";
 import { LoadingComponent, } from "../../../App";
 import { isSilverOrPremiumUser, LoadingTextSpinner } from "../../../utils/common";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";

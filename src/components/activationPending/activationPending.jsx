@@ -241,7 +241,7 @@ const ActivationPending = () => {
       <MembershipDialog
         open={open}
         onClose={handleClose}
-        selectedPlan={selectedPlan}
+        onSelectPlan={setSelectedPlan}
       />
     </Box>
   );
