@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { FaHeart } from "react-icons/fa";
-import { useExpressInterest } from "../../api/User/useGetProfileDetails";
 import { get } from "../../api/authHooks";
 import TokenService from "../../token/tokenService";
 import MembershipDialog from "../MembershipDailog/MembershipDailog";
@@ -26,6 +25,7 @@ import EducationPop from "../viewAll/popupContent/educationPop/EducationPop";
 import LifeStylePop from "../viewAll/popupContent/lifeStylePop/LifeStylePop";
 import PreferencePop from "../viewAll/popupContent/preferencePop/PreferencePop";
 import OthersPop from "../viewAll/popupContent/others/OthersPop";
+import { useExpressInterest } from "../../api/User";
 
 const ProfileDialog = ({
   openDialog,

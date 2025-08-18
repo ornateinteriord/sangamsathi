@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Box, Typography, Pagination } from "@mui/material";
-import { useGetReceivedInterests, useUpdateInterestStatus } from "../../../../api/User/useGetProfileDetails";
+import { useGetReceivedInterests, useUpdateInterestStatus } from "../../../../api/User";
 import TokenService from "../../../../token/tokenService";
 import toast from "react-hot-toast";
 import { LoadingTextSpinner } from "../../../../../utils/common";
