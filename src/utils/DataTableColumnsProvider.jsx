@@ -103,7 +103,7 @@ export const getImageVerificationColumns = (upgradeUserMutation,handleStatusUpda
     },
     {
       name: "Email ID",
-      selector: (row) => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -173,7 +173,7 @@ export const getRenewalsColumns = () => [
     },
     {
       name: "Email Id",
-      selector: (row) => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -211,7 +211,7 @@ export const getResetPasswordColumns = (handleOpenDialog) =>  [
     },
     {
       name: "Username",
-      selector: (row) => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -235,7 +235,7 @@ export const getResetPasswordColumns = (handleOpenDialog) =>  [
           color="primary"
           sx={{
             textTransform: "capitalize",
-            background: "#5e0476",
+            background: "#34495e",
           }}
           onClick={() => handleOpenDialog(row)}
         >
@@ -280,7 +280,7 @@ export const getResetPasswordColumns = (handleOpenDialog) =>  [
           color="primary"
           sx={{
             textTransform: "capitalize",
-            background: "#5e0476",
+            background: "#34495e",
           }}
           onClick={() => handleAction(row)}
         >
@@ -348,7 +348,7 @@ export const getUserTableColumns = (formatUserRole) =>  [
     },
     {
       name: "Username",
-      selector: row => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -358,18 +358,21 @@ export const getUserTableColumns = (formatUserRole) =>  [
     },
     {
       name: "Membership",
-      cell: row => (
+      cell: row => {
+        const role = row?.user_role || row?.type_of_user;
+        return (
         <Typography
           sx={{
-            color: row.user_role === 'PremiumUser' ? '#FFD700' : 
-                  row.user_role === 'SilverUser' ? '#C0C0C0' : 
-                  row.user_role === 'FreeUser' ? '#4CAF50' :
-                  row.user_role === 'Assistance' ? '#3498db' : '#333',
+            color: role === 'PremiumUser' ? '#FFD700' : 
+                  role === 'SilverUser' ? '#C0C0C0' : 
+                  role === 'FreeUser' ? '#4CAF50' :
+                  role === 'Assistance' ? '#3498db' : '#333',
           }}
         >
-          {formatUserRole(row.user_role)}
+          {formatUserRole(role)}
         </Typography>
-      ),
+      )
+      },
       sortable: true,
     },
     {
@@ -507,7 +510,7 @@ export const getUserDataColumns = (upgradeUserMutation, handleUpgrade) => [
     },
     {
       name: "Email Id",
-      selector: row => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -565,7 +568,7 @@ export const getUserDataColumns = (upgradeUserMutation, handleUpgrade) => [
     },
     {
       name: "Email",
-      selector: row => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -599,7 +602,7 @@ export const getUserDataColumns = (upgradeUserMutation, handleUpgrade) => [
     },
     {
       name: "Email",
-      selector: row => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -672,7 +675,7 @@ export const getOnlineTransactionColumns = (showActive) => [
     },
     {
       name: "UserName",
-      selector: (row) => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -720,12 +723,12 @@ export const getOnlineTransactionColumns = (showActive) => [
     },
     {
       name: "Username",
-      selector: (row) => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
       name: "Email",
-      selector: (row) => row.email,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
@@ -821,7 +824,7 @@ export const getOnlineTransactionColumns = (showActive) => [
     },
     {
       name: "UserName",
-      selector: (row) => row.username,
+      selector: row => row?.username || row?.email_id,
       sortable: true,
     },
     {
