@@ -40,6 +40,11 @@
         gap: 1.5rem;
       }
     }
+     .form-header{
+      h3 {
+        text-align: center;
+      }
+    }
 
     // Left Column - Contact Form
     .contact-form-column {
@@ -264,6 +269,11 @@
         font-size: 0.95rem;
       }
     }
+     .form-header{
+      h3 {
+        text-align: center;
+      }
+    }
 
     .contact-content-wrapper {
       .contact-columns {
@@ -295,6 +305,11 @@
       h2 {
         font-size: 1.6rem;
         margin-top: 20px;
+      }
+    }
+    .form-header{
+      h3 {
+        text-align: center;
       }
     }
 
