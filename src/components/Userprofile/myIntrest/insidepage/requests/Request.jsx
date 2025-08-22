@@ -71,7 +71,17 @@ const Requests = ({refetchCounts}) => {
         }}
       >
         {isFetching ? (
-          <LoadingTextSpinner />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              minHeight: "200px", // optional: ensures it takes space to center vertically
+            }}
+          >
+            <LoadingTextSpinner />
+          </Box>
         ) : interests.length === 0 ? (
           <Typography variant="h6">No pending requests found</Typography>
         ) : (
