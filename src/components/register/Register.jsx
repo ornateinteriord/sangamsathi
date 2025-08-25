@@ -226,7 +226,7 @@ const Register = () => {
                 mt: isMobile ? "15px" : "",
               }}
             >
-              <Avatar sx={{ bgcolor: "#5e0476" }}>
+              <Avatar sx={{ bgcolor: "#39af5e" }}>
                 <HowToRegIcon />
               </Avatar>
               <Typography
@@ -252,7 +252,7 @@ const Register = () => {
               <Box
                 component="span"
                 sx={{
-                  color: "#5e0476",
+                  color: "#39af5e",
                 }}
               >
                 {getUserRole()}
@@ -272,7 +272,7 @@ const Register = () => {
             <Box sx={{ flex: 1 }}>
               <Typography
                 variant="h6"
-                sx={{ mb: 3, color: "#5e0476", fontWeight: 600 }}
+                sx={{ mb: 3, color: "#39af5e", fontWeight: 600 }}
               >
                 PERSONAL DETAILS
               </Typography>
@@ -368,7 +368,7 @@ const Register = () => {
               />
               <Typography
                 variant="h6"
-                sx={{ mb: 2, color: "#5e0476", fontWeight: 600 }}
+                sx={{ mb: 2, color: "#39af5e", fontWeight: 600 }}
               >
                 SOCIAL & CAREER DETAILS
               </Typography>
@@ -438,7 +438,7 @@ const Register = () => {
             <Box sx={{ flex: 1 }}>
               <Typography
                 variant="h6"
-                sx={{ mb: 3, color: "#5e0476", fontWeight: 600 }}
+                sx={{ mb: 3, color: "#39af5e", fontWeight: 600 }}
               >
                 FAMILY DETAILS
               </Typography>
@@ -526,7 +526,7 @@ const Register = () => {
 
           <Typography
             variant="h6"
-            sx={{ mt: 1, mb: 3, color: "#5e0476", fontWeight: 600 }}
+            sx={{ mt: 1, mb: 3, color: "#39af5e", fontWeight: 600 }}
           >
             LOGIN DETAILS
           </Typography>
@@ -639,11 +639,11 @@ const Register = () => {
               sx={{
                 fontWeight: 600,
                 color: "#000",
-                border:'1px solid #5e0476',
+                border:'1px solid #39af5e',
                 width: { xs: "100%", sm: "50%", md: "20%" },
                 textTransform: "capitalize",
                 "&:hover": {
-                  backgroundColor: "#5e0476",
+                  backgroundColor: "#39af5e",
                   color: "#fff",
                 },
               }}
@@ -657,9 +657,9 @@ const Register = () => {
               size="large"
               disabled={isPending}
               sx={{
-                backgroundColor: "#5e0476",
+                backgroundColor: "#39af5e",
                 "&:hover": {
-                  backgroundColor: "#5e0476",
+                  backgroundColor: "#39af5e",
                 },
                 color: "white",
                 fontWeight: 600,

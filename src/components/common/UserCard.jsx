@@ -98,7 +98,7 @@ const UserCard = ({
           boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
           mb: 2,
           padding: "3px",
-          background: "linear-gradient(45deg,  #5e0476)",
+          background: "linear-gradient(45deg,  #39af5e)",
         }}
       >
         <Avatar
@@ -191,9 +191,9 @@ const UserCard = ({
                 fullWidth
                 variant="contained"
                 sx={{
-                  backgroundColor:'#5e0476',
+                  backgroundColor:'#39af5e',
                    "&:hover":{
-                    backgroundColor:'#6c2780ff'
+                    backgroundColor:'#216a38'
                   },
                   color: "#fff",
                   textTransform: "capitalize",
@@ -216,8 +216,8 @@ const UserCard = ({
                   textTransform: "none",
                   fontWeight: 500,
                   fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                  backgroundColor:'#5e0476',
-                  "&:hover": { backgroundColor: "#8d37a4ff" },
+                  backgroundColor:'#39af5e',
+                  "&:hover": { backgroundColor: "#216a38" },
                 }}
               >
                 View More

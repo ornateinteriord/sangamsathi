@@ -157,9 +157,9 @@ const ProfileDialog = ({
           text: "Express Interest",
           disabled: false,
             customStyle: {
-            backgroundColor: "#5e0476",
+            backgroundColor: "#39af5e",
             "&:hover": {
-              backgroundColor: "#7a1c9a",
+              backgroundColor: "#216a38",
             },
           },
         };
@@ -309,7 +309,7 @@ const ProfileDialog = ({
   sx={{
     mb: 2,
     "& .MuiTabs-indicator": {
-      backgroundColor: "#5e0476", 
+      backgroundColor: "#39af5e", 
       height: 3,
     },
     "& .MuiTab-root": {
@@ -320,12 +320,12 @@ const ProfileDialog = ({
       fontWeight: 500,
       color: "text.secondary",
       "&.Mui-selected": {
-        color: "#5e0476",
+        color: "#39af5e",
         fontWeight: 600,
       },
       "&:hover": {
-        backgroundColor: "rgba(94, 4, 118, 0.08)", 
-        color: "#5e0476",
+        backgroundColor: "#abdcbaff", 
+        color: "#39af5e",
       },
     },
   }}

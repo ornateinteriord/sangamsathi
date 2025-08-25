@@ -32,7 +32,7 @@
 
       .highlight-text {
         font-size: clamp(1rem, 2vw, 1.375rem);
-        color: #5e0476 !important;
+        color: #39af5e !important;
         font-weight: 500;
         text-transform: uppercase;
       }
@@ -66,7 +66,7 @@
         font-size: 0.875rem;
         font-weight: 500;
         color: #fff;
-        background-color: #5e0476;
+        background-color: #39af5e;
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -106,7 +106,7 @@
       font-size: clamp(1.5rem, 3vw, 1.75rem);
       font-weight: 500;
       margin-bottom: 30px;
-      color: #5e0476;
+      color: #39af5e;
       @media (max-width: 900px){
         text-align: center;
       }

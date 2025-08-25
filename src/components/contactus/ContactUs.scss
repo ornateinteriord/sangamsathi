@@ -16,7 +16,7 @@
     h2 {
       margin-top: 30px;
       font-size: 2.2rem;
-      color: #5e0476;
+      color: #39af5e;
       margin-bottom: 0.75rem;
       font-weight: 500;
     }
@@ -58,7 +58,7 @@
 
       .form-header {
         height: 60px;
-        background: #5e0476;
+        background: #39af5e;
         color: white;
         padding: 0.5rem;
         text-align: center;
@@ -142,13 +142,13 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: #5e0476;
+            background: #39af5e;
             color: white;
             letter-spacing: 0.3px;
             min-width: 0; 
 
             &:hover {
-              background-color: #0d3a5a;
+              background-color: #216a38;
             }
           }
 
@@ -163,11 +163,11 @@
             transition: all 0.3s ease;
             background: transparent;
             color: #000;
-            border: 1px solid #5e0476;
+            border: 1px solid #39af5e;
             min-width: 0; 
 
             &:hover {
-              background-color: #5e0476;
+              background-color: #39af5e;
               color: white;
             }
           }
@@ -193,7 +193,7 @@
           padding: 1.1rem;
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
           transition: all 0.2s ease;
-          border-left: 3px solid #5e0476;
+          border-left: 3px solid #39af5e;
           display: flex;
           align-items: flex-start;
           gap: 0.75rem;
@@ -202,7 +202,7 @@
             width: 36px;
             height: 36px;
             min-width: 36px;
-            background: #5e0476;
+            background: #39af5e;
             border-radius: 50%;
             display: flex;
             align-items: center;

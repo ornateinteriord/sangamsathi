@@ -77,7 +77,7 @@ const handlePlanSelection = (planName) => {
               mb: isMobile? 1 : 3,
               fontWeight: 500,
               color: theme.palette.primary.main,
-              background: '#5e0476',
+              background: '#39af5e',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}
@@ -116,7 +116,7 @@ const handlePlanSelection = (planName) => {
           fontSize:isMobile? "18px" : "23px",
           mb: 0,
           fontWeight: 500,
-          color: '#5e0476',
+          color: '#39af5e',
           textAlign: 'left',
         }}
       >
@@ -390,7 +390,7 @@ const handlePlanSelection = (planName) => {
     textAlign: 'center', 
   }}
 >
-  <VerifiedUser  sx={{ fontSize: 40,color:'#5e0476' }} />
+  <VerifiedUser  sx={{ fontSize: 40,color:'#39af5e' }} />
   Trusted By Thousands of Users
 </Typography>
 
@@ -413,7 +413,7 @@ const handlePlanSelection = (planName) => {
       minWidth:isMobile?"100%": 280,
     }}
   >
-    <Shield sx={{ fontSize: 50, color:"#5e0476", mb: 1 }} />
+    <Shield sx={{ fontSize: 50, color:"#39af5e", mb: 1 }} />
     <Typography variant="h6" sx={{ fontWeight: 500, mb: 1,  }}>
       Secure Payment
     </Typography>
@@ -432,7 +432,7 @@ const handlePlanSelection = (planName) => {
       minWidth:isMobile?"100%": 280,
     }}
   >
-    <VerifiedUser sx={{ fontSize: 50, color: '#5e0476', mb: 2 }} />
+    <VerifiedUser sx={{ fontSize: 50, color: '#39af5e', mb: 2 }} />
     <Typography variant="h6" sx={{ fontWeight: 500, mb: 1,color:'#000' }}>
       Verified Profiles
     </Typography>
@@ -451,7 +451,7 @@ const handlePlanSelection = (planName) => {
        minWidth:isMobile?"100%": 280,
     }}
   >
-    <CreditCard sx={{ fontSize: 50, color:'#5e0476', mb: 2 }} />
+    <CreditCard sx={{ fontSize: 50, color:'#39af5e', mb: 2 }} />
     <Typography variant="h6" sx={{ fontWeight: 500, mb: 1,color:'#000' }}>
       Payment Options
     </Typography>

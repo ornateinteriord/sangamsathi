@@ -15,7 +15,7 @@ const NotFoundPage = () => {
         justifyContent: 'center',
         textAlign: 'center',
         padding: 4,
-        color: '#5e0476'
+        color: '#39af5e'
       }}
     >
       <Box sx={{ maxWidth: '600px' }}>
@@ -25,7 +25,7 @@ const NotFoundPage = () => {
             fontSize: '4rem', 
             fontWeight: 700,
             mb: 2,
-            color: '#5e0476'
+            color: '#39af5e'
           }}
         >
           404
@@ -37,7 +37,7 @@ const NotFoundPage = () => {
             fontSize: '1.8rem',
             fontWeight: 600,
             mb: 2,
-            color: '#5e0476'
+            color: '#39af5e'
           }}
         >
           Page Not Found
@@ -63,7 +63,7 @@ const NotFoundPage = () => {
             onClick={() => navigate('/')}
             sx={{
                 textTransform:'capitalize',
-              backgroundColor: '#5e0476',
+              backgroundColor: '#39af5e',
               '&:hover': { backgroundColor: 'rgba(93, 32, 110, 1)' },
               px: 3,
               py: 1
@@ -77,10 +77,10 @@ const NotFoundPage = () => {
             onClick={() => navigate(-1)}
             sx={{
                   textTransform:'capitalize',
-              color: '#5e0476',
-              borderColor: '#5e0476',
+              color: '#39af5e',
+              borderColor: '#39af5e',
               '&:hover': { 
-                backgroundColor: '#5e0476',
+                backgroundColor: '#39af5e',
                 color: 'white'
               },
               px: 3,

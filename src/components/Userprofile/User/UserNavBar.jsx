@@ -224,7 +224,7 @@ const UserNavBar = () => {
           position="fixed"
           sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            background: "#5e0476",
+            background: "#39af5e",
             height: "60px",
           }}
         >
@@ -244,7 +244,7 @@ const UserNavBar = () => {
             <Box sx={{ textAlign: "left", width: "100%" }}>
               <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
                 <Typography variant="h6" noWrap component="div">
-                  Sangam❤️Sathi
+                 Kanaka ❤️ Matrimony
                 </Typography>
               </Link>
             </Box>
@@ -306,7 +306,7 @@ const UserNavBar = () => {
             [`& .MuiDrawer-paper`]: {
               width: isSidebarOpen ? drawerWidth : 0,
               boxSizing: "border-box",
-              background: "#5e0476",
+              background: "#39af5e",
               color: "#fff",
               transition: "width 0.6s ease, opacity 0.6s ease",
               opacity: isSidebarOpen ? 1 : 0,

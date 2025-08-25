@@ -40,7 +40,7 @@ const Members = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "#1a4f72",
+            color: "#39af5e",
             textTransform: "capitalize",
             fontFamily: "Outfit, sans-serif",
             fontSize: { xs: "1.5rem", sm: "2rem" },
@@ -101,7 +101,7 @@ const Members = () => {
                         textShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
                       }}
                     >
-                      Girija ❤️ Kalyana
+                      Kanaka ❤️ Matrimony
                     </Typography>
 
                     <Box

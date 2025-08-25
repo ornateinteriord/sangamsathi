@@ -64,7 +64,7 @@ const Search = () => {
 
   return (
     <Box sx={{ p: { xs: 1, sm: 2 },  }}>
-         <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: '#34495e',
+         <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: '#39af5e',
                          mt:{xs:0},mb:{xs:1,md:2} }} fontWeight="500px">
                              Search Profiles
                            </Typography>

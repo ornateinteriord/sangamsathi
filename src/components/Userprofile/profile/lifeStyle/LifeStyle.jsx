@@ -209,7 +209,7 @@ const LifeStyle = () => {
           fullWidth={isMobile}
           sx={{
             color: "black",
-             border:'1px solid #5e0476',
+             border:'1px solid #39af5e',
             backgroundColor: "#fff",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#fff" },
@@ -224,7 +224,7 @@ const LifeStyle = () => {
           disabled={isUpdating}
           fullWidth={isMobile}
           sx={{
-            backgroundColor: "#5e0476",
+            backgroundColor: "#39af5e",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#2c3e50" },
             width: isMobile ? "100%" : "130px"

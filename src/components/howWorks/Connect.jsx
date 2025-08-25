@@ -11,7 +11,7 @@ const stats = [
       id: 1,
       title: 'Profiles',
       value: `${dashboardstats?.stats?.totalProfiles || 0}`,
-      icon: <FaUserFriends style={{ fontSize: 40, color: '#5e0476' }} />,
+      icon: <FaUserFriends style={{ fontSize: 40, color: '#39af5e' }} />,
       color: '#f8f9fa',
       textColor: 'rgb(192, 9, 88)',
      
@@ -20,7 +20,7 @@ const stats = [
       id: 2,
       title: 'This Week',
       value: `${dashboardstats?.stats?.thisWeekRegistrations || 0}`,
-      icon: <FaCalendarWeek style={{ fontSize: 40, color: '#5e0476' }} />,
+      icon: <FaCalendarWeek style={{ fontSize: 40, color: '#39af5e' }} />,
       color: '#f8f9fa',
       textColor: '#00bcd4',
       
@@ -29,7 +29,7 @@ const stats = [
       id: 3,
       title: 'This Month',
       value: `${dashboardstats?.stats?.thisMonthRegistrations || 0}`,
-      icon: <FaCalendarAlt style={{ fontSize: 40, color: '#5e0476' }} />,
+      icon: <FaCalendarAlt style={{ fontSize: 40, color: '#39af5e' }} />,
       color: '#f8f9fa',
       textColor: '#ff5a5f',
      
@@ -70,7 +70,7 @@ const stats = [
   }}>
     <Typography variant="h4" sx={{ 
      
-      color: '#5e0476', 
+      color: '#39af5e', 
       textAlign: 'center',
       fontSize: { xs: '1.75rem', md: '2.125rem' }
     }}>
@@ -108,7 +108,7 @@ const stats = [
                 p: 2,
                 mb: 2,
                 borderRadius: '50%',
-                color: "#5e0476"
+                color: "#39af5e"
               }}>
                 {stat.icon}
               </Box>
@@ -137,7 +137,7 @@ const stats = [
 </Container>
 
       <Container sx={{ textAlign: 'center', marginTop: {xs:0,md:5}, fontFamily: "Outfit" }}>
-        <Typography variant="h4" sx={{ marginBottom: 4, color: '#5e0476', fontFamily: "Outfit sans-serif",
+        <Typography variant="h4" sx={{ marginBottom: 4, color: '#39af5e', fontFamily: "Outfit sans-serif",
            fontSize: { xs: '1.60rem', md: '2.125rem' }
          }}>
           Find your Special Someone
@@ -159,7 +159,7 @@ const stats = [
                     right: 10,
                     backgroundColor: '#fff',
                     color: '#000',
-                    border: '2px solid #5e0476',
+                    border: '2px solid #39af5e',
                   },
                 }}
               >
@@ -168,7 +168,7 @@ const stats = [
                   sx={{
                     padding: 3,
                     borderRadius: '50%',
-                    backgroundColor: '#5e0476',
+                    backgroundColor: '#39af5e',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -181,7 +181,7 @@ const stats = [
                 </Paper>
               </Badge>
               <Box sx={{ marginTop: 2 }}>
-                <Typography variant="h6" sx={{ color: '#5e0476', fontFamily: "Outfit sans-serif" }}>
+                <Typography variant="h6" sx={{ color: '#39af5e', fontFamily: "Outfit sans-serif" }}>
                   {feature.title}
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#777', fontFamily: "Outfit sans-serif" }}>

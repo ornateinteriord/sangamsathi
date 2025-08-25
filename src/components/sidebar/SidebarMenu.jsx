@@ -99,11 +99,11 @@ const SidebarMenu = ({
             disablePadding
             onClick={item.onClick}
             sx={{
-              backgroundColor:
-                selectedItem === item.text ? "#b47ac4" : "transparent",
-              "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-              },
+             backgroundColor:
+        selectedItem === item.text ? "#2e8e4b" : "transparent", 
+      "&:hover": {
+        backgroundColor: "rgba(57, 175, 94, 0.2)",
+      },
               borderRadius: "2px",
               mx: 0,
               my: 2,

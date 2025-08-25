@@ -184,10 +184,10 @@ const FamilyReligious = () => {
           sx={{ 
             maxWidth: { xs: '160px', sm: 200 },
             textTransform: 'capitalize', 
-            backgroundColor: "#5e0476",
+            backgroundColor: "#39af5e",
             color: "#fff",
             "&:hover": {
-              backgroundColor: "#5e0476"
+              backgroundColor: "#39af5e"
             } 
           }}
           startIcon={isUpdating ? <CircularProgress size={20} /> : null}

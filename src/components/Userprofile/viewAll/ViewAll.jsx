@@ -73,7 +73,7 @@ const ViewAll = () => {
           mb: 3,
         }}
       >
-        <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: '#5e0476',
+        <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: '#39af5e',
                    mt:{xs:0},mb:{xs:1,md:2},textAlign:'left' }} fontWeight="500px">
                        Profiles
                      </Typography>

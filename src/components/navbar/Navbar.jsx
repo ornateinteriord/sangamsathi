@@ -190,7 +190,7 @@ const Navbar = () => {
               }
             }}
           >
-            Sangam ❤️ Sathi
+            Kanaka ❤️ Matrimony
           </Typography>
 
           {/* Desktop Menu */}
@@ -311,7 +311,7 @@ const Navbar = () => {
         sx={{
           "& .MuiDrawer-paper": {
             width: "280px",
-            background: '#5e0476',
+            background: '#39af5e',
             color: "#fff",
           },
         }}
@@ -330,9 +330,9 @@ const Navbar = () => {
             <Typography
               variant="h6"
               component="div"
-              sx={{ fontWeight: "bold", fontSize: "1.3rem" }}
+              sx={{ fontWeight: "bold", fontSize: "1.1rem" }}
             >
-              Sangam ❤️ Sathi
+              Kanaka ❤️ Matrimony
             </Typography>
             <IconButton onClick={toggleMobileMenu} sx={{ color: "#fff" }}>
               <CloseIcon />
@@ -486,7 +486,7 @@ const Navbar = () => {
             <Typography
               variant="body2"
               sx={{
-                color: "#5e0476",
+                color: "#39af5e",
                 cursor: "pointer",
                 textAlign: "center",
                 "&:hover": {
@@ -518,9 +518,9 @@ const Navbar = () => {
               fontWeight: "bold",
               textTransform: "capitalize",
               fontSize: "1rem",
-              backgroundColor: "#5e0476",
+              backgroundColor: "#39af5e",
               "&:hover": {
-                  backgroundColor: "#6c1b83ff",
+                  backgroundColor: "#216a38",
               }
             }}
           >
@@ -534,13 +534,13 @@ const Navbar = () => {
             variant="body2"
             sx={{
               textAlign: "center",
-              color:  "#5e0476",
+              color:  "#39af5e",
             }}
           >
             Don't have an account?{" "}
             <span
               style={{
-                color:  "#5e0476",
+                color:  "#39af5e",
                 cursor: "pointer",
                 fontWeight: "bold",
               }}
@@ -704,9 +704,9 @@ const Navbar = () => {
       fontWeight: 500,
       textTransform: "capitalize",
       fontSize: "1rem",
-      backgroundColor: "#5e0476",
+      backgroundColor: "#39af5e",
       "&:hover": {
-        backgroundColor: "#6c1b83",
+        backgroundColor: "#216a38",
       },
     }}
   >
@@ -731,12 +731,12 @@ const Navbar = () => {
       fontWeight: 500,
       textTransform: "capitalize",
       fontSize: "1rem",
-      color: "#5e0476",
-      borderColor: "#5e0476",
+      color: "#39af5e",
+      borderColor: "#39af5e",
       "&:hover": {
-        borderColor: "#6c1b83",
-        backgroundColor: "#e3d2e7ff",
-        color: "#6c1b83",
+        borderColor: "#216a38",
+        backgroundColor: "#e4e2e4ff",
+        color: "#216a38",
       },
     }}
   >
