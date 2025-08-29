@@ -101,7 +101,7 @@ const Members = () => {
                         textShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
                       }}
                     >
-                      Girija ❤️ Kalyana
+                     Sangam ❤️ Sathi
                     </Typography>
 
                     <Box
