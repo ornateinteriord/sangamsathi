@@ -228,7 +228,7 @@ const ResetPassword = () => {
           <Button
             onClick={handlePasswordReset}
             sx={{ color: "#fff",backgroundColor:"#4caf50","&:hover": {backgroundColor:"#388e3c",},fontWeight: 400, }}
-            disabled={isPending || !newPassword || !confirmPassword || newPassword !== confirmPassword}
+            disabled={isResetting || !newPassword || !confirmPassword || newPassword !== confirmPassword}
           >
             {isResetting ? "Submitting..." : "Submit"}
           </Button>
