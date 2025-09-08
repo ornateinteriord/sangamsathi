@@ -48,7 +48,7 @@ const ResetPassword = () => {
     refetch: searchUser 
   } = useGetSearchProfiles(search, true);
   
-  const { mutateAsync: resetPassword, isPending } = UserResetPassword();
+  const { mutateAsync: resetPassword, isPending : isResetting } = UserResetPassword();
   const isMobile = useMediaQuery('(max-width:600px)');
 
   // Data handling
