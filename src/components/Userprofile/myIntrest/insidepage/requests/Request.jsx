@@ -1,10 +1,23 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Box, Typography, Pagination } from "@mui/material";
-import { useGetReceivedInterests, useUpdateInterestStatus } from "../../../../api/User";
+import {
+  Box,
+  Typography,
+  Pagination,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
+import {
+  useGetReceivedInterests,
+  useUpdateInterestStatus,
+} from "../../../../api/User";
 import TokenService from "../../../../token/tokenService";
 import toast from "react-hot-toast";
 import { LoadingTextSpinner } from "../../../../../utils/common";
 import UserCard from "../../../../common/UserCard";
+import ProfileDialog from "../../../ProfileDialog/ProfileDialog";
 
 const Requests = ({refetchCounts}) => {
   const [currentPage, setCurrentPage] = useState(1);
