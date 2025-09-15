@@ -34,6 +34,7 @@ const ProfileDialog = ({
   currentTab,
   setCurrentTab,
   isLoading,
+  isRequestTab = false,
 }) => {
   const tabLabels = [
     "About",
@@ -399,7 +400,7 @@ const ProfileDialog = ({
                 },
               }}
             >
-              {loggedInUserId !== selectedUser?.registration_no && (
+              {loggedInUserId !== selectedUser?.registration_no && !isRequestTab && (
                 <Button
                   variant="contained"
                   color={buttonState.color}

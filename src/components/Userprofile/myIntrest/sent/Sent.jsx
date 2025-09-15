@@ -27,7 +27,7 @@ const Sent = ({refetchCounts}) => {
   const itemsPerPage = 4;
   const currentUserRegistrationNo = TokenService.getRegistrationNo();
 
-  const { mutate: cancelInterest, isFetching: isCancelling } = useCancelSentInterest();
+  const { mutate: cancelInterest, isPending: isCancelling } = useCancelSentInterest();
   const {
     data: sentInterests,
     isPending: isLoading,
@@ -135,7 +135,7 @@ const Sent = ({refetchCounts}) => {
         />
       )}
 
-   <Dialog open={cancelConfirmOpen} onClose={handleCancelDialogClose}>
+    <Dialog open={cancelConfirmOpen} onClose={handleCancelDialogClose}>
   <DialogTitle sx={{ fontWeight: 600, color: "black" }}>
     Cancel Request
   </DialogTitle>
@@ -179,6 +179,7 @@ const Sent = ({refetchCounts}) => {
     </Button>
   </DialogActions>
 </Dialog>
+
 
       {isLoading && (
         <LoadingTextSpinner />

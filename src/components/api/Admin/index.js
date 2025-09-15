@@ -4,6 +4,22 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { get, post, put } from "../authHooks";
 import { toast } from "react-toastify";
 
+
+export const useUpgradeUserType = () => {
+   return useMutation({
+    mutationFn: async ({ userType, amountPaid, paidType, referenceNumber, registration_no }) => {
+      const response = await post(`/api/admin/upgrade-user-type/${registration_no}`, {
+        userType, amountPaid, paidType, referenceNumber
+      });
+      if (response?.success) {
+        return response;
+      } else {
+        throw new Error(response?.message || "Failed to fetch users");
+      }
+    },
+  });
+};
+
 export const getAllUserImageVerification = () => {
    return useMutation({
     mutationFn: async ({ page, pageSize }) => {
@@ -168,14 +184,30 @@ export const usePromotersEarnings = () => {
   return useQuery({
     queryKey: ['promoters-earnings'],
     queryFn: async () => {
-      const response = await get('/api/admin/all-promoters-earnings'); // <-- Match your backend route
+      const response = await get('/api/admin/all-promoters-earnings');
       if (!response.success) {
         throw new Error(response.message || 'Failed to fetch promoter earnings');
       }
-      return response.Earnings;
+      return {
+        aggregatedEarnings: response.Earnings || []
+      };
     },
   });
 };
+export const useAllPromotersData = (promoterId, enabled) => {
+  return useQuery({
+    queryKey: ['promoter-transactions', promoterId],
+    queryFn: async () => {
+      const response = await get(`/api/admin/all-promoter-users/${promoterId}`);
+      if (!response.success) {
+        throw new Error(response.message || 'Failed to fetch promoter transactions');
+      }
+      return response.records || [];
+    },
+    enabled: !!promoterId && enabled, 
+  });
+};
+
 
 export const usePromotersTransactions = () => {
   return useQuery({
@@ -226,6 +258,34 @@ export const useUpdatePromoterStatus = () => {
   });
 };
 
+export const getPromoterUsersStats = () => {
+  return useQuery({
+    queryKey: ["promoter-user-stats"],
+    queryFn: async () => {
+      const response = await get("/api/admin/promoter-user-stats");
+      if (response.success) {
+        return response.data;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+  });
+};
+
+export const getPromoterUsersList = (promoterId) => {
+  return useQuery({
+    queryKey: ["promoter-users-list",promoterId],
+    queryFn: async () => {
+      const response = await get(`/api/admin/promoter-users/${promoterId}`);
+      if (response.success) {
+        return response.users;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+    enabled: false
+  });
+};
 export const getAllNews = () => {
   return useQuery({
     queryKey: ["news"],

@@ -21,44 +21,89 @@ export const customStyles = {
   },
 };
 
-export const getPromoterTableColumns = () => [
+export const getPromoterTableColumns = (handleDetailsClick) => [
     {
       name: "Promoter's Name",
-      selector: row => row.name,
+      selector: row => row.promoter_name,
       sortable: true,
     },
     {
-      name: "Promocode",
-      selector: row => "-",
-    },
-    {
-      name: "Mobile",
-      selector: row => row.phone,
-      sortable: true,
+      name: "Promoter's Code",
+      selector: row => row.promoter_id,
     },
     {
       name: "Free Users",
-      selector: row => "-",
-    },
-    {
-      name: "Premium Users",
-      selector: row => "-",
+      selector: row => row.freeCount,
     },
     {
       name: "Silver Users",
-      selector: row => "-",
+      selector: row => row.silverCount,
+    },
+    {
+      name: "Premium Users",
+      selector: row => row.premiumCount,
     },
     {
       name: "Total Users",
-      selector: row => "-",
+      selector: row => row.totalCount,
     },
     {
       name: "Action",
-      cell: () => (
-        <Button variant="contained" size="small" sx={{ textTransform: 'capitalize' }}>
-          DETAILS
+      cell: (row) => (
+        <Button 
+          disabled={row.totalCount === 0} 
+          onClick={() => {
+            handleDetailsClick(row)
+          }} 
+          variant="contained" 
+          size="small" 
+          sx={{ textTransform: 'capitalize' }}
+        >
+          Details
         </Button>
       ),
+    },
+  ];
+export const getPromoterUserListTable = () => [
+    {
+      name: "Registration No",
+      selector: row => row.registration_no,
+      sortable: true,
+      width : '10%'
+    },
+    {
+      name: "Name",
+      selector: row => `${row.first_name} ${row.last_name}`,
+      sortable: true,
+       width : '20%'
+    },
+    {
+      name: "Email Id",
+      selector: row => row?.username || row?.email_id,
+      sortable: true,
+       width : '30%'
+    },
+    {
+      name: "Gender",
+      selector: row => row?.gender,
+      sortable: true,
+       width : '15%'
+    },
+    {
+      name: "User Type",
+      selector: row => row.type_of_user,
+      sortable: true,
+       width : '15%'
+    },
+    {
+      name: "Status",
+      cell: row => (
+        <Typography color={row.status === "active" ? "green" : "red"}>
+          {row.status}
+        </Typography>
+      ),
+      sortable: true,
+       width : '10%'
     },
   ];
 export const getPendingandSuccessUserDataColumns = () => [
@@ -395,41 +440,21 @@ export const getUserTableColumns = (formatUserRole) =>  [
     },
   ];
 
-export const getPromotersEarningsColumns = (handlePayNow) => [
+export const getPromotersEarningsColumns = (handleDetailsClick) => [
   {
     name: "Promoter Code",
     selector: (row) => row.referal_by || "N/A",
     sortable: true,
   },
   {
-    name: "Reference No",
-    selector: (row) => row.ref_no ||  "N/A",
-    sortable: true,
-  },
-  {
-    name: "Email",
-    selector: (row) => row.emailid ||  "N/A",
-    sortable: true,
-  },
-  {
-    name: "Mobile",
-    selector: (row) => row.mobile || "N/A",
-    sortable: true,
-  },
-  {
     name: "Total Earnings",
-    selector: (row) => `₹${row.amount_earned || 0}`,
+    selector: (row) => `₹${row.totalAmount || 0}`,
     sortable: true,
   },
   {
-    name: "Transaction ID",
-    selector: (row) => row.transaction_no || "N/A",
-    sortable: false,
-  },
-  {
-    name: "Txn Date",
-    selector: (row) => row.transaction_date || "N/A",
-    sortable: false,
+    name: "Total Transactions",
+    selector: (row) => row.count || 0,
+    sortable: true,
   },
   {
     name: "Status",
@@ -443,21 +468,56 @@ export const getPromotersEarningsColumns = (handlePayNow) => [
   },
   {
     name: "Action",
-    cell: (row) =>
-      row.status === "pending" ? (
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={() => handlePayNow(row)}
-        >
-          Pay Now
-        </Button>
-      ) : (
-        "N/A"
-      ),
+    cell: (row) => (
+      <Button
+        variant="contained"
+        color="secondary"
+        size="small"
+        onClick={() => handleDetailsClick(row)}
+        sx={{ textTransform: "capitalize" }}
+      >
+        Details
+      </Button>
+    ),
   },
 ];
+export const getTransactionDetailsDialogColumns = () => [
+            {
+                name: "Ref No",
+                selector: (row) => row.ref_no || "N/A",
+                sortable: true,
+            },
+            {
+                name: "Email",
+                selector: (row) => row.emailid || "N/A",
+                sortable: true,
+            },
+            {
+                name: "Mobile",
+                selector: (row) => row.mobile || "N/A",
+                sortable: true,
+            },
+            {
+                name: "Amount",
+                selector: (row) => `₹${row.amount_earned || 0}`,
+                sortable: true,
+            },
+            {
+                name: "Transaction No",
+                selector: (row) => row.transaction_no || "N/A",
+                sortable: true,
+            },
+            {
+                name: "Transaction Date",
+                selector: (row) => row.transaction_date || "N/A",
+                sortable: true,
+            },
+            {
+                name: "User Type",
+                selector: (row) => row.usertype || "N/A",
+                sortable: true,
+            },
+        ];
 
  export const getPromotersTransactionsColumns = () => [
   {
@@ -497,6 +557,49 @@ export const getPromotersEarningsColumns = (handlePayNow) => [
   },
 ];
 
+export const getUserUpgradeColumns = (handleUpgrade) => [
+    {
+      name: "Registration No",
+      selector: row => row.registration_no,
+      sortable: true,
+    },
+    {
+      name: "Name",
+      selector: row => `${row.first_name} ${row.last_name}`,
+      sortable: true,
+    },
+    {
+      name: "Email Id",
+      selector: row => row?.username || row?.email_id,
+      sortable: true,
+    },
+    {
+      name: "User Type",
+      selector: row => row.type_of_user,
+      sortable: true,
+    },
+    {
+      name: "Status",
+      cell: row => (
+        <Typography color={row.status === "active" ? "green" : "red"}>
+          {row.status}
+        </Typography>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Upgrade",
+      cell: row => (
+        <Button
+          variant="contained"
+          size="small"
+          onClick={() => handleUpgrade(row)}
+        >
+          Upgrade
+        </Button>
+      ),
+    },
+  ];
 export const getUserDataColumns = (upgradeUserMutation, handleUpgrade) => [
     {
       name: "Registration No",
