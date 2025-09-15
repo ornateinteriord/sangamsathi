@@ -48,7 +48,7 @@ const ResetPassword = () => {
     refetch: searchUser 
   } = useGetSearchProfiles(search, true);
   
-  const { mutateAsync: resetPassword, isPending } = UserResetPassword();
+  const { mutateAsync: resetPassword, isPending : isResetting } = UserResetPassword();
   const isMobile = useMediaQuery('(max-width:600px)');
 
   // Data handling
@@ -228,7 +228,7 @@ const ResetPassword = () => {
           <Button
             onClick={handlePasswordReset}
             sx={{ color: "#fff",backgroundColor:"#4caf50","&:hover": {backgroundColor:"#388e3c",},fontWeight: 400, }}
-            disabled={isPending || !newPassword || !confirmPassword || newPassword !== confirmPassword}
+            disabled={isResetting || !newPassword || !confirmPassword || newPassword !== confirmPassword}
           >
             {isResetting ? "Submitting..." : "Submit"}
           </Button>
