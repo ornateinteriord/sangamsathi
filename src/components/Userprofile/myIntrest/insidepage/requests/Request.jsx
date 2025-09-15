@@ -1,15 +1,36 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Box, Typography, Pagination } from "@mui/material";
-import { useGetReceivedInterests, useUpdateInterestStatus } from "../../../../api/User";
+import {
+  Box,
+  Typography,
+  Pagination,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
+import {
+  useGetReceivedInterests,
+  useUpdateInterestStatus,
+} from "../../../../api/User";
 import TokenService from "../../../../token/tokenService";
 import toast from "react-hot-toast";
 import { LoadingTextSpinner } from "../../../../../utils/common";
 import UserCard from "../../../../common/UserCard";
+import ProfileDialog from "../../../ProfileDialog/ProfileDialog";
 
-const Requests = ({refetchCounts}) => {
+const Requests = ({ refetchCounts }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
+  const [selectedSender, setSelectedSender] = useState(null);
+  const [isRejecting, setIsRejecting] = useState(false);
 
+  // Add new state for profile dialog
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [currentTab, setCurrentTab] = useState(0);
+
+  const itemsPerPage = 4;
   const recipient = TokenService.getRegistrationNo();
 
   const {
@@ -20,7 +41,7 @@ const Requests = ({refetchCounts}) => {
     error,
   } = useGetReceivedInterests(recipient);
 
-  const { mutate: updateInterest, } = useUpdateInterestStatus();
+  const { mutate: updateInterest } = useUpdateInterestStatus();
 
   useEffect(() => {
     fetchReceivedInterests({ page: currentPage - 1, pageSize: itemsPerPage });
@@ -28,32 +49,62 @@ const Requests = ({refetchCounts}) => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(error?.message || "Something went wrong while fetching requests");
+      toast.error(
+        error?.message || "Something went wrong while fetching requests"
+      );
     }
   }, [isError, error]);
 
   const totalPages = useMemo(() => {
-    return receivedInterests ? Math.ceil(receivedInterests.totalRecords / itemsPerPage) : 1;
+    return receivedInterests
+      ? Math.ceil(receivedInterests.totalRecords / itemsPerPage)
+      : 1;
   }, [receivedInterests]);
 
-  const handleInterestResponse = (senderRefNo, isAccepted) => {
+  const handleRejectClick = (senderRefNo) => {
+    setSelectedSender(senderRefNo);
+    setRejectDialogOpen(true);
+  };
+
+  const handleConfirmReject = () => {
+    if (!selectedSender) return;
+    setIsRejecting(true);
     updateInterest(
       {
-        sender: senderRefNo,
+        sender: selectedSender,
         recipient,
-        status: isAccepted ? "accepted" : "rejected",
+        status: "rejected",
       },
       {
         onSuccess: () => {
-          toast.success(`Request ${isAccepted ? "accepted" : "rejected"} successfully`);
-           fetchReceivedInterests({ page: currentPage - 1, pageSize: itemsPerPage });
-           refetchCounts()
+          toast.success("Request rejected successfully");
+          setIsRejecting(false);
+          setRejectDialogOpen(false);
+          fetchReceivedInterests({
+            page: currentPage - 1,
+            pageSize: itemsPerPage,
+          });
+          refetchCounts();
         },
         onError: (error) => {
-          toast.error(error?.response?.data?.message || "Failed to update request");
+          toast.error(
+            error?.response?.data?.message || "Failed to reject request"
+          );
+          setIsRejecting(false);
         },
       }
     );
+  };
+
+  const handleRejectDialogClose = () => {
+    setRejectDialogOpen(false);
+    setSelectedSender(null);
+  };
+
+  // Add handleOpenDialog function
+  const handleOpenDialog = (user) => {
+    setSelectedUser(user);
+    setOpenDialog(true);
   };
 
   const interests = receivedInterests?.content || [];
@@ -65,8 +116,8 @@ const Requests = ({refetchCounts}) => {
           display: "flex",
           flexWrap: "wrap",
           gap: 3,
-          justifyContent: {xs: "center", sm: "flex-start"},
-          mr:2,
+          justifyContent: { xs: "center", sm: "flex-start" },
+          mr: 2,
           marginTop: 1,
         }}
       >
@@ -77,7 +128,6 @@ const Requests = ({refetchCounts}) => {
               justifyContent: "center",
               alignItems: "center",
               width: "100%",
-              minHeight: "200px", // optional: ensures it takes space to center vertically
             }}
           >
             <LoadingTextSpinner />
@@ -89,12 +139,52 @@ const Requests = ({refetchCounts}) => {
             <UserCard
               key={interest._id}
               profile={interest.sender}
-              onResponse={handleInterestResponse}
+              onViewMore={handleOpenDialog} // Add this prop
+              onResponse={(senderRefNo, isAccepted) =>
+                isAccepted
+                  ? updateInterest(
+                      {
+                        sender: senderRefNo,
+                        recipient,
+                        status: "accepted",
+                      },
+                      {
+                        onSuccess: () => {
+                          toast.success("Request accepted successfully");
+                          fetchReceivedInterests({
+                            page: currentPage - 1,
+                            pageSize: itemsPerPage,
+                          });
+                          refetchCounts();
+                        },
+                        onError: (error) => {
+                          toast.error(
+                            error?.response?.data?.message ||
+                              "Failed to update request"
+                          );
+                        },
+                      }
+                    )
+                  : handleRejectClick(senderRefNo)
+              }
               showResponseButtons={true}
             />
           ))
         )}
       </Box>
+
+      {/* Add ProfileDialog component */}
+      {selectedUser && (
+        <ProfileDialog
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          selectedUser={selectedUser}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          isLoading={false}
+          isRequestTab={true}
+        />
+      )}
 
       {totalPages > 1 && interests.length > 0 && (
         <Box sx={{ display: "flex", justifyContent: "end", marginTop: 4 }}>
@@ -108,7 +198,9 @@ const Requests = ({refetchCounts}) => {
           />
         </Box>
       )}
-       <Dialog open={rejectDialogOpen} onClose={handleRejectDialogClose}>
+
+      {/* Reject Confirmation Dialog */}
+      <Dialog open={rejectDialogOpen} onClose={handleRejectDialogClose}>
         <DialogTitle sx={{ fontWeight: 600, color: "black" }}>
           Reject Profile
         </DialogTitle>
