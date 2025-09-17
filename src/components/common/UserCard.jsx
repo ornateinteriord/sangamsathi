@@ -97,11 +97,11 @@ const UserCard = ({
           width: { xs: 100, sm: 120 },
           height: { xs: 100, sm: 120 },
           borderRadius: "50%",
-          border: "3px solid #87CEEB",
+          border: "2.5px solid #5e0476",
           boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
           mb: 2,
           padding: "2px",
-          background: "linear-gradient(45deg, #87CEEB, #E0F7FA)",
+          background: "linear-gradient(45deg, #5e0476, #fff)",
         }}
       >
         <Avatar
@@ -202,12 +202,14 @@ const UserCard = ({
                 fullWidth
                 variant="contained"
                 sx={{
-                  backgroundColor: "#4caf50",
-                  color: "#fff",
+                  backgroundColor: "transparent",
+                  border: "1px solid #5e0476",
+                  color: "#000",
                   textTransform: "capitalize",
                   flex: 1,
                   "&:hover": {
-                    backgroundColor: "#45a049"
+                    backgroundColor: "#5e0476",
+                      color: "#fff",
                   }
                 }}
                 onClick={() => onResponse(profile?.registration_no, true)}
@@ -220,9 +222,12 @@ const UserCard = ({
           <Button
             fullWidth
             variant="contained"
-            color="primary"
             onClick={() => onViewMore(profile)}
             sx={{
+               backgroundColor: "#5e0476",
+                "&:hover": {
+                    backgroundColor: "#80119eff",
+                  },
               minWidth: "120px",
               borderRadius: 2,
               py: 1,
