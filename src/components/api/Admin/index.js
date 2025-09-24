@@ -20,6 +20,24 @@ export const useUpgradeUserType = () => {
   });
 };
 
+export const getRenewalProfiles = () => {
+  return useMutation({
+    mutationFn: async ({ page, pageSize, search = "" }) => {
+      const response = await get("/api/admin/renewal-profiles", {
+        page,
+        pageSize,
+        search,
+      });
+      
+      if (response?.success) {
+        return response;
+      } else {
+        throw new Error(response?.message || "Failed to fetch renewal profiles");
+      }
+    },
+  });
+};
+
 export const getAllUserImageVerification = () => {
    return useMutation({
     mutationFn: async ({ page, pageSize }) => {
