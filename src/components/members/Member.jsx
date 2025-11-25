@@ -5,6 +5,8 @@ import {
   Box,
   Paper,
   useMediaQuery,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
@@ -18,7 +20,9 @@ const Members = () => {
   const isLargeScreen = useMediaQuery("(min-width:1200px)");
   const isMediumScreen = useMediaQuery("(min-width:900px)");
   const isSmallScreen = useMediaQuery("(min-width:600px)");
-  const { data: recentregisters = [] } = useGetRecentRegisters();
+  
+  // Destructure properly with loading and error states
+  const { data: recentregisters, isLoading, error } = useGetRecentRegisters();
 
   const getSlidesPerView = () => {
     if (isLargeScreen) return 3;
@@ -26,6 +30,36 @@ const Members = () => {
     if (isSmallScreen) return 1.5;
     return 1;
   };
+
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <Container sx={{ mt: 3 }}>
+        <Alert severity="error">Error loading recent registers: {error.message}</Alert>
+      </Container>
+    );
+  }
+
+  // Ensure recentregisters is an array before mapping
+  const membersData = Array.isArray(recentregisters) ? recentregisters : [];
+
+  // If no data available
+  if (membersData.length === 0) {
+    return (
+      <Container sx={{ mt: 3, textAlign: "center" }}>
+        <Typography variant="h6">No recent registers found.</Typography>
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -60,11 +94,11 @@ const Members = () => {
             speed={1000}
             navigation={{
               nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
+              prevEl: ".swiper-button-pre",
             }}
             loop
           >
-            {recentregisters?.map((member) => (
+            {membersData.map((member) => (
               <SwiperSlide key={member._id}>
                 <Box
                   sx={{
@@ -144,7 +178,7 @@ const Members = () => {
                               wordBreak: "break-word",
                             }}
                           >
-                            {item.value}
+                            {item.value || "N/A"}
                           </Typography>
                         </Box>
                       ))}

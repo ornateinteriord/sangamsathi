@@ -2,9 +2,9 @@
 export const membershipOptions = [
   {
     name: 'SILVER MEMBERSHIP',
-    originalPrice: '₹2,399.60',
-    discountedPrice: '₹599',
-    discount: 'Save 70%',
+    originalPrice: '₹1499',
+    discountedPrice: '₹999',
+    discount: 'Save ₹500',
     duration: '6 MONTHS',
     features: [
       'View Profile Details',
@@ -19,9 +19,9 @@ export const membershipOptions = [
   },
   {
     name: 'PREMIUM MEMBERSHIP',
-    originalPrice: '₹2,399.60',
-    discountedPrice: '₹999',
-    discount: 'Save 60%',
+    originalPrice: '₹2999',
+    discountedPrice: '₹1499',
+    discount: 'Save ₹1500',
     duration: '1 YEAR',
     features: [
       'All Silver Features',
