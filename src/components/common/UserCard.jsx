@@ -15,55 +15,69 @@ import { calculateAge, isSilverOrPremiumUser } from "../../utils/common";
 const UserCard = ({
   profile,
   connection = null,
-  onViewMore = () => {},
-  onCancelRequest = () => {},
-  onRemoveConnection = () => {},
+  onViewMore = () => { },
+  onCancelRequest = () => { },
+  onRemoveConnection = () => { },
   interestId = null,
   showCancelButton = false,
-  onResponse = () => {},
+  onResponse = () => { },
   showResponseButtons = false,
   showRemoveButton = false,
 }) => {
   const age = profile?.age || calculateAge(profile?.date_of_birth);
+  const isPremium = isSilverOrPremiumUser(profile?.type_of_user || profile?.type_of_use);
 
   return (
     <Card
       sx={{
         width: { xs: 280, sm: 280, md: 260, lg: 280 },
-        borderRadius: 4,
-        boxShadow: 3,
+        borderRadius: "20px",
+        boxShadow: "0 4px 24px rgba(94,4,118,0.10)",
         overflow: "hidden",
-        transition: "transform 0.2s",
+        transition: "transform 0.25s ease, box-shadow 0.25s ease",
         "&:hover": {
-          transform: "translateY(-4px)",
-          boxShadow: 6,
+          transform: "translateY(-6px)",
+          boxShadow: "0 12px 36px rgba(94,4,118,0.18)",
         },
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        pt: 2,
         position: "relative",
+        background: "#fff",
       }}
     >
+      {/* Top gradient banner */}
+      <Box
+        sx={{
+          width: "100%",
+          height: 72,
+          background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+          position: "relative",
+          flexShrink: 0,
+        }}
+      />
+
+      {/* Connection direction badge */}
       {connection && (
         <Box
           sx={{
             position: "absolute",
-            top: 12,
+            top: 10,
             right: 12,
             backgroundColor:
               connection?.direction === "sent" ? "#1976d2" : "#4caf50",
             color: "white",
             borderRadius: "50%",
-            width: "24px",
-            height: "24px",
+            width: 26,
+            height: 26,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "12px",
+            fontSize: "13px",
             fontWeight: "bold",
             border: "2px solid white",
-            zIndex: 1,
+            zIndex: 2,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
           }}
           title={
             connection?.direction === "sent"
@@ -71,44 +85,63 @@ const UserCard = ({
               : "You accepted this request"
           }
         >
-          {connection?.direction === "sent" ? "→" : "←"}
+          {connection?.direction === "sent" ? "↑" : "↓"}
         </Box>
       )}
 
-      {isSilverOrPremiumUser(profile?.type_of_user || profile?.type_of_use) && (
+      {/* Premium badge */}
+      {isPremium && (
         <Chip
-          label="PREMIUM"
+          label="★ PREMIUM"
           size="small"
           sx={{
             position: "absolute",
-            top: 12,
+            top: 10,
             left: connection ? 12 : "auto",
             right: connection ? "auto" : 12,
-            fontWeight: 500,
-            fontSize: { xs: "0.6rem", sm: "0.7rem" },
-            backgroundColor: "#FFD700",
-            zIndex: 1,
+            fontWeight: 700,
+            fontSize: "0.6rem",
+            letterSpacing: "0.5px",
+            background: "linear-gradient(135deg, #f7c948, #e6a800)",
+            color: "#5a3800",
+            border: "none",
+            boxShadow: "0 2px 8px rgba(230,168,0,0.4)",
+            zIndex: 2,
+            height: 22,
           }}
         />
       )}
 
+      {/* Avatar floated over banner */}
       <Box
         sx={{
-          width: { xs: 100, sm: 120 },
-          height: { xs: 100, sm: 120 },
-          borderRadius: "50%",
-          border: "2.5px solid #5e0476",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-          mb: 2,
-          padding: "2px",
-          background: "linear-gradient(45deg, #5e0476, #fff)",
+          position: "relative",
+          mt: "-44px",
+          mb: 1.5,
+          zIndex: 1,
         }}
       >
-        <Avatar
-          src={profile?.image}
-          alt={profile?.first_name}
-          sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
+        <Box
+          sx={{
+            width: { xs: 90, sm: 96 },
+            height: { xs: 90, sm: 96 },
+            borderRadius: "50%",
+            background: "linear-gradient(135deg, #5e0476, #c774e8)",
+            padding: "3px",
+            boxShadow: "0 4px 16px rgba(94,4,118,0.35)",
+          }}
+        >
+          <Avatar
+            src={profile?.image}
+            alt={profile?.first_name}
+            sx={{
+              width: "100%",
+              height: "100%",
+              border: "3px solid #fff",
+              fontSize: "2rem",
+            }}
+          />
+        </Box>
       </Box>
 
       <CardContent
@@ -117,59 +150,96 @@ const UserCard = ({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          px: { xs: 1, sm: 2 },
+          px: { xs: 1.5, sm: 2 },
           pt: 0,
-          pb: 2,
+          pb: "16px !important",
           textAlign: "center",
         }}
       >
-        <Typography fontWeight="500px" sx={{ color: "#000", mb: 0.5 }}>
+        {/* Name */}
+        <Typography
+          sx={{
+            fontWeight: 700,
+            fontSize: "1rem",
+            color: "#1a1a1a",
+            mb: 0.25,
+            lineHeight: 1.3,
+          }}
+        >
           {profile?.first_name} {profile?.last_name}
         </Typography>
-        <Typography color="text.secondary">{age || "N/A"} yrs</Typography>
 
+        {/* Age */}
+        <Typography
+          sx={{
+            fontSize: "0.82rem",
+            color: "#5e0476",
+            fontWeight: 600,
+            mb: 1.2,
+            background: "rgba(94,4,118,0.07)",
+            px: 1.5,
+            py: 0.25,
+            borderRadius: "20px",
+          }}
+        >
+          {age || "N/A"} yrs
+        </Typography>
+
+        {/* Occupation */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: 1,
-            mb: 0.5,
+            gap: 0.75,
+            mb: 0.6,
           }}
         >
-          <FaBriefcase size={16} color="#000" />
-          <Typography variant="body2" color="#000" sx={{ lineHeight: 1.3 }}>
+          <FaBriefcase size={13} color="#7a0c99" />
+          <Typography variant="body2" sx={{ color: "#444", fontSize: "0.82rem" }}>
             {profile?.occupation || "Not specified"}
           </Typography>
         </Box>
 
+        {/* Location */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: 1,
-            mb: 1,
+            gap: 0.75,
+            mb: 1.5,
           }}
         >
-          <FaMapMarkerAlt size={16} color="#000" />
-          <Typography variant="body2" color="#000" sx={{ lineHeight: 1.3 }}>
+          <FaMapMarkerAlt size={13} color="#7a0c99" />
+          <Typography variant="body2" sx={{ color: "#444", fontSize: "0.82rem" }}>
             {[profile?.city, profile?.state, profile?.country]
               .filter(Boolean)
               .join(", ") || "Location not specified"}
           </Typography>
         </Box>
 
-        <Divider
-          sx={{ width: "100%", my: 1, height: "1px", borderColor: "#ccc" }}
-        />
-
-        <Box display="flex" justifyContent="space-around" width="100%" mb={1}>
-          <ProfileInfo label="Heigh"  font value={profile?.height || "N/A"} />
+        {/* Stats row */}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            background: "rgba(94,4,118,0.04)",
+            borderRadius: "12px",
+            py: 1,
+            px: 0.5,
+            mb: 1.5,
+          }}
+        >
+          <ProfileInfo label="Height" value={profile?.height || "N/A"} />
+          <Divider orientation="vertical" flexItem sx={{ borderColor: "rgba(94,4,118,0.15)" }} />
           <ProfileInfo label="Religion" value={profile?.religion || "N/A"} />
+          <Divider orientation="vertical" flexItem sx={{ borderColor: "rgba(94,4,118,0.15)" }} />
           <ProfileInfo label="Caste" value={profile?.caste || "N/A"} />
         </Box>
 
+        {/* Action Buttons */}
         <Box
           display="flex"
           justifyContent="center"
@@ -179,20 +249,22 @@ const UserCard = ({
           flexWrap="wrap"
         >
           {showResponseButtons && (
-            <Box sx={{ display: 'flex', gap: 1, width: '100%', mb: 1 }}>
+            <Box sx={{ display: "flex", gap: 1, width: "100%", mb: 0.75 }}>
               <Button
                 fullWidth
                 variant="outlined"
                 sx={{
-                  background: "#fff",
-                  ":hover":{
-                    background: "transparent"
+                  color: "#d32f2f",
+                  borderColor: "rgba(211,47,47,0.4)",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  borderRadius: "10px",
+                  fontSize: "0.82rem",
+                  flex: 1,
+                  "&:hover": {
+                    background: "rgba(211,47,47,0.06)",
+                    borderColor: "#d32f2f",
                   },
-                  color: "red",
-                  fontWeight: 500,
-                  borderColor: "red",
-                  textTransform: "capitalize",
-                  flex: 1
                 }}
                 onClick={() => onResponse(profile?.registration_no, false)}
               >
@@ -202,15 +274,18 @@ const UserCard = ({
                 fullWidth
                 variant="contained"
                 sx={{
-                  backgroundColor: "transparent",
-                  border: "1px solid #5e0476",
-                  color: "#000",
-                  textTransform: "capitalize",
+                  background: "linear-gradient(135deg, #5e0476, #7a0c99)",
+                  color: "#fff",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  borderRadius: "10px",
+                  fontSize: "0.82rem",
                   flex: 1,
+                  boxShadow: "0 2px 10px rgba(94,4,118,0.3)",
                   "&:hover": {
-                    backgroundColor: "#5e0476",
-                      color: "#fff",
-                  }
+                    background: "linear-gradient(135deg, #7a0c99, #5e0476)",
+                    boxShadow: "0 4px 14px rgba(94,4,118,0.4)",
+                  },
                 }}
                 onClick={() => onResponse(profile?.registration_no, true)}
               >
@@ -219,45 +294,47 @@ const UserCard = ({
             </Box>
           )}
 
+          {/* View More */}
           <Button
             fullWidth
             variant="contained"
             onClick={() => onViewMore(profile)}
             sx={{
-               backgroundColor: "#5e0476",
-                "&:hover": {
-                    backgroundColor: "#80119eff",
-                  },
-              minWidth: "120px",
-              borderRadius: 2,
-              py: 1,
+              background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #7a0c99 0%, #5e0476 100%)",
+                boxShadow: "0 4px 16px rgba(94,4,118,0.4)",
+                transform: "translateY(-1px)",
+              },
+              transition: "all 0.2s ease",
+              boxShadow: "0 2px 10px rgba(94,4,118,0.25)",
+              borderRadius: "10px",
+              py: 0.9,
               textTransform: "none",
-              fontWeight: 500,
-              fontSize: { xs: "0.8rem", sm: "0.9rem" },
+              fontWeight: 600,
+              fontSize: { xs: "0.82rem", sm: "0.88rem" },
             }}
           >
-            View More
+            View Profile
           </Button>
 
           {showRemoveButton && (
             <Button
               fullWidth
               variant="outlined"
-              color="primary"
               onClick={() => onRemoveConnection(interestId)}
               sx={{
                 flex: 1,
-                borderRadius: 2,
-                py: 1,
+                borderRadius: "10px",
+                py: 0.9,
                 textTransform: "none",
-                fontWeight: 500,
-                fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                backgroundColor: "#d32f2f",
-                color : '#fff',
+                fontWeight: 600,
+                fontSize: { xs: "0.78rem", sm: "0.82rem" },
+                color: "#d32f2f",
+                borderColor: "rgba(211,47,47,0.4)",
                 "&:hover": {
-                  backgroundColor: "#d32f2f",
-                  color : '#fff',
-                  borderColor : '#fff'
+                  background: "rgba(211,47,47,0.06)",
+                  borderColor: "#d32f2f",
                 },
               }}
             >
@@ -269,16 +346,20 @@ const UserCard = ({
             <Button
               fullWidth
               variant="outlined"
-              color="primary"
               onClick={() => onCancelRequest(interestId)}
               sx={{
                 flex: 1,
-                borderRadius: 2,
-                py: 1,
+                borderRadius: "10px",
+                py: 0.9,
                 textTransform: "none",
-                fontWeight: 500,
-                fontSize: { xs: "0.8rem", sm: "0.7rem" },
-                "&:hover": { backgroundColor: "transparent" },
+                fontWeight: 600,
+                fontSize: { xs: "0.78rem", sm: "0.82rem" },
+                color: "#888",
+                borderColor: "rgba(0,0,0,0.2)",
+                "&:hover": {
+                  background: "rgba(0,0,0,0.04)",
+                  borderColor: "rgba(0,0,0,0.35)",
+                },
               }}
             >
               Cancel Request
@@ -293,15 +374,14 @@ const UserCard = ({
 export default UserCard;
 
 export const ProfileInfo = ({ label, value }) => (
-  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: 0.5 }}>
     <Typography
-      variant="body2"
-      color="text.secondary"
-      sx={{ fontWeight: 500, color: "#000" }}
+      variant="caption"
+      sx={{ fontWeight: 700, color: "#5e0476", fontSize: "0.68rem", letterSpacing: "0.3px", textTransform: "uppercase" }}
     >
       {label}
     </Typography>
-    <Typography variant="body2" color="text.secondary">
+    <Typography variant="body2" sx={{ color: "#333", fontWeight: 500, fontSize: "0.82rem" }}>
       {value}
     </Typography>
   </Box>

@@ -13,8 +13,43 @@ import useAuth from "../hook/UseAuth";
 import TokenService from "../token/tokenService";
 import ThemedButton from "../UI/ThemedButton";
 
+// Defined outside component so React doesn't treat them as new types every render
+const HeroWrapper = styled(Box)({
+  position: "relative",
+  textAlign: "center",
+  color: "#fff",
+  height: "100vh",
+  overflow: "hidden",
+});
 
+const SlideImage = styled(Box)({
+  width: "100%",
+  height: "100vh",
+  objectFit: "cover",
+  objectPosition: "center",
+});
 
+const Overlay = styled(Box)({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0, 0, 0, 0.4)",
+  zIndex: 1,
+});
+
+const Content = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  zIndex: 2,
+  textAlign: "center",
+  width: "90%",
+  maxWidth: "1200px",
+  padding: theme.spacing(2),
+}));
 
 const HeroSlider = () => {
   const theme = useTheme();
@@ -42,42 +77,6 @@ const HeroSlider = () => {
     adaptiveHeight: true,
   };
 
-  const HeroWrapper = styled(Box)(({ theme }) => ({
-    position: "relative",
-    textAlign: "center",
-    color: "#fff",
-    height: isMobile ? "100vh" : isTablet ? "80vh" : "100vh",
-    overflow: "hidden",
-  }));
-
-  const SlideImage = styled(Box)(({ theme }) => ({
-    width: "100%",
-    height: isMobile ? "100vh" : isTablet ? "80vh" : "100vh",
-    objectFit: "cover",
-    objectPosition: "center",
-  }));
-
-  const Overlay = styled(Box)(({ theme }) => ({
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    zIndex: 1,
-  }));
-
-  const Content = styled(Box)(({ theme }) => ({
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    zIndex: 2,
-    textAlign: "center",
-    width: "90%",
-    maxWidth: "1200px",
-    padding: theme.spacing(2),
-  }));
 
   return (
     <Box className="hero-main-container">
@@ -136,7 +135,7 @@ const HeroSlider = () => {
               mt: isMobile ? 1 : 2,
             }}
           >
-           {isLoggedIn ? (
+            {isLoggedIn ? (
               <ThemedButton
                 title="Get Started"
                 size={isMobile ? "small" : "large"}
@@ -147,7 +146,7 @@ const HeroSlider = () => {
                   fontFamily: 'Outfit, sans-serif',
                   minWidth: isMobile ? '160px' : '200px',
                 }}
-                onClick={() => navigate(isAdmin? '/admin/dashboard' : '/user/userDashboard')}
+                onClick={() => navigate(isAdmin ? '/admin/dashboard' : '/user/userDashboard')}
               />
             ) : (
               <>
@@ -170,7 +169,7 @@ const HeroSlider = () => {
                   sx={{
                     backgroundColor: '#FFFF',
                     '&:hover': { backgroundColor: '#FFFF' },
-                    color:'#000',
+                    color: '#000',
                     px: isMobile ? 2 : 4,
                     py: isMobile ? 1.5 : 1.5,
                     fontSize: isMobile ? '1rem' : '1rem',

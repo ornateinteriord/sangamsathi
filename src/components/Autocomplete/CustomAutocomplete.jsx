@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 
 const CustomAutocomplete = ({
   options,
@@ -13,6 +13,12 @@ const CustomAutocomplete = ({
 }) => {
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
+  // Re-sync filteredOptions when the options prop changes (e.g. filtered by parent)
+  useEffect(() => {
+    setFilteredOptions(options);
+  }, [options]);
+
 
   const handleInputChange = (_, inputValue) => {
     onChange({ target: { name, value: inputValue } });
@@ -30,7 +36,7 @@ const CustomAutocomplete = ({
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setHighlightedIndex(prev => 
+      setHighlightedIndex(prev =>
         Math.min(prev + 1, filteredOptions.length - 1)
       );
     } else if (e.key === 'ArrowUp') {
@@ -38,11 +44,11 @@ const CustomAutocomplete = ({
       setHighlightedIndex(prev => Math.max(prev - 1, -1));
     } else if (e.key === 'Enter' && highlightedIndex >= 0) {
       e.preventDefault();
-      onChange({ 
-        target: { 
-          name, 
-          value: filteredOptions[highlightedIndex] 
-        } 
+      onChange({
+        target: {
+          name,
+          value: filteredOptions[highlightedIndex]
+        }
       });
       setHighlightedIndex(-1);
     }
@@ -66,11 +72,11 @@ const CustomAutocomplete = ({
         />
       )}
       renderOption={(props, option, { selected }) => (
-        <li 
-          {...props} 
-          style={{ 
-            backgroundColor: highlightedIndex === filteredOptions.indexOf(option) 
-              ? '#f5f5f5' 
+        <li
+          {...props}
+          style={{
+            backgroundColor: highlightedIndex === filteredOptions.indexOf(option)
+              ? '#f5f5f5'
               : 'inherit',
             padding: '8px 16px'
           }}

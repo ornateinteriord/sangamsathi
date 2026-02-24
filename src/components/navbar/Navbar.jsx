@@ -20,7 +20,7 @@ import {
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff, EmailOutlined, LockOutlined, FavoriteRounded } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -41,6 +41,7 @@ const Navbar = () => {
   const [forgotPasswordError, setForgotPasswordError] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -117,7 +118,7 @@ const Navbar = () => {
       return;
     }
     setForgotPasswordError("");
-    
+
     resetPassword({ email }, {
       onSuccess: (response) => {
         if (response.success) {
@@ -140,11 +141,11 @@ const Navbar = () => {
       setForgotPasswordError("All fields are required");
       return;
     }
-    
-    resetPassword({ 
-      email, 
-      otp, 
-      password: newPassword, 
+
+    resetPassword({
+      email,
+      otp,
+      password: newPassword,
     }, {
       onSuccess: () => {
         toast.success("Password reset successfully");
@@ -164,8 +165,8 @@ const Navbar = () => {
           <IconButton
             className="menu-button"
             onClick={toggleMobileMenu}
-            sx={{ 
-              display: { xs: "flex", md: "none" }, 
+            sx={{
+              display: { xs: "flex", md: "none" },
               color: "#fff",
             }}
           >
@@ -183,7 +184,7 @@ const Navbar = () => {
               whiteSpace: "nowrap",
               textDecoration: "none",
               color: "#fff",
-             textAlign:'center',
+              textAlign: 'center',
               [theme.breakpoints.up('md')]: {
                 margin: "0",
                 marginRight: "auto"
@@ -194,65 +195,63 @@ const Navbar = () => {
           </Typography>
 
           {/* Desktop Menu */}
-       <Box 
-  sx={{ 
-    display: { xs: "none", md: "flex" },
-    flexGrow: 1,
-    justifyContent: "center",
-    marginLeft: "20px"
-  }}
->
-  {menuItems.map((item) => {
-    // Get the current path (assuming you're using React Router)
-    const currentPath = window.location.pathname;
-    // Check if this item is active
-    const isActive = currentPath === item.path;
-    
-    return (
-      <Button
-        key={item.text}
-        component={Link}
-        to={item.path}
-        sx={{
-          color: "#fff",
-          fontWeight: 600,  
-          fontSize: "1rem",
-          textTransform: "capitalize",
-          margin: "0 8px",
-          position: "relative",
-          "&:hover": {
-            color: "#fff",  
-            backgroundColor: "transparent",  
-            "&::after": { 
-              content: '""',
-              position: "absolute",
-              bottom: "4px",
-              left: "8px",
-              right: "8px",
-              height: "2px",
-              backgroundColor: "#fff",  
-              transform: "scaleX(1)",  
-              transition: "transform 0.3s ease"
-            }
-          },
-          "&::after": {  
-            content: '""',
-            position: "absolute",
-            bottom: "4px",
-            left: "8px",
-            right: "8px",
-            height: "2px",
-            backgroundColor: "#fff",
-            transform: isActive ? "scaleX(1)" : "scaleX(0)",  
-            transition: "transform 0.3s ease"
-          }
-        }}
-      >
-        {item.text}
-      </Button>
-    );
-  })}
-</Box>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              flexGrow: 1,
+              justifyContent: "center",
+              marginLeft: "20px"
+            }}
+          >
+            {menuItems.map((item) => {
+              const isActive = location.pathname === item.path;
+
+              return (
+                <Button
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                  sx={{
+                    color: "#fff",
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                    textTransform: "capitalize",
+                    margin: "0 8px",
+                    position: "relative",
+                    "&:hover": {
+                      color: "#fff",
+                      backgroundColor: "transparent",
+                      "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        bottom: "4px",
+                        left: "8px",
+                        right: "8px",
+                        height: "2px",
+                        backgroundColor: "#fff",
+                        transform: "scaleX(1)",
+                        transition: "transform 0.3s ease"
+                      }
+                    },
+                    "&::after": {
+                      content: '""',
+                      position: "absolute",
+                      bottom: "4px",
+                      left: "8px",
+                      right: "8px",
+                      height: "2px",
+                      backgroundColor: "#fff",
+                      transform: isActive ? "scaleX(1)" : "scaleX(0)",
+                      transition: "transform 0.3s ease"
+                    }
+                  }}
+                >
+                  {item.text}
+                </Button>
+              );
+            })}
+
+          </Box>
 
           {/* Auth Buttons */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -278,7 +277,7 @@ const Navbar = () => {
               </Button>
             ) : (
               <>
-             <Button
+                <Button
                   variant="contained"
                   size={isMobile ? "medium" : "large"}
                   onClick={handleOpen}
@@ -351,8 +350,8 @@ const Navbar = () => {
                   },
                 }}
               >
-                <Link 
-                  className="link mobile-link" 
+                <Link
+                  className="link mobile-link"
                   to={item.path}
                   style={{
                     width: "100%",
@@ -360,8 +359,8 @@ const Navbar = () => {
                     color: "#fff",
                   }}
                 >
-                  <ListItemText 
-                    primary={item.text} 
+                  <ListItemText
+                    primary={item.text}
                     primaryTypographyProps={{ fontWeight: 500 }}
                   />
                 </Link>
@@ -420,67 +419,141 @@ const Navbar = () => {
       </Drawer>
 
       {/* Login Dialog */}
-      <Dialog 
-        open={open} 
+      <Dialog
+        open={open}
         onClose={handleClose}
         maxWidth="xs"
         fullWidth
         PaperProps={{
           sx: {
-            borderRadius: "12px",
-            padding: {xs: "0px", sm: "10px"},
+            borderRadius: "20px",
+            overflow: "hidden",
+            boxShadow: "0 24px 60px rgba(94,4,118,0.25)",
+            padding: "0px",
           }
         }}
       >
-        <DialogTitle
+        {/* Gradient Header */}
+        <Box
           sx={{
+            background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+            pt: 4,
+            pb: 3,
+            px: 3,
             textAlign: "center",
-            fontWeight: "bold",
-            fontSize: "1.5rem",
-            paddingBottom: "0px",
+            position: "relative",
           }}
         >
-          Login
-        </DialogTitle>
-        <DialogContent>
+          <IconButton
+            onClick={handleClose}
+            size="small"
+            sx={{
+              position: "absolute",
+              top: 12,
+              right: 12,
+              color: "rgba(255,255,255,0.7)",
+              "&:hover": { color: "#fff", background: "rgba(255,255,255,0.15)" },
+            }}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+          <Box
+            sx={{
+              width: 58,
+              height: 58,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.15)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              mx: "auto",
+              mb: 1,
+              border: "2px solid rgba(255,255,255,0.25)",
+            }}
+          >
+            <FavoriteRounded sx={{ color: "#fff", fontSize: 20 }} />
+          </Box>
+          {/* <Typography sx={{ color: "#fff", fontWeight: 700, fontSize: "1.4rem", letterSpacing: "0.3px" }}>
+            Welcome Back
+          </Typography> */}
+          <Typography sx={{ color: "rgba(255,255,255,0.72)", fontSize: "1.2rem", }}>
+            Login to your Sangam Sathi account
+          </Typography>
+        </Box>
+
+        {/* Form Body */}
+        <DialogContent sx={{ px: 3, pt: 3, pb: 1 }}>
           <Box
             component="form"
             onSubmit={handleLogin}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-             
-            }}
+            sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}
           >
             <TextField
               fullWidth
-              placeholder="Enter Email"
+              label="Email Address"
               name="username"
               value={loginData.username}
               onChange={handleChangeLogin}
               variant="outlined"
               required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailOutlined sx={{ color: "#5e0476", fontSize: 20 }} />
+                  </InputAdornment>
+                ),
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "5px",
+                  borderRadius: "10px",
+                  "&:hover fieldset": { borderColor: "#5e0476" },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#5e0476",
+                    boxShadow: "0 0 0 3px rgba(94,4,118,0.1)",
+                  },
                 },
-                mb:1
+                "& label.Mui-focused": { color: "#5e0476" },
               }}
             />
             <TextField
               fullWidth
-              placeholder="Password"
+              label="Password"
               name="password"
               value={loginData.password}
               onChange={handleChangeLogin}
-              type="password"
+              type={showLoginPassword ? "text" : "password"}
               variant="outlined"
               required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOutlined sx={{ color: "#5e0476", fontSize: 20 }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowLoginPassword(!showLoginPassword)}
+                      edge="end"
+                      size="small"
+                    >
+                      {showLoginPassword
+                        ? <VisibilityOff sx={{ fontSize: 20, color: "#999" }} />
+                        : <Visibility sx={{ fontSize: 20, color: "#999" }} />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "5px",
+                  borderRadius: "10px",
+                  "&:hover fieldset": { borderColor: "#5e0476" },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#5e0476",
+                    boxShadow: "0 0 0 3px rgba(94,4,118,0.1)",
+                  },
                 },
+                "& label.Mui-focused": { color: "#5e0476" },
               }}
             />
             <Typography
@@ -488,10 +561,11 @@ const Navbar = () => {
               sx={{
                 color: "#5e0476",
                 cursor: "pointer",
-                textAlign: "center",
-                "&:hover": {
-                  textDecoration: "underline",
-                },
+                textAlign: "right",
+                fontWeight: 500,
+                fontSize: "0.82rem",
+                mt: -1,
+                "&:hover": { textDecoration: "underline" },
               }}
               onClick={handleOpenForgotPassword}
             >
@@ -499,72 +573,61 @@ const Navbar = () => {
             </Typography>
           </Box>
         </DialogContent>
-        <DialogActions
-          sx={{
-            padding: "6px 24px",
-            flexDirection: "column",
-            gap: "12px",
-          }}
-        >
+
+        <DialogActions sx={{ px: 3, pb: 3, pt: 1, flexDirection: "column", gap: "14px" }}>
           <Button
             variant="contained"
             fullWidth
-            type="submit"
             onClick={handleLogin}
             disabled={isLoginPending}
             sx={{
-              height: "44px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              textTransform: "capitalize",
+              height: "48px",
+              borderRadius: "10px",
+              fontWeight: 700,
+              textTransform: "none",
               fontSize: "1rem",
-              backgroundColor: "#5e0476",
+              letterSpacing: "0.3px",
+              background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+              boxShadow: "0 4px 14px rgba(94,4,118,0.35)",
               "&:hover": {
-                  backgroundColor: "#6c1b83ff",
-              }
+                background: "linear-gradient(135deg, #7a0c99 0%, #5e0476 100%)",
+                boxShadow: "0 6px 20px rgba(94,4,118,0.45)",
+                transform: "translateY(-1px)",
+              },
+              transition: "all 0.25s ease",
             }}
           >
-            {isLoginPending ? (
-             <CircularProgress size={24} color="inherit" /> 
-            ) : (
-              "Login"
-            )}
+            {isLoginPending ? <CircularProgress size={22} color="inherit" /> : "Login"}
           </Button>
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "center",
-              color:  "#5e0476",
-            }}
-          >
+
+          <Typography variant="body2" sx={{ color: "#666", fontSize: "0.875rem", pb: 1 }}>
             Don't have an account?{" "}
-            <span
-              style={{
-                color:  "#5e0476",
+            <Box
+              component="span"
+              sx={{
+                color: "#5e0476",
                 cursor: "pointer",
-                fontWeight: "bold",
+                fontWeight: 700,
+                "&:hover": { textDecoration: "underline" },
               }}
-              onClick={() => {
-                handleClose();
-                navigate('/register');
-              }}
+              onClick={() => { handleClose(); navigate("/register"); }}
             >
-              Register
-            </span>
+              Register now
+            </Box>
           </Typography>
         </DialogActions>
       </Dialog>
 
       {/* Forgot Password Dialog */}
-      <Dialog 
-        open={openForgotPassword} 
-        onClose={handleCloseForgotPassword} 
+      <Dialog
+        open={openForgotPassword}
+        onClose={handleCloseForgotPassword}
         maxWidth="xs"
         fullWidth
         PaperProps={{
           sx: {
             borderRadius: "12px",
-             padding: {xs: "0px", sm: "10px"},
+            padding: { xs: "0px", sm: "10px" },
           }
         }}
       >
@@ -636,7 +699,7 @@ const Navbar = () => {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton 
+                        <IconButton
                           onClick={() => setShowNewPassword(!showNewPassword)}
                           edge="end"
                         >
@@ -662,7 +725,7 @@ const Navbar = () => {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton 
+                        <IconButton
                           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                           edge="end"
                         >
@@ -686,63 +749,63 @@ const Navbar = () => {
             )}
           </Box>
         </DialogContent>
-  <DialogActions
-  sx={{
-    padding: "6px 24px",
-    flexDirection: "column",
-    gap: "12px",
-  }}
->
-  <Button
-    variant="contained"
-    fullWidth
-    onClick={otpSent ? handleResetPassword : handleSendOtp}
-    disabled={isResettingPassword}
-    sx={{
-      height: "44px",
-      borderRadius: "8px",
-      fontWeight: 500,
-      textTransform: "capitalize",
-      fontSize: "1rem",
-      backgroundColor: "#5e0476",
-      "&:hover": {
-        backgroundColor: "#6c1b83",
-      },
-    }}
-  >
-    {isResettingPassword ? (
-      <CircularProgress size={24} color="inherit" />
-    ) : otpSent ? (
-      "Reset Password"
-    ) : (
-      "Send OTP"
-    )}
-  </Button>
+        <DialogActions
+          sx={{
+            padding: "6px 24px",
+            flexDirection: "column",
+            gap: "12px",
+          }}
+        >
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={otpSent ? handleResetPassword : handleSendOtp}
+            disabled={isResettingPassword}
+            sx={{
+              height: "44px",
+              borderRadius: "8px",
+              fontWeight: 500,
+              textTransform: "capitalize",
+              fontSize: "1rem",
+              backgroundColor: "#5e0476",
+              "&:hover": {
+                backgroundColor: "#6c1b83",
+              },
+            }}
+          >
+            {isResettingPassword ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : otpSent ? (
+              "Reset Password"
+            ) : (
+              "Send OTP"
+            )}
+          </Button>
 
-  <Button
-    variant="outlined"
-    fullWidth
-    onClick={handleCloseForgotPassword}
-    sx={{
-      height: "44px",
-      mb:2.4,
-      mr:1,
-      borderRadius: "8px",
-      fontWeight: 500,
-      textTransform: "capitalize",
-      fontSize: "1rem",
-      color: "#5e0476",
-      borderColor: "#5e0476",
-      "&:hover": {
-        borderColor: "#6c1b83",
-        backgroundColor: "#e3d2e7ff",
-        color: "#6c1b83",
-      },
-    }}
-  >
-    Cancel
-  </Button>
-</DialogActions>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={handleCloseForgotPassword}
+            sx={{
+              height: "44px",
+              mb: 2.4,
+              mr: 1,
+              borderRadius: "8px",
+              fontWeight: 500,
+              textTransform: "capitalize",
+              fontSize: "1rem",
+              color: "#5e0476",
+              borderColor: "#5e0476",
+              "&:hover": {
+                borderColor: "#6c1b83",
+                backgroundColor: "#e3d2e7ff",
+                color: "#6c1b83",
+              },
+            }}
+          >
+            Cancel
+          </Button>
+        </DialogActions>
 
       </Dialog>
     </div>

@@ -1,51 +1,41 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-     font-family: 'Outfit', sans-serif !important;
-   
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
 }
-body{
-    font-family: 'Outfit', sans-serif;
-    background-color: #fff;
-    color: #fff;
-   
-}
-button:hover{
-    background-color:transparent ;
-}
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden; /* Hides the scrollbar */
-  }
-  
-  ::-webkit-scrollbar {
-    display: none; /* Hide the scrollbar */
-  }
 
- * {
-   margin: 0 !important;
-   padding: 0 !important;
-   box-sizing: border-box !important;
- }
-
- button:hover {
-   background-color: transparent;
- }
+html {
+  scroll-behavior: smooth;
+}
 
 html, body {
-  
+  width: 100%;
+  min-height: 100%;
+  background-color: #fff;
+  color: #1a1a1a;
+  overflow-x: hidden;
+}
 
-   width: 100% !important;
-   height: 100%;
-   overflow: hidden !important;
-   background-color: #fff;
-   color: #fff;
- }
-
+/* Custom thin scrollbar */
 ::-webkit-scrollbar {
-  display: none;
+  width: 5px;
+  height: 5px;
 }
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #5e0476;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7a0c99;
+}
+
+/* Remove default browser button reset that fights with MUI */
+button:not([class]) {
+  cursor: pointer;
+}
+
 

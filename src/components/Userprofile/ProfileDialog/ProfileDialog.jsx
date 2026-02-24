@@ -7,12 +7,14 @@ import {
   CircularProgress,
   Dialog,
   DialogContent,
+  IconButton,
   Tab,
   Tabs,
   Typography,
 } from "@mui/material";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { FaHeart } from "react-icons/fa";
+import CloseIcon from "@mui/icons-material/Close";
 import { get } from "../../api/authHooks";
 import TokenService from "../../token/tokenService";
 import MembershipDialog from "../MembershipDailog/MembershipDailog";
@@ -36,14 +38,7 @@ const ProfileDialog = ({
   isLoading,
   isRequestTab = false,
 }) => {
-  const tabLabels = [
-    "About",
-    "Family",
-    "Education",
-    "LifeStyle",
-    "Preference",
-    "Others",
-  ];
+  const tabLabels = ["About", "Family", "Education", "LifeStyle", "Preference", "Others"];
   const [localInterestStatus, setLocalInterestStatus] = useState("none");
   const [isStatusLoading, setIsStatusLoading] = useState(false);
   const [membershipDialogOpen, setMembershipDialogOpen] = useState(false);
@@ -53,7 +48,6 @@ const ProfileDialog = ({
 
   const renderDialogContent = () => {
     if (!selectedUser) return null;
-
     const contentMap = {
       0: <AboutPop userDetails={selectedUser} />,
       1: <FamilyPop userDetails={selectedUser} />,
@@ -62,21 +56,15 @@ const ProfileDialog = ({
       4: <PreferencePop userDetails={selectedUser} />,
       5: <OthersPop userDetails={selectedUser} />,
     };
-
     return contentMap[currentTab] || null;
   };
 
   const fetchStatus = async () => {
-    if (
-      !loggedInUserRole ||
-      !loggedInUserId ||
-      !selectedUser?.registration_no
-    ) {
+    if (!loggedInUserRole || !loggedInUserId || !selectedUser?.registration_no) {
       setLocalInterestStatus("none");
       setIsStatusLoading(false);
       return;
     }
-
     setIsStatusLoading(true);
     try {
       const response = await get(
@@ -93,74 +81,54 @@ const ProfileDialog = ({
   };
 
   useEffect(() => {
-    if (
-      openDialog &&
-      loggedInUserRole &&
-      loggedInUserId &&
-      selectedUser?.registration_no
-    ) {
+    if (openDialog && loggedInUserRole && loggedInUserId && selectedUser?.registration_no) {
       fetchStatus();
     }
-  }, [
-    openDialog,
-    loggedInUserRole,
-    loggedInUserId,
-    selectedUser?.registration_no,
-  ]);
+  }, [openDialog, loggedInUserRole, loggedInUserId, selectedUser?.registration_no]);
 
   const getButtonState = () => {
     if (isStatusLoading) {
-      return {
-        color: "primary",
-        text: "Loading...",
-        disabled: true,
-      };
+      return { color: "primary", text: "Loading...", disabled: true };
     }
     if (loggedInUserRole === "FreeUser") {
       return {
-        color: "gold", 
-        text: "Upgrade",
+        color: "gold",
+        text: "Upgrade to Connect",
         disabled: false,
         isPremiumAction: true,
         customStyle: {
           textTransform: "none",
-          background: "linear-gradient(45deg, #FFD700 0%, #D4AF37 100%)",
-          color: "#000",
-          fontWeight: "bold",
+          background: "linear-gradient(135deg, #FFD700 0%, #D4AF37 100%)",
+          color: "#5a3800",
+          fontWeight: 700,
+          boxShadow: "0 4px 14px rgba(212,175,55,0.35)",
           "&:hover": {
-            background: "linear-gradient(45deg, #D4AF37 0%, #FFD700 100%)",
+            background: "linear-gradient(135deg, #D4AF37 0%, #FFD700 100%)",
+            boxShadow: "0 6px 20px rgba(212,175,55,0.45)",
+            transform: "translateY(-1px)",
           },
         },
       };
     }
     switch (localInterestStatus) {
       case "pending":
-        return {
-          color: "warning",
-          text: "Request Sent",
-          disabled: true,
-        };
+        return { color: "warning", text: "Request Sent", disabled: true };
       case "accepted":
-        return {
-          color: "success",
-          text: "Connected",
-          disabled: true,
-        };
+        return { color: "success", text: "Connected ✓", disabled: true };
       case "rejected":
-        return {
-          color: "error",
-          text: "Rejected",
-          disabled: true,
-        };
+        return { color: "error", text: "Rejected", disabled: true };
       default:
         return {
           color: "primary",
           text: "Express Interest",
           disabled: false,
-            customStyle: {
-            backgroundColor: "#5e0476",
+          customStyle: {
+            background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+            boxShadow: "0 4px 14px rgba(94,4,118,0.35)",
             "&:hover": {
-              backgroundColor: "#7a1c9a",
+              background: "linear-gradient(135deg, #7a0c99 0%, #5e0476 100%)",
+              boxShadow: "0 6px 20px rgba(94,4,118,0.45)",
+              transform: "translateY(-1px)",
             },
           },
         };
@@ -168,7 +136,6 @@ const ProfileDialog = ({
   };
 
   const buttonState = getButtonState();
-
   const expressInterestMutation = useExpressInterest();
 
   const handleButtonClick = () => {
@@ -199,9 +166,28 @@ const ProfileDialog = ({
       }
     );
   };
+
   const handleConfirmPayment = () => {
     setMembershipDialogOpen(false);
   };
+
+  // Membership chip styling
+  const getMembershipChip = (type) => {
+    if (type === "PremiumUser")
+      return {
+        label: "★ Premium",
+        bg: "linear-gradient(135deg, #FFD700, #D4AF37)",
+        color: "#5a3800",
+      };
+    if (type === "SilverUser")
+      return {
+        label: "◆ Silver",
+        bg: "linear-gradient(135deg, #C0C0C0, #A8A8A8)",
+        color: "#22272e",
+      };
+    return { label: "Free", bg: "#e8f4fd", color: "#1565c0" };
+  };
+  const chip = getMembershipChip(selectedUser?.type_of_user);
 
   return (
     <>
@@ -214,140 +200,212 @@ const ProfileDialog = ({
           "& .MuiDialog-paper": {
             margin: { xs: "8px", sm: "16px" },
             width: { xs: "calc(100% - 16px)", sm: "calc(100% - 32px)" },
-            maxWidth: "1200px",
+            maxWidth: "1100px",
             maxHeight: { xs: "calc(100% - 16px)", sm: "calc(100% - 32px)" },
+            borderRadius: "20px",
+            overflow: "hidden",
+            boxShadow: "0 24px 64px rgba(94,4,118,0.2)",
           },
         }}
       >
         <DialogContent
           sx={{
             p: 0,
-            backgroundColor: "#f5f5f5",
+            background: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)",
             overflowY: "auto",
             maxHeight: { xs: "90vh", sm: "85vh" },
           }}
         >
+          {/* Close button */}
+          <IconButton
+            onClick={() => setOpenDialog(false)}
+            sx={{
+              position: "absolute",
+              top: 12,
+              right: 12,
+              zIndex: 10,
+              background: "rgba(255,255,255,0.85)",
+              backdropFilter: "blur(6px)",
+              boxShadow: "0 2px 10px rgba(0,0,0,0.12)",
+              "&:hover": { background: "#fff" },
+            }}
+          >
+            <CloseIcon sx={{ fontSize: 20, color: "#5e0476" }} />
+          </IconButton>
+
           <Box
             sx={{
               width: "100%",
               display: "flex",
               flexDirection: { xs: "column", md: "row" },
               gap: { xs: 2, sm: 3 },
-              p: { xs: 1.5, sm: 3 },
+              p: { xs: 2, sm: 3 },
             }}
           >
-
+            {/* ── Left Panel ── */}
             <Box
               sx={{
-                flex: 1,
+                flex: "0 0 auto",
+                width: { xs: "100%", md: 270 },
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: { xs: 1, sm: 2 },
-                minWidth: { xs: "100%", md: "300px" },
+                gap: 2,
               }}
             >
-              <CardMedia
-                component="img"
-                src={selectedUser?.image || Profileimage}
+              {/* Photo card */}
+              <Box
                 sx={{
-                  borderRadius: 2,
-                  height: { xs: 200, sm: 250, md: 280 },
                   width: "100%",
-                  objectFit: "contain",
-                  maxWidth: { xs: "300px", md: "none" },
+                  background: "#fff",
+                  borderRadius: "16px",
+                  boxShadow: "0 4px 20px rgba(94,4,118,0.1)",
+                  overflow: "hidden",
+                  border: "1px solid rgba(94,4,118,0.08)",
                 }}
-              />
-              <Box textAlign="center" sx={{ width: "100%" }}>
-                <Typography
-                  variant="h5"
-                  fontWeight="500px"
-                  sx={{ fontSize: { xs: "1.3rem", sm: "1.5rem" } }}
-                >
-                  {selectedUser?.first_name} {selectedUser?.last_name}
-                </Typography>
-                <Typography
-                  color="text.secondary"
-                  sx={{ fontSize: { xs: "0.9rem", sm: "1rem" } }}
-                >
-                  {selectedUser?.age ||
-                    calculateAge(selectedUser?.date_of_birth)}{" "}
-                  yrs, {selectedUser?.height}
-                </Typography>
-                <Chip
-                  label={selectedUser?.type_of_user || "FreeUser"}
-                  size="small"
+              >
+                {/* Gradient top strip */}
+                <Box
                   sx={{
-                    mt: 1,
-                    fontSize: { xs: "0.7rem", sm: "0.8rem" },
-                    backgroundColor:
-                      selectedUser?.type_of_user === "PremiumUser" ||
-                      selectedUser?.type_of_user === "SilverUser"
-                        ? "#FFD700"
-                        : selectedUser?.type_of_user === "FreeUser"
-                        ? "#87CEEB"
-                        : "gray",
-                    color: "#000",
-                    fontWeight: "500px",
+                    height: 8,
+                    background: "linear-gradient(90deg, #5e0476, #7a0c99, #c774e8)",
                   }}
                 />
+                <Box sx={{ p: 2.5, textAlign: "center" }}>
+                  <Box
+                    sx={{
+                      display: "inline-block",
+                      borderRadius: "50%",
+                      background: "linear-gradient(135deg, #5e0476, #c774e8)",
+                      p: "3px",
+                      boxShadow: "0 4px 16px rgba(94,4,118,0.3)",
+                      mb: 2,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      src={selectedUser?.image || Profileimage}
+                      sx={{
+                        borderRadius: "50%",
+                        width: { xs: 130, md: 150 },
+                        height: { xs: 130, md: 150 },
+                        objectFit: "cover",
+                        display: "block",
+                        border: "3px solid #fff",
+                      }}
+                    />
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: 700, color: "#1a1a1a", fontSize: { xs: "1.1rem", sm: "1.2rem" } }}
+                  >
+                    {selectedUser?.first_name} {selectedUser?.last_name}
+                  </Typography>
+                  <Typography
+                    sx={{ color: "#666", fontSize: "0.88rem", mt: 0.25, mb: 1.25 }}
+                  >
+                    {selectedUser?.age || calculateAge(selectedUser?.date_of_birth)} yrs
+                    {selectedUser?.height ? ` • ${selectedUser.height}` : ""}
+                  </Typography>
+
+                  <Chip
+                    label={chip.label}
+                    size="small"
+                    sx={{
+                      background: chip.bg,
+                      color: chip.color,
+                      fontWeight: 700,
+                      fontSize: "0.7rem",
+                      letterSpacing: "0.3px",
+                      border: "none",
+                      boxShadow:
+                        selectedUser?.type_of_user === "PremiumUser"
+                          ? "0 2px 8px rgba(212,175,55,0.35)"
+                          : "none",
+                    }}
+                  />
+                </Box>
+              </Box>
+
+              {/* Verified badge strip */}
+              <Box
+                sx={{
+                  width: "100%",
+                  background: "#fff",
+                  borderRadius: "12px",
+                  p: 1.5,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  boxShadow: "0 2px 10px rgba(94,4,118,0.08)",
+                  border: "1px solid rgba(94,4,118,0.08)",
+                }}
+              >
+                <RiVerifiedBadgeFill style={{ fontSize: 20, color: "#1976d2", flexShrink: 0 }} />
+                <Typography sx={{ fontSize: "0.88rem", fontWeight: 600, color: "#1a1a1a" }}>
+                  Verified Profile
+                </Typography>
               </Box>
             </Box>
 
-
-            <Box
-              sx={{
-                flex: 2,
-                minWidth: 0,
-                width: { xs: "100%", md: "auto" },
-              }}
-            >
-             <Tabs
-  value={currentTab}
-  onChange={(e, val) => setCurrentTab(val)}
-  variant="scrollable"
-  scrollButtons="auto"
-  sx={{
-    mb: 2,
-    "& .MuiTabs-indicator": {
-      backgroundColor: "#5e0476", 
-      height: 3,
-    },
-    "& .MuiTab-root": {
-      fontSize: { xs: "0.7rem", sm: "0.8rem" },
-      minWidth: "unset",
-      padding: { xs: "6px 12px", sm: "12px 16px" },
-      textTransform: "none", 
-      fontWeight: 500,
-      color: "text.secondary",
-      "&.Mui-selected": {
-        color: "#5e0476",
-        fontWeight: 600,
-      },
-      "&:hover": {
-        backgroundColor: "rgba(94, 4, 118, 0.08)", 
-        color: "#5e0476",
-      },
-    },
-  }}
->
-  {tabLabels.map((label, index) => (
-    <Tab 
-      key={index} 
-      label={label}
-      sx={{
-      }}
-    />
-  ))}
-</Tabs>
+            {/* ── Right Panel ── */}
+            <Box sx={{ flex: 2, minWidth: 0, width: { xs: "100%", md: "auto" } }}>
+              {/* Tabs */}
               <Box
                 sx={{
-                  p: { xs: 1, sm: 2 },
-                  backgroundColor: "white",
-                  borderRadius: 2,
-                  boxShadow: 1,
-                  minHeight: { xs: 250, sm: 300 },
-                  maxHeight: { xs: "40vh", sm: "50vh", md: "60vh" },
+                  background: "#fff",
+                  borderRadius: "12px",
+                  mb: 2,
+                  boxShadow: "0 2px 10px rgba(94,4,118,0.08)",
+                  border: "1px solid rgba(94,4,118,0.08)",
+                  overflow: "hidden",
+                }}
+              >
+                <Tabs
+                  value={currentTab}
+                  onChange={(e, val) => setCurrentTab(val)}
+                  variant="scrollable"
+                  scrollButtons="auto"
+                  sx={{
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: "#5e0476",
+                      height: 3,
+                      borderRadius: "3px 3px 0 0",
+                    },
+                    "& .MuiTab-root": {
+                      fontSize: { xs: "0.72rem", sm: "0.82rem" },
+                      minWidth: "unset",
+                      padding: { xs: "10px 12px", sm: "12px 18px" },
+                      textTransform: "none",
+                      fontWeight: 500,
+                      color: "#666",
+                      "&.Mui-selected": {
+                        color: "#5e0476",
+                        fontWeight: 700,
+                      },
+                      "&:hover": {
+                        backgroundColor: "rgba(94,4,118,0.05)",
+                        color: "#5e0476",
+                      },
+                    },
+                  }}
+                >
+                  {tabLabels.map((label, index) => (
+                    <Tab key={index} label={label} />
+                  ))}
+                </Tabs>
+              </Box>
+
+              {/* Tab content */}
+              <Box
+                sx={{
+                  p: { xs: 1.5, sm: 2.5 },
+                  background: "#fff",
+                  borderRadius: "12px",
+                  boxShadow: "0 2px 10px rgba(94,4,118,0.08)",
+                  border: "1px solid rgba(94,4,118,0.08)",
+                  minHeight: { xs: 220, sm: 280 },
+                  maxHeight: { xs: "38vh", sm: "48vh", md: "55vh" },
                   overflowY: "auto",
                 }}
               >
@@ -356,99 +414,71 @@ const ProfileDialog = ({
             </Box>
           </Box>
 
+          {/* ── Footer Action Bar ── */}
           <Box
             sx={{
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               alignItems: "center",
-              p: { xs: 1.5, sm: 2 },
-              backgroundColor: "white",
-              borderTop: "1px solid #eee",
-              gap: { xs: 1, sm: 0 },
+              px: { xs: 2, sm: 3 },
+              py: 2,
+              background: "#fff",
+              borderTop: "1px solid rgba(94,4,118,0.1)",
+              gap: 1.5,
             }}
           >
-            <Box
-              display="flex"
-              alignItems="center"
-              sx={{ mb: { xs: 1, sm: 0 } }}
-            >
-              <RiVerifiedBadgeFill
-                style={{
-                  fontSize: { xs: 20, sm: 24 },
-                  color: "#1976d2",
-                  marginRight: 8,
+            {loggedInUserId !== selectedUser?.registration_no && !isRequestTab && (
+              <Button
+                variant="contained"
+                onClick={handleButtonClick}
+                disabled={isLoading || buttonState.disabled}
+                startIcon={
+                  isLoading || isStatusLoading
+                    ? <CircularProgress size={18} color="inherit" />
+                    : <FaHeart />
+                }
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 700,
+                  borderRadius: "10px",
+                  px: 3,
+                  py: 1,
+                  fontSize: { xs: "0.85rem", sm: "0.92rem" },
+                  transition: "all 0.25s ease",
+                  width: { xs: "100%", sm: "auto" },
+                  ...buttonState.customStyle,
                 }}
-              />
-              <Typography
-                variant="body1"
-                fontWeight="500px"
-                color="#000"
-                sx={{ fontSize: { xs: "0.9rem", sm: "1rem" } }}
               >
-                Verified Profile
-              </Typography>
-            </Box>
-            <Box
+                {buttonState.text}
+              </Button>
+            )}
+
+            <Button
+              variant="outlined"
+              onClick={() => setOpenDialog(false)}
               sx={{
-                display: "flex",
-                gap: 2,
+                textTransform: "none",
+                fontWeight: 600,
+                borderRadius: "10px",
+                px: 3,
+                py: 1,
+                fontSize: { xs: "0.85rem", sm: "0.92rem" },
+                color: "#5e0476",
+                borderColor: "rgba(94,4,118,0.3)",
                 width: { xs: "100%", sm: "auto" },
-                "& button": {
-                  fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                  padding: { xs: "6px 12px", sm: "8px 16px" },
+                "&:hover": {
+                  borderColor: "#5e0476",
+                  background: "rgba(94,4,118,0.04)",
                 },
               }}
             >
-              {loggedInUserId !== selectedUser?.registration_no && !isRequestTab && (
-                <Button
-                  variant="contained"
-                  color={buttonState.color}
-                  onClick={handleButtonClick}
-                  disabled={isLoading}
-                  startIcon={
-                    isLoading || isStatusLoading ? (
-                      <CircularProgress size={20} />
-                    ) : (
-                      <FaHeart />
-                    )
-                  }
-                  fullWidth={window.innerWidth < 600}
-                  sx={{
-                    textTransform: "none",
-                    fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                    padding: { xs: "6px 12px", sm: "8px 16px" },
-                    backgroundColor: (theme) =>
-                      theme.palette[buttonState.color]?.main ||
-                      theme.palette.primary.main,
-                    "&:hover": {
-                      backgroundColor: (theme) =>
-                        theme.palette[buttonState.color]?.main ||
-                        theme.palette.primary.main,
-                    },
-                    ...buttonState.customStyle,
-                  }}
-                >
-                  {buttonState.text}
-                </Button>
-              )}
-
-              <Button
-                variant="outlined"
-                onClick={() => setOpenDialog(false)}
-                fullWidth={window.innerWidth < 600}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "transparent",
-                  },
-                }}
-              >
-                Close
-              </Button>
-            </Box>
+              Close
+            </Button>
           </Box>
         </DialogContent>
       </Dialog>
+
       <MembershipDialog
         open={membershipDialogOpen}
         onClose={() => setMembershipDialogOpen(false)}
