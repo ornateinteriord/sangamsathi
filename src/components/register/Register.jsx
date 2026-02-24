@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
+// Cashfree JS SDK v3 is loaded via <script> tag in index.html (window.Cashfree)
 import {
   Box,
   Paper,
@@ -16,6 +18,7 @@ import {
 } from "@mui/material";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import rawJsonData from "../Userprofile/profile/eduction/jsondata/data.json";
+
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { toast } from "react-toastify";
@@ -41,7 +44,7 @@ const Register = () => {
   const [citySuggestions, setCitySuggestions] = useState(datas.cities || []);
   const [talukSuggestions, setTalukSuggestions] = useState([]);
 
-  const getUserRole = () => {
+  const getUserRole = useCallback(() => {
     switch (planType) {
       case "PremiumUser":
         return "PremiumUser";
@@ -50,7 +53,7 @@ const Register = () => {
       default:
         return "FreeUser";
     }
-  };
+  }, [planType]);
 
   const initialFormState = {
     user_role: getUserRole(),
@@ -81,6 +84,20 @@ const Register = () => {
   };
 
   const [formData, setFormData] = useState(initialFormState);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+
+  // Determine display amount for selected plan
+  const getPlanAmount = () => {
+    switch (planType) {
+      case "PremiumUser":
+        return 1499;
+      case "SilverUser":
+        return 999;
+      default:
+        return 0;
+    }
+  };
+  const displayAmount = getPlanAmount();
 
   useEffect(() => {
     setFormData((prev) => ({
@@ -159,23 +176,104 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // --- Field Validation ---
+    if (!formData.first_name?.trim()) {
+      toast.error("Please enter your first name");
+      return;
+    }
     if (!/^[0-9]{10}$/.test(formData.mobile_no)) {
       toast.error("Please enter a valid 10-digit mobile number");
       return;
     }
-
+    if (!formData.username?.trim()) {
+      toast.error("Please enter your email");
+      return;
+    }
+    if (!formData.password || formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
-    try {
+
+    const planName = getUserRole();
+    let amount = 0;
+    if (planName === "PremiumUser") amount = 1499;
+    else if (planName === "SilverUser") amount = 999;
+
+    // --- Free User: Register directly ---
+    if (amount === 0) {
       mutate(formData, {
-        onSuccess: () => {
-          toast.success(formData.message);
-        },
+        onSuccess: () => toast.success("Registered successfully!"),
+        onError: (err) =>
+          toast.error(err?.response?.data?.error || "Registration failed. Try again."),
       });
-    } catch (error) {}
+      return;
+    }
+
+    // --- Paid User: Create order → Open Cashfree Checkout ---
+    (async () => {
+      try {
+        setIsProcessingPayment(true);
+
+        // Guard: Make sure Cashfree SDK is loaded (from index.html CDN script)
+        if (typeof window.Cashfree !== "function") {
+          toast.error(
+            "Payment SDK not loaded. Please check your internet connection and refresh the page."
+          );
+          return;
+        }
+
+        const orderId = `REG-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+        const BACKEND_URL = import.meta.env.VITE_API_URL || "";
+
+        const payload = {
+          orderId,
+          orderAmount: amount,
+          customerName: `${formData.first_name} ${formData.last_name || ""}`.trim(),
+          customerEmail: formData.username.trim().toLowerCase(),
+          customerPhone: formData.mobile_no,
+          planType: planName,
+          context: "registration",
+          originalAmount: amount,
+        };
+
+        const resp = await axios.post(`${BACKEND_URL}/api/payment/create-order`, payload, {
+          headers: { "Content-Type": "application/json" },
+          timeout: 30000,
+        });
+
+        const data = resp.data || {};
+        const sessionId = data.payment_session_id;
+        const cashfreeEnv = data.cashfree_env === "production" ? "production" : "sandbox";
+
+        if (!sessionId) {
+          toast.error("Could not initiate payment. Please try again.");
+          return;
+        }
+
+        // Open Cashfree hosted checkout page
+        const cashfree = window.Cashfree({ mode: cashfreeEnv });
+        cashfree.checkout({
+          paymentSessionId: sessionId,
+          redirectTarget: "_self", // redirects back to return_url after payment
+        });
+
+      } catch (err) {
+        console.error("Payment error:", err);
+        const message =
+          err?.response?.data?.error ||
+          err?.message ||
+          "Failed to start payment. Please try again.";
+        toast.error(message);
+      } finally {
+        setIsProcessingPayment(false);
+      }
+    })();
   };
+
 
   const isValidAge = (value) => {
     if (value === "") return true; // Allow empty field
@@ -192,18 +290,20 @@ const Register = () => {
           py: 4,
           px: { xs: 1, sm: 2 },
           mt: "10px",
-          width: isMobile ? "100%" : "85%",
+          width: isMobile ? "100%" : "88%",
           display: "flex",
           justifyContent: "center",
           justifySelf: "center",
+          background: "linear-gradient(135deg, #faf5ff 0%, #f9f0ff 100%)",
+          borderRadius: 3,
         }}
       >
         <Box
           component="form"
           onSubmit={handleSubmit}
           sx={{
-            p: { xs: 2, sm: 4, md: 6 },
-            borderRadius: 2,
+            p: { xs: 2, sm: 4, md: 5 },
+            borderRadius: 3,
             width: "100%",
           }}
         >
@@ -212,10 +312,13 @@ const Register = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              mb: 2,
+              mb: 3,
               flexDirection: { xs: "column", sm: "row" },
               gap: 1,
               width: "100%",
+              pb: 2,
+              borderBottom: "2px solid",
+              borderColor: "rgba(94,4,118,0.15)",
             }}
           >
             <Box
@@ -238,43 +341,97 @@ const Register = () => {
               </Typography>
             </Box>
 
-            <Box
-              sx={{
-                fontSize: { xs: "18px", sm: "22px" },
-                backgroundColor: "transparent",
-                color: "black",
-                py: 1,
-                borderRadius: 1,
-                fontWeight: 500,
-              }}
-            >
-              Registering as:{" "}
+            {displayAmount > 0 && (
               <Box
-                component="span"
                 sx={{
-                  color: "#5e0476",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1.5,
+                  background: "linear-gradient(135deg, #5e0476, #7a0c99)",
+                  color: "#fff",
+                  py: 1,
+                  px: 2.5,
+                  borderRadius: 2,
+                  fontWeight: 600,
+                  fontSize: { xs: "14px", sm: "16px" },
+                  boxShadow: "0 4px 14px rgba(94,4,118,0.35)",
                 }}
               >
+                <Box component="span" sx={{ opacity: 0.85, fontSize: "13px" }}>Plan:</Box>
                 {getUserRole()}
+                <Box
+                  component="span"
+                  sx={{
+                    ml: 1,
+                    background: "rgba(255,255,255,0.2)",
+                    px: 1.5,
+                    py: 0.3,
+                    borderRadius: 1,
+                    fontSize: "14px",
+                  }}
+                >
+                  ₹{displayAmount}
+                </Box>
               </Box>
-            </Box>
+            )}
+            {displayAmount === 0 && (
+              <Box
+                sx={{
+                  fontSize: { xs: "14px", sm: "16px" },
+                  color: "#555",
+                  py: 0.5,
+                  px: 2,
+                  borderRadius: 2,
+                  fontWeight: 500,
+                  border: "1px solid rgba(94,4,118,0.2)",
+                  background: "rgba(94,4,118,0.04)",
+                }}
+              >
+                Plan: <Box component="span" sx={{ color: "#5e0476", fontWeight: 600 }}>Free</Box>
+              </Box>
+            )}
           </Box>
-
-          <Divider sx={{ height: "1px", mb: isMobile ? 1 : 2 }} />
 
           <Box
             sx={{
               display: "flex",
               flexDirection: { xs: "column", md: "row" },
-              gap: 4,
+              gap: 3,
+              mt: 3,
             }}
           >
-            <Box sx={{ flex: 1 }}>
+            <Box
+              sx={{
+                flex: 1,
+                background: "#fff",
+                borderRadius: 3,
+                p: { xs: 2, sm: 3 },
+                boxShadow: "0 2px 16px rgba(94,4,118,0.08)",
+                border: "1px solid rgba(94,4,118,0.08)",
+              }}
+            >
               <Typography
                 variant="h6"
-                sx={{ mb: 3, color: "#5e0476", fontWeight: 600 }}
+                sx={{
+                  mb: 3,
+                  color: "#5e0476",
+                  fontWeight: 700,
+                  fontSize: "0.9rem",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  "&::after": {
+                    content: '""',
+                    flex: 1,
+                    height: "1px",
+                    background: "rgba(94,4,118,0.15)",
+                    ml: 1,
+                  },
+                }}
               >
-                PERSONAL DETAILS
+                Personal Details
               </Typography>
 
               <FormControl fullWidth sx={{ mb: 3 }} required>
@@ -435,12 +592,38 @@ const Register = () => {
               </Box>
             </Box>
 
-            <Box sx={{ flex: 1 }}>
+            <Box
+              sx={{
+                flex: 1,
+                background: "#fff",
+                borderRadius: 3,
+                p: { xs: 2, sm: 3 },
+                boxShadow: "0 2px 16px rgba(94,4,118,0.08)",
+                border: "1px solid rgba(94,4,118,0.08)",
+              }}
+            >
               <Typography
                 variant="h6"
-                sx={{ mb: 3, color: "#5e0476", fontWeight: 600 }}
+                sx={{
+                  mb: 3,
+                  color: "#5e0476",
+                  fontWeight: 700,
+                  fontSize: "0.9rem",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  "&::after": {
+                    content: '""',
+                    flex: 1,
+                    height: "1px",
+                    background: "rgba(94,4,118,0.15)",
+                    ml: 1,
+                  },
+                }}
               >
-                FAMILY DETAILS
+                Family Details
               </Typography>
 
               <FormControl fullWidth sx={{ mb: 3 }}>
@@ -526,9 +709,27 @@ const Register = () => {
 
           <Typography
             variant="h6"
-            sx={{ mt: 1, mb: 3, color: "#5e0476", fontWeight: 600 }}
+            sx={{
+              mt: 3,
+              mb: 2.5,
+              color: "#5e0476",
+              fontWeight: 700,
+              fontSize: "0.9rem",
+              letterSpacing: "1.5px",
+              textTransform: "uppercase",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              "&::after": {
+                content: '""',
+                flex: 1,
+                height: "1px",
+                background: "rgba(94,4,118,0.15)",
+                ml: 1,
+              },
+            }}
           >
-            LOGIN DETAILS
+            Login Details
           </Typography>
 
           <Box
@@ -609,6 +810,7 @@ const Register = () => {
               type="password"
               value={formData.password}
               onChange={handleChange}
+              required
             />
             <TextField
               fullWidth
@@ -617,6 +819,7 @@ const Register = () => {
               type="password"
               value={formData.confirmPassword}
               onChange={handleChange}
+              required
             />
           </Box>
 
@@ -639,7 +842,7 @@ const Register = () => {
               sx={{
                 fontWeight: 600,
                 color: "#000",
-                border:'1px solid #5e0476',
+                border: '1px solid #5e0476',
                 width: { xs: "100%", sm: "50%", md: "20%" },
                 textTransform: "capitalize",
                 "&:hover": {
@@ -655,19 +858,26 @@ const Register = () => {
               type="submit"
               variant="contained"
               size="large"
-              disabled={isPending}
+              disabled={isPending || isProcessingPayment}
               sx={{
-                backgroundColor: "#5e0476",
+                background: isPending || isProcessingPayment
+                  ? "#ccc"
+                  : "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
                 "&:hover": {
-                  backgroundColor: "#5e0476",
+                  background: "linear-gradient(135deg, #7a0c99 0%, #5e0476 100%)",
+                  boxShadow: "0 6px 20px rgba(94,4,118,0.4)",
+                  transform: "translateY(-1px)",
                 },
+                transition: "all 0.25s ease",
                 color: "white",
-                fontWeight: 600,
+                fontWeight: 700,
+                letterSpacing: "0.5px",
                 width: { xs: "100%", sm: "50%", md: "20%" },
                 textTransform: "capitalize",
+                borderRadius: 2,
               }}
             >
-              Submit
+              {isProcessingPayment ? 'Redirecting to Payment...' : displayAmount > 0 ? `Pay ₹${displayAmount}` : 'Submit'}
             </Button>
           </Box>
         </Box>

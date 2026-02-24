@@ -1,12 +1,12 @@
 import React from 'react';
-import { 
-  Box, 
-  Typography, 
-  Button, 
-  Grid, 
-  Card, 
-  CardContent, 
-  Divider, 
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Divider,
   Container,
   useTheme,
   useMediaQuery,
@@ -15,9 +15,9 @@ import {
   ListItem,
   ListItemIcon
 } from '@mui/material';
-import { 
-  CreditCard, 
-  Shield, 
+import {
+  CreditCard,
+  Shield,
   VerifiedUser,
   CheckCircle,
   Star,
@@ -36,7 +36,7 @@ import { useNavigate } from 'react-router-dom';
 const MembershipPlans = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
   const benefits = [
@@ -47,34 +47,32 @@ const MembershipPlans = () => {
     { icon: <PhoneAndroid color="success" />, text: 'Dedicated mobile app' }
   ];
 
-const handlePlanSelection = (planName) => {
-  const planRoles = {
-    'PREMIUM MEMBERSHIP': 'PremiumUser',
-    'SILVER MEMBERSHIP': 'SilverUser'
-  };
+  const handlePlanSelection = (planName) => {
+    const planRoles = {
+      'PREMIUM MEMBERSHIP': 'PremiumUser',
+      'SILVER MEMBERSHIP': 'SilverUser'
+    };
 
-  const planType = planRoles[planName] || 'FreeUser';
-  navigate(`/register?type=${planType}`);  
-  
-  console.log(`Navigating with plan type: ${planType}`);  
-};
+    const planType = planRoles[planName] || 'FreeUser';
+    navigate(`/register?type=${planType}`);
+  };
 
   return (
     <>
       <Navbar />
-      <Box sx={{ 
+      <Box sx={{
         background: '#ffff',
         minHeight: '100vh',
-        py:isMobile? 5.5 : 6
+        py: isMobile ? 5.5 : 6
       }}>
         <Box width={'100%'} padding={'20px'}>
-          <Typography 
-            component="h4" 
-            sx={{ 
-                fontSize: isMobile? "28px":"40px",
-              textAlign: 'left', 
-              mt:1,
-              mb: isMobile? 1 : 3,
+          <Typography
+            component="h4"
+            sx={{
+              fontSize: isMobile ? "28px" : "40px",
+              textAlign: 'left',
+              mt: 1,
+              mb: isMobile ? 1 : 3,
               fontWeight: 500,
               color: theme.palette.primary.main,
               background: '#5e0476',
@@ -84,291 +82,292 @@ const handlePlanSelection = (planName) => {
           >
             Find Your Perfect Match
           </Typography>
-      <Divider sx={{
-        height: '1px',my:1}} />
-         <Box
-  sx={{
-    display: 'flex',
-    flexDirection: isMobile ? 'column' : 'row',
-    gap: 4,
-    mt: 0,
-  }}
->
-  {/* Left Side - Description Container */}
-  <Box
-    sx={{
-      flex: isMobile ? '1 1 100%' : '0 0 33%',
-    }}
-  >
-    <Paper
-      elevation={3}
-      sx={{
-     mt:isMobile?2:6,
-        p: 4,
-        borderRadius: 3,
-        background: 'linear-gradient(145deg, #ffffff, #f5f5ff)',
-        borderLeft: `6px solid ${theme.palette.primary.main}`,
-        height: '100%',
-      }}
-    >
-      <Typography
-        sx={{
-          fontSize:isMobile? "18px" : "23px",
-          mb: 0,
-          fontWeight: 500,
-          color: '#5e0476',
-          textAlign: 'left',
-        }}
-      >
-        Why Choose Our Membership?
-      </Typography>
-
-      <List>
-        {benefits.map((item, index) => (
-          <ListItem key={index} sx={{ px: 0 }}>
-            <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
-            <Typography variant="body1" color='#000'>{item.text}</Typography>
-          </ListItem>
-        ))}
-      </List>
-
-      <Divider sx={{ height:'1px',  my:isMobile?1:1 }} />
-
-      <Typography variant="body1" sx={{ mb: 2 ,textAlign:'start',color:'#000'}}>
-        Our membership plans are designed to help you find your perfect match with premium features and exclusive benefits.
-      </Typography>
-
-      <Box
-        sx={{
-          p: 2,
-          borderRadius: 2,
-          bgcolor: '#f0f4ff',
-          border: `1px dashed ${theme.palette.primary.light}`,
-        }}
-      >
-        <Typography variant="body2" color='#000'>
-          "Join thousands of happy couples who found their life partners through our platform."
-        </Typography>
-      </Box>
-    </Paper>
-  </Box>
-
-  {/* Right Side - Membership Plans */}
-  <Box
-    sx={{
-      flex: isMobile ? '1 1 100%' : '0 0 67%',
-    }}
-  >
-    <Typography
-      variant="h4"
-      component="h2"
-      sx={{
-        textAlign: isMobile ? 'center' : 'left',
-        fontSize:isMobile? "27px" : "30px",
-        mb: 2,
-        fontWeight: 500,
-        color: theme.palette.text.secondary,
-        textTransform:'capitalize'
-      }}
-    >
-     Membership Plans
-    </Typography>
-
-    <Box
-      sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 1,
-      }}
-    >
-      {membershipOptions.map((plan, index) => (
-        <Box
-          key={index}
-          sx={{
-            flex: '1 1 calc(50% - 12px)',
-            minWidth: isMobile ? '100%' : 'auto',
-          }}
-        >
-          <Card
+          <Divider sx={{
+            height: '1px', my: 1
+          }} />
+          <Box
             sx={{
-                width:isMobile?'100%':'90%',
-              height: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              boxShadow: 4,
-              border: 'none',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                transform: 'translateY(-5px)',
-                boxShadow: 8,
-              },
-              background: plan.gradient,
-              color: 'white',
-              borderRadius: 3,
-              overflow: 'hidden',
-              position: 'relative',
-              '&:before': {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 4,
-                background: 'rgba(255,255,255,0.3)',
-              },
+              flexDirection: isMobile ? 'column' : 'row',
+              gap: 4,
+              mt: 0,
             }}
           >
-            <CardContent
+            {/* Left Side - Description Container */}
+            <Box
               sx={{
-                flexGrow: 1,
-                position: 'relative',
-                zIndex: 1,
+                flex: isMobile ? '1 1 100%' : '0 0 33%',
               }}
             >
+              <Paper
+                elevation={3}
+                sx={{
+                  mt: isMobile ? 2 : 6,
+                  p: 4,
+                  borderRadius: 3,
+                  background: 'linear-gradient(145deg, #ffffff, #f5f5ff)',
+                  borderLeft: `6px solid ${theme.palette.primary.main}`,
+                  height: '100%',
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: isMobile ? "18px" : "23px",
+                    mb: 0,
+                    fontWeight: 500,
+                    color: '#5e0476',
+                    textAlign: 'left',
+                  }}
+                >
+                  Why Choose Our Membership?
+                </Typography>
+
+                <List>
+                  {benefits.map((item, index) => (
+                    <ListItem key={index} sx={{ px: 0 }}>
+                      <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
+                      <Typography variant="body1" color='#000'>{item.text}</Typography>
+                    </ListItem>
+                  ))}
+                </List>
+
+                <Divider sx={{ height: '1px', my: isMobile ? 1 : 1 }} />
+
+                <Typography variant="body1" sx={{ mb: 2, textAlign: 'start', color: '#000' }}>
+                  Our membership plans are designed to help you find your perfect match with premium features and exclusive benefits.
+                </Typography>
+
+                <Box
+                  sx={{
+                    p: 2,
+                    borderRadius: 2,
+                    bgcolor: '#f0f4ff',
+                    border: `1px dashed ${theme.palette.primary.light}`,
+                  }}
+                >
+                  <Typography variant="body2" color='#000'>
+                    "Join thousands of happy couples who found their life partners through our platform."
+                  </Typography>
+                </Box>
+              </Paper>
+            </Box>
+
+            {/* Right Side - Membership Plans */}
+            <Box
+              sx={{
+                flex: isMobile ? '1 1 100%' : '0 0 67%',
+              }}
+            >
+              <Typography
+                variant="h4"
+                component="h2"
+                sx={{
+                  textAlign: isMobile ? 'center' : 'left',
+                  fontSize: isMobile ? "27px" : "30px",
+                  mb: 2,
+                  fontWeight: 500,
+                  color: theme.palette.text.secondary,
+                  textTransform: 'capitalize'
+                }}
+              >
+                Membership Plans
+              </Typography>
+
               <Box
                 sx={{
-                  position: 'absolute',
-                  top:isMobile? 55 : 16,
-                  right: 16,
-                  bgcolor: 'rgba(255,255,255,0.2)',
-                  color: 'white',
-                  px: 1.5,
-                  py: 0.5,
-                  borderRadius: 1,
-                  fontSize: '0.75rem',
-                  fontWeight: 500,
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 1,
                 }}
               >
-                {plan.discount}
-              </Box>
-
-              <Typography
-                variant="h5"
-                component="h3"
-                sx={{
-                  fontWeight: 500,
-                  mb: 1,
-                  color: 'white',
-                }}
-              >
-                {plan.name}
-              </Typography>
-
-              <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 2 }}>
-                <Typography
-                  variant="h3"
-                  component="div"
-                  sx={{
-                    fontWeight: 800,
-                    mr: 2,
-                  }}
-                >
-                  {plan.discountedPrice}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    textDecoration: 'line-through',
-                    opacity: 0.8,
-                     color:'#fff'
-                  }}
-                >
-                  {plan.originalPrice}
-                </Typography>
-              </Box>
-
-              <Divider
-                sx={{
-                  height:'1px',
-                  my: 2,
-                  bgcolor: 'rgba(255,255,255,0.3)',
-                }}
-              />
-
-              <List
-                dense
-                sx={{
-                  mb: 1,
-                  '& li': {
-                    px: 0,
-                    py: 0.5,
-                  },
-                }}
-              >
-                {plan.features.map((feature, i) => (
-                  <ListItem
-                    key={i}
+                {membershipOptions.map((plan, index) => (
+                  <Box
+                    key={index}
                     sx={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
+                      flex: '1 1 calc(50% - 12px)',
+                      minWidth: isMobile ? '100%' : 'auto',
                     }}
                   >
-                    <CheckCircle
+                    <Card
                       sx={{
-                        fontSize: 18,
-                        mr: 1.5,
-                        mt: '2px',
+                        width: isMobile ? '100%' : '90%',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        boxShadow: 4,
+                        border: 'none',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          transform: 'translateY(-5px)',
+                          boxShadow: 8,
+                        },
+                        background: plan.gradient,
+                        color: 'white',
+                        borderRadius: 3,
+                        overflow: 'hidden',
+                        position: 'relative',
+                        '&:before': {
+                          content: '""',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: 4,
+                          background: 'rgba(255,255,255,0.3)',
+                        },
                       }}
-                    />
-                    <Typography variant="body2" sx={{color:'#fff'}}>{feature}</Typography>
-                  </ListItem>
+                    >
+                      <CardContent
+                        sx={{
+                          flexGrow: 1,
+                          position: 'relative',
+                          zIndex: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            position: 'absolute',
+                            top: isMobile ? 55 : 16,
+                            right: 16,
+                            bgcolor: 'rgba(255,255,255,0.2)',
+                            color: 'white',
+                            px: 1.5,
+                            py: 0.5,
+                            borderRadius: 1,
+                            fontSize: '0.75rem',
+                            fontWeight: 500,
+                          }}
+                        >
+                          {plan.discount}
+                        </Box>
+
+                        <Typography
+                          variant="h5"
+                          component="h3"
+                          sx={{
+                            fontWeight: 500,
+                            mb: 1,
+                            color: 'white',
+                          }}
+                        >
+                          {plan.name}
+                        </Typography>
+
+                        <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 2 }}>
+                          <Typography
+                            variant="h3"
+                            component="div"
+                            sx={{
+                              fontWeight: 800,
+                              mr: 2,
+                            }}
+                          >
+                            {plan.discountedPrice}
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              textDecoration: 'line-through',
+                              opacity: 0.8,
+                              color: '#fff'
+                            }}
+                          >
+                            {plan.originalPrice}
+                          </Typography>
+                        </Box>
+
+                        <Divider
+                          sx={{
+                            height: '1px',
+                            my: 2,
+                            bgcolor: 'rgba(255,255,255,0.3)',
+                          }}
+                        />
+
+                        <List
+                          dense
+                          sx={{
+                            mb: 1,
+                            '& li': {
+                              px: 0,
+                              py: 0.5,
+                            },
+                          }}
+                        >
+                          {plan.features.map((feature, i) => (
+                            <ListItem
+                              key={i}
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                              }}
+                            >
+                              <CheckCircle
+                                sx={{
+                                  fontSize: 18,
+                                  mr: 1.5,
+                                  mt: '2px',
+                                }}
+                              />
+                              <Typography variant="body2" sx={{ color: '#fff' }}>{feature}</Typography>
+                            </ListItem>
+                          ))}
+                        </List>
+
+                        <Typography
+                          variant="subtitle1"
+                          sx={{
+                            fontWeight: 500,
+                            mb: 1,
+                            opacity: 0.9,
+                          }}
+                        >
+                          Validity: {plan.duration}
+                        </Typography>
+
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          size="large"
+                          sx={{
+                            bgcolor: 'white',
+                            color: plan.color,
+                            '&:hover': {
+                              bgcolor: 'rgba(255,255,255,0.9)',
+                            },
+                            py: 1.5,
+                            fontWeight: 700,
+                            borderRadius: 2,
+                            boxShadow: 2,
+                          }}
+                          onClick={() => handlePlanSelection(plan.name)}
+                        >
+                          Get Started
+                        </Button>
+
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            mt: 2,
+                            textAlign: 'center',
+                            opacity: 0.8,
+                            color: '#fff'
+                          }}
+                        >
+                          Have Promocode? Get ₹100 discount
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Box>
                 ))}
-              </List>
-
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: 500,
-                  mb: 1,
-                  opacity: 0.9,
-                }}
-              >
-                Validity: {plan.duration}
-              </Typography>
-
-             <Button
-  variant="contained"
-  fullWidth
-  size="large"
-  sx={{
-    bgcolor: 'white',
-    color: plan.color,
-    '&:hover': {
-      bgcolor: 'rgba(255,255,255,0.9)',
-    },
-    py: 1.5,
-    fontWeight: 700,
-    borderRadius: 2,
-    boxShadow: 2,
-  }}
-  onClick={() => handlePlanSelection(plan.name)}
->
-  Get Started
-</Button>
-
-              <Typography
-                variant="body2"
-                sx={{
-                  mt: 2,
-                  textAlign: 'center',
-                  opacity: 0.8,
-                  color:'#fff'
-                }}
-              >
-                Have Promocode? Get ₹100 discount
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
-      ))}
-    </Box>
-  </Box>
-</Box>
+              </Box>
+            </Box>
+          </Box>
 
 
           {/* Trust and Security Section */}
-          <Box sx={{ 
-            mt:isMobile? 4 :  8,
+          <Box sx={{
+            mt: isMobile ? 4 : 8,
             textAlign: 'center',
             bgcolor: 'Background.paper',
             p: 4,
@@ -376,101 +375,109 @@ const handlePlanSelection = (planName) => {
             boxShadow: 2,
             border: `1px solid ${theme.palette.divider}`
           }}>
-          <Typography 
-  variant="h5" 
-  sx={{ 
-    mb:isMobile? 0 : 3,
-    fontWeight: 500,
-    color: '#000',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 1,
-    flexDirection: { xs: 'column', sm: 'row' }, 
-    textAlign: 'center', 
-  }}
->
-  <VerifiedUser  sx={{ fontSize: 40,color:'#5e0476' }} />
-  Trusted By Thousands of Users
-</Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                mb: isMobile ? 0 : 3,
+                fontWeight: 500,
+                color: '#000',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 1,
+                flexDirection: { xs: 'column', sm: 'row' },
+                textAlign: 'center',
+              }}
+            >
+              <VerifiedUser sx={{ fontSize: 40, color: '#5e0476' }} />
+              Trusted By Thousands of Users
+            </Typography>
 
-           <Box
-  sx={{
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    gap:isMobile? 0 : 3,
-    mt:isMobile? 0 : 4
-  }}
->
-  {/* Secure Payment */}
-  <Box
-    sx={{
-      flex: '1 1 300px',
-      p: 3,
-      borderRadius: 2,
-      bgcolor: '#f9f9ff',
-      minWidth:isMobile?"100%": 280,
-    }}
-  >
-    <Shield sx={{ fontSize: 50, color:"#5e0476", mb: 1 }} />
-    <Typography variant="h6" sx={{ fontWeight: 500, mb: 1,  }}>
-      Secure Payment
-    </Typography>
-    <Typography variant="body2" color='#000'>
-      Your information is protected by 256-bit SSL encryption and secure payment gateways.
-    </Typography>
-  </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+                gap: isMobile ? 0 : 3,
+                mt: isMobile ? 0 : 4
+              }}
+            >
+              {/* Secure Payment */}
+              <Box
+                sx={{
+                  flex: '1 1 300px',
+                  p: 3,
+                  borderRadius: 2,
+                  bgcolor: '#f9f9ff',
+                  minWidth: isMobile ? "100%" : 280,
+                }}
+              >
+                <Shield sx={{ fontSize: 50, color: "#5e0476", mb: 1 }} />
+                <Typography variant="h6" sx={{ fontWeight: 500, mb: 1, }}>
+                  Secure Payment
+                </Typography>
+                <Typography variant="body2" color='#000'>
+                  Your information is protected by 256-bit SSL encryption and secure payment gateways.
+                </Typography>
+              </Box>
 
-  {/* Verified Profiles */}
-  <Box
-    sx={{
-      flex: '1 1 300px',
-      p: 3,
-      borderRadius: 2,
-      bgcolor: '#f9f9ff',
-      minWidth:isMobile?"100%": 280,
-    }}
-  >
-    <VerifiedUser sx={{ fontSize: 50, color: '#5e0476', mb: 2 }} />
-    <Typography variant="h6" sx={{ fontWeight: 500, mb: 1,color:'#000' }}>
-      Verified Profiles
-    </Typography>
-    <Typography variant="body2" color='#000'>
-      Every profile undergoes strict verification to ensure authenticity.
-    </Typography>
-  </Box>
+              {/* Verified Profiles */}
+              <Box
+                sx={{
+                  flex: '1 1 300px',
+                  p: 3,
+                  borderRadius: 2,
+                  bgcolor: '#f9f9ff',
+                  minWidth: isMobile ? "100%" : 280,
+                }}
+              >
+                <VerifiedUser sx={{ fontSize: 50, color: '#5e0476', mb: 2 }} />
+                <Typography variant="h6" sx={{ fontWeight: 500, mb: 1, color: '#000' }}>
+                  Verified Profiles
+                </Typography>
+                <Typography variant="body2" color='#000'>
+                  Every profile undergoes strict verification to ensure authenticity.
+                </Typography>
+              </Box>
 
-  {/* Payment Options */}
-  <Box
-    sx={{
-      flex: '1 1 300px',
-      p: 3,
-      borderRadius: 2,
-      bgcolor: '#f9f9ff',
-       minWidth:isMobile?"100%": 280,
-    }}
-  >
-    <CreditCard sx={{ fontSize: 50, color:'#5e0476', mb: 2 }} />
-    <Typography variant="h6" sx={{ fontWeight: 500, mb: 1,color:'#000' }}>
-      Payment Options
-    </Typography>
-    <Typography variant="body2" sx={{ mb: 1.5,color:'#000' }}>
-      We accept all major payment methods:
-    </Typography>
-    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-      {['visa', 'master', 'amex', 'paypal'].map((type, i) => (
-        <Box
-          key={i}
-          component="img"
-          src={`/${type}.png`}
-          alt={type}
-          sx={{ height: 34 }}
-        />
-      ))}
-    </Box>
-  </Box>
-</Box>
+              {/* Payment Options */}
+              <Box
+                sx={{
+                  flex: '1 1 300px',
+                  p: 3,
+                  borderRadius: 2,
+                  bgcolor: '#f9f9ff',
+                  minWidth: isMobile ? "100%" : 280,
+                }}
+              >
+                <CreditCard sx={{ fontSize: 50, color: '#5e0476', mb: 2 }} />
+                <Typography variant="h6" sx={{ fontWeight: 500, mb: 1, color: '#000' }}>
+                  Payment Options
+                </Typography>
+                <Typography variant="body2" sx={{ mb: 1.5, color: '#000' }}>
+                  We accept all major payment methods:
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
+                  {['Visa', 'Mastercard', 'Amex', 'UPI'].map((type, i) => (
+                    <Box
+                      key={i}
+                      sx={{
+                        px: 2,
+                        py: 0.5,
+                        border: '1px solid #ccc',
+                        borderRadius: 1,
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        color: '#555',
+                        bgcolor: '#fff',
+                      }}
+                    >
+                      {type}
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
 
           </Box>
         </Box>
