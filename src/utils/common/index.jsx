@@ -7,19 +7,10 @@ export const isSilverOrPremiumUser = (role = " ") => {
 
 export const LoadingTextSpinner = () => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        gap: 1,
-        height: "50vh",
-      }}
-    >
-      <CircularProgress size={60} color="#000" />
-      <Typography color="#000">Loading...</Typography>
-    </Box>
+    <div className="loading-text-spinner-container">
+      <div className="inline-premium-spinner"></div>
+      <div className="loading-text" style={{ fontSize: '0.9rem', letterSpacing: '1px' }}>Loading...</div>
+    </div>
   );
 };
 
