@@ -22,11 +22,11 @@ const UserDashboard = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [currentTab, setCurrentTab] = useState(0);
-  const itemsPerPage = 8; 
- const theme = useTheme();
-const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const itemsPerPage = 8;
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const registerNo = TokenService.getRegistrationNo();
-  
+
   const {
     data: userProfile,
     isLoading: isLoadingProfile,
@@ -42,13 +42,13 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     error: connectionsError,
   } = useGetConnections();
 
-useEffect(() => {
-  fetchConnections({ 
-    page: currentPage, 
-    pageSize: itemsPerPage, 
-    userId: registerNo 
-  });
-}, [currentPage, registerNo, fetchConnections]);
+  useEffect(() => {
+    fetchConnections({
+      page: currentPage,
+      pageSize: itemsPerPage,
+      userId: registerNo
+    });
+  }, [currentPage, registerNo, fetchConnections]);
 
 
   useEffect(() => {
@@ -79,28 +79,62 @@ useEffect(() => {
         mt: "0",
       }}
     >
-      <Box sx={{ textAlign: "center", mb: 1 }}>
-        <Typography
-          variant={isSmallScreen ? "h5" : "h4"}
-          fontWeight="500px"
-          color="#212121"
-          textTransform="capitalize"
-          sx={{
-            fontSize: {
-              xs: "1.5rem",
-              sm: "2rem",
-            },
-          }}
-        >
-          Welcome {userProfile?.first_name || "User"} {userProfile?.last_name || ""}
-        </Typography>
-        <Typography color="#424242">({userProfile?.registration_no})</Typography>
-        <Divider sx={{ mt: 1, height: '1px', backgroundColor: '#e0e0e0' }} />
+      <Box sx={{
+        width: "100%",
+        mb: 4,
+        mt: 1,
+        background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+        borderRadius: "24px",
+        padding: { xs: "24px 20px", sm: "32px 40px" },
+        boxShadow: "0 10px 30px rgba(94, 4, 118, 0.25)",
+        position: "relative",
+        overflow: "hidden"
+      }}>
+        {/* Subtle decorative glass circle */}
+        <Box sx={{
+          position: "absolute",
+          top: "-50%",
+          right: "-10%",
+          width: "300px",
+          height: "300px",
+          background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)",
+          borderRadius: "50%",
+          zIndex: 0
+        }} />
+
+        <Box sx={{ position: "relative", zIndex: 1, textAlign: { xs: "center", sm: "left" } }}>
+          <Typography
+            variant={isSmallScreen ? "h5" : "h3"}
+            fontWeight="700"
+            color="#ffffff"
+            textTransform="capitalize"
+            sx={{
+              fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.75rem" },
+              textShadow: "0 2px 10px rgba(0,0,0,0.2)",
+              mb: 0.5
+            }}
+          >
+            Welcome, {userProfile?.first_name || "User"} {userProfile?.last_name || ""}
+          </Typography>
+          <Box display="flex" alignItems="center" justifyContent={{ xs: "center", sm: "flex-start" }} gap={1}>
+            <Typography sx={{
+              color: "rgba(255, 255, 255, 0.9)",
+              fontSize: "1rem",
+              fontWeight: 500,
+              background: "rgba(0,0,0,0.15)",
+              padding: "4px 12px",
+              borderRadius: "20px",
+              letterSpacing: "1px"
+            }}>
+              ID: {userProfile?.registration_no}
+            </Typography>
+          </Box>
+        </Box>
       </Box>
 
       <Stack spacing={3}>
         {!isSilverOrPremiumUser(userProfile?.type_of_user) && (
-          <Box sx={{ 
+          <Box sx={{
             width: "100%",
             overflowX: isSmallScreen ? "auto" : "visible",
           }}>
@@ -109,62 +143,62 @@ useEffect(() => {
         )}
 
         <Box>
-          <Box 
+          <Box
             gap={isSmallScreen ? 1 : 0}
-           mb={2}
+            mb={2}
           >
- <Typography  
- variant="h5"
-    sx={{fontSize:{ xs: "22px" },color:'#000',textAlign:{xs:'left',md:'left'} }} 
-  >
-    Interested Profiles
-  </Typography>
+            <Typography
+              variant="h5"
+              sx={{ fontSize: { xs: "22px" }, color: '#000', textAlign: { xs: 'left', md: 'left' } }}
+            >
+              Interested Profiles
+            </Typography>
           </Box>
-<Box
-  sx={{
-    display: "grid",
-    justifySelf: "center",
-    alignSelf: "center",
-    mr: 2,
-    gridTemplateColumns: {
-      xs: "1fr",
-      sm: "repeat(2, 1fr)",
-      md: "repeat(3, 1fr)",
-      lg: "repeat(4, 1fr)",
-    },
-    gap: { xs: 2, sm: 3 },
-    minHeight: 300,
-  }}
->
- {isLoadingConnections ? (
-  <Box sx={{ gridColumn: "1 / -1", textAlign: "center" }}>
-    <LoadingTextSpinner />
-  </Box>
-  ) : connectionsData?.connections?.length > 0 ? (
-    connectionsData.connections.map((connection) => (
-      <UserCard 
-        key={connection._id}
-        profile={connection.profile} 
-        connection={connection}
-        onViewMore={handleOpenDialog}
-      />
-    ))
-  ) : (
-    <Box sx={{ gridColumn: "1 / -1" }}>
-      <Typography
-        sx={{
-          color: "#212121",
-          fontSize: "17px",
-          fontWeight: "bold",
-          textAlign: "center",
-          width: "100%",
-        }}
-      >
-        No connections yet. Send or accept interest requests to see connections here.
-      </Typography>
-    </Box>
-  )}
-</Box>
+          <Box
+            sx={{
+              display: "grid",
+              justifySelf: "center",
+              alignSelf: "center",
+              mr: 2,
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+                lg: "repeat(4, 1fr)",
+              },
+              gap: { xs: 2, sm: 3 },
+              minHeight: 300,
+            }}
+          >
+            {isLoadingConnections ? (
+              <Box sx={{ gridColumn: "1 / -1", textAlign: "center" }}>
+                <LoadingTextSpinner />
+              </Box>
+            ) : connectionsData?.connections?.length > 0 ? (
+              connectionsData.connections.map((connection) => (
+                <UserCard
+                  key={connection._id}
+                  profile={connection.profile}
+                  connection={connection}
+                  onViewMore={handleOpenDialog}
+                />
+              ))
+            ) : (
+              <Box sx={{ gridColumn: "1 / -1" }}>
+                <Typography
+                  sx={{
+                    color: "#212121",
+                    fontSize: "17px",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    width: "100%",
+                  }}
+                >
+                  No connections yet. Send or accept interest requests to see connections here.
+                </Typography>
+              </Box>
+            )}
+          </Box>
 
           <Box display="flex" justifyContent="end" mt={3}>
             <Pagination

@@ -32,12 +32,12 @@ const UserCard = ({
       sx={{
         width: { xs: 280, sm: 280, md: 260, lg: 280 },
         borderRadius: "20px",
-        boxShadow: "0 4px 24px rgba(94,4,118,0.10)",
+        boxShadow: "0 4px 20px rgba(94,4,118,0.06)",
         overflow: "hidden",
-        transition: "transform 0.25s ease, box-shadow 0.25s ease",
+        transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
         "&:hover": {
           transform: "translateY(-6px)",
-          boxShadow: "0 12px 36px rgba(94,4,118,0.18)",
+          boxShadow: "0 12px 30px rgba(94,4,118,0.15)",
         },
         display: "flex",
         flexDirection: "column",

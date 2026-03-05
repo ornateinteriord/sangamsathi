@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,26 +11,31 @@ html {
   scroll-behavior: smooth;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   min-height: 100%;
-  background-color: #fff;
+  /* Premium soft off-white to make pure white cards pop */
+  background-color: #f8f6fa;
   color: #1a1a1a;
   overflow-x: hidden;
 }
 
 /* Custom thin scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f8f6fa;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #5e0476;
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #7a0c99;
 }
@@ -37,5 +44,3 @@ html, body {
 button:not([class]) {
   cursor: pointer;
 }
-
-

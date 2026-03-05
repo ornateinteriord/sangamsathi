@@ -41,12 +41,14 @@ const MyMatches = () => {
   }, [data]);
 
   return (
-    <Box sx={{ p: { xs: 1, sm: 2 }, backgroundColor: "#f9f9f9" }}>
-    
-           <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: "#5e0476 ",
-           mt:{xs:1},mb:{xs:2,md:2},textAlign:'left' }} fontWeight="500px">
-               My Matches
-             </Typography>
+    <Box sx={{ p: { xs: 1, sm: 2 } }}>
+
+      <Typography variant="h5" sx={{
+        fontSize: { xs: '21px', sm: '25px' }, color: "#5e0476 ",
+        mt: { xs: 1 }, mb: { xs: 2, md: 2 }, textAlign: 'left'
+      }} fontWeight="500px">
+        My Matches
+      </Typography>
 
       {isUsersLoading ? (
         <LoadingTextSpinner />
@@ -73,14 +75,14 @@ const MyMatches = () => {
           }}
         >
           {data?.content?.map((user, idx) => {
-           return (
-             <UserCard 
-              key={`${user._id}-${idx}`}
-              profile={user}
-              onViewMore={handleOpenDialog}
-              showCancelButton={false}
-            />
-           )
+            return (
+              <UserCard
+                key={`${user._id}-${idx}`}
+                profile={user}
+                onViewMore={handleOpenDialog}
+                showCancelButton={false}
+              />
+            )
           })}
         </Box>
       )}
