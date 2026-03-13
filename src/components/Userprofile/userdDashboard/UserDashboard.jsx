@@ -81,12 +81,12 @@ const UserDashboard = () => {
     >
       <Box sx={{
         width: "100%",
-        mb: 4,
+        mb: 5,
         mt: 1,
-        background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+        background: "linear-gradient(135deg, #0B192C 0%, #1A365D 100%)",
         borderRadius: "24px",
-        padding: { xs: "24px 20px", sm: "32px 40px" },
-        boxShadow: "0 10px 30px rgba(94, 4, 118, 0.25)",
+        padding: { xs: "24px", sm: "32px 40px" },
+        boxShadow: "0 20px 40px rgba(11, 25, 44, 0.2)",
         position: "relative",
         overflow: "hidden"
       }}>
@@ -97,37 +97,72 @@ const UserDashboard = () => {
           right: "-10%",
           width: "300px",
           height: "300px",
-          background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)",
+          background: "radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0) 70%)",
           borderRadius: "50%",
           zIndex: 0
         }} />
 
-        <Box sx={{ position: "relative", zIndex: 1, textAlign: { xs: "center", sm: "left" } }}>
-          <Typography
-            variant={isSmallScreen ? "h5" : "h3"}
-            fontWeight="700"
-            color="#ffffff"
-            textTransform="capitalize"
-            sx={{
-              fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.75rem" },
-              textShadow: "0 2px 10px rgba(0,0,0,0.2)",
-              mb: 0.5
-            }}
-          >
-            Welcome, {userProfile?.first_name || "User"} {userProfile?.last_name || ""}
-          </Typography>
-          <Box display="flex" alignItems="center" justifyContent={{ xs: "center", sm: "flex-start" }} gap={1}>
-            <Typography sx={{
-              color: "rgba(255, 255, 255, 0.9)",
-              fontSize: "1rem",
-              fontWeight: 500,
-              background: "rgba(0,0,0,0.15)",
-              padding: "4px 12px",
-              borderRadius: "20px",
-              letterSpacing: "1px"
-            }}>
-              ID: {userProfile?.registration_no}
+        <Box sx={{
+          position: "relative", zIndex: 1,
+          display: "flex", flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "center", md: "flex-start" },
+          justifyContent: "space-between",
+          gap: 3
+        }}>
+          {/* Welcome Text */}
+          <Box sx={{ textAlign: { xs: "center", md: "left" }, flex: 1 }}>
+            <Typography
+              variant={isSmallScreen ? "h5" : "h3"}
+              fontWeight="800"
+              color="#ffffff"
+              textTransform="capitalize"
+              sx={{
+                fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.75rem" },
+                letterSpacing: "-0.5px",
+                mb: 1
+              }}
+            >
+              Welcome back, <br className="hidden md:block" />
+              <span style={{ color: '#D4AF37' }}>{userProfile?.first_name || "User"} {userProfile?.last_name || ""}</span>
             </Typography>
+            <Box display="flex" alignItems="center" justifyContent={{ xs: "center", md: "flex-start" }} gap={1}>
+              <Typography sx={{
+                color: "#1E293B",
+                fontSize: "0.9rem",
+                fontWeight: 700,
+                background: "#D4AF37",
+                padding: "4px 12px",
+                borderRadius: "20px",
+                letterSpacing: "1px",
+                boxShadow: "0 4px 10px rgba(212,175,55,0.3)"
+              }}>
+                ID: {userProfile?.registration_no}
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* Quick Stats Card */}
+          <Box sx={{
+            background: "rgba(255, 255, 255, 0.05)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: "16px",
+            padding: "20px",
+            display: "flex",
+            gap: 3,
+            minWidth: { xs: "100%", sm: "auto" }
+          }}>
+            <Box sx={{ textAlign: "center", px: 2 }}>
+              <Typography sx={{ color: "#94A3B8", fontSize: "0.8rem", textTransform: "uppercase", fontWeight: 700, mb: 0.5 }}>Interests Sent</Typography>
+              <Typography sx={{ color: "#fff", fontSize: "1.5rem", fontWeight: 800 }}>{connectionsData?.totalRecords || 0}</Typography>
+            </Box>
+            <Divider orientation="vertical" flexItem sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
+            <Box sx={{ textAlign: "center", px: 2 }}>
+              <Typography sx={{ color: "#94A3B8", fontSize: "0.8rem", textTransform: "uppercase", fontWeight: 700, mb: 0.5 }}>Profile Status</Typography>
+              <Typography sx={{ color: "#D4AF37", fontSize: "1.2rem", fontWeight: 800 }}>
+                {isSilverOrPremiumUser(userProfile?.type_of_user) ? 'Premium' : 'Free'}
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>

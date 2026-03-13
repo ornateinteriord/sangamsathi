@@ -44,7 +44,7 @@ const MyMatches = () => {
     <Box sx={{ p: { xs: 1, sm: 2 } }}>
 
       <Typography variant="h5" sx={{
-        fontSize: { xs: '21px', sm: '25px' }, color: "#5e0476 ",
+        fontSize: { xs: '21px', sm: '25px' }, color: "#0B192C ",
         mt: { xs: 1 }, mb: { xs: 2, md: 2 }, textAlign: 'left'
       }} fontWeight="500px">
         My Matches

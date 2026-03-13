@@ -11,27 +11,27 @@ const Connect = () => {
       id: 1,
       title: 'Profiles',
       value: `${dashboardstats?.stats?.totalProfiles || 0}`,
-      icon: <FaUserFriends style={{ fontSize: 40, color: '#5e0476' }} />,
+      icon: <FaUserFriends style={{ fontSize: 40, color: '#D4AF37' }} />,
       color: '#f8f9fa',
-      textColor: 'rgb(192, 9, 88)',
+      textColor: '#D4AF37',
 
     },
     {
       id: 2,
       title: 'This Week',
       value: `${dashboardstats?.stats?.thisWeekRegistrations || 0}`,
-      icon: <FaCalendarWeek style={{ fontSize: 40, color: '#5e0476' }} />,
+      icon: <FaCalendarWeek style={{ fontSize: 40, color: '#D4AF37' }} />,
       color: '#f8f9fa',
-      textColor: '#00bcd4',
+      textColor: '#D4AF37',
 
     },
     {
       id: 3,
       title: 'This Month',
       value: `${dashboardstats?.stats?.thisMonthRegistrations || 0}`,
-      icon: <FaCalendarAlt style={{ fontSize: 40, color: '#5e0476' }} />,
+      icon: <FaCalendarAlt style={{ fontSize: 40, color: '#D4AF37' }} />,
       color: '#f8f9fa',
-      textColor: '#ff5a5f',
+      textColor: '#D4AF37',
 
     },
   ];
@@ -61,196 +61,162 @@ const Connect = () => {
     <>
       <Box sx={{
         position: 'relative',
-        background: 'linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(249,242,252,0.5) 100%)',
-        py: { xs: 4, md: 6 },
+        background: '#F8FAFC',
+        py: { xs: 6, md: 8 },
         overflow: 'hidden'
       }}>
-        {/* Background decorative circles */}
-        <Box sx={{
-          position: 'absolute', top: '-10%', left: '-5%', width: '300px', height: '300px',
-          borderRadius: '50%', background: 'radial-gradient(circle, rgba(94,4,118,0.03) 0%, rgba(255,255,255,0) 70%)', zIndex: 0
-        }} />
-        <Box sx={{
-          position: 'absolute', bottom: '-10%', right: '-5%', width: '400px', height: '400px',
-          borderRadius: '50%', background: 'radial-gradient(circle, rgba(94,4,118,0.04) 0%, rgba(255,255,255,0) 70%)', zIndex: 0
-        }} />
-
         <Container maxWidth="xl" sx={{ fontFamily: "Outfit", position: 'relative', zIndex: 1 }}>
-          <Box sx={{ maxWidth: "100%", mx: 'auto', px: { xs: 2, sm: 4 } }}>
-            <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 6 } }}>
-              <Typography variant="h6" sx={{ color: '#c774e8', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', mb: 1, fontSize: '0.85rem' }}>
-                Join Our Growing Community
-              </Typography>
-              <Typography variant="h3" sx={{
-                color: '#1a1a1a',
-                fontWeight: 800,
-                fontSize: { xs: '2rem', md: '2.75rem' },
-                '& span': { color: '#5e0476' }
-              }}>
-                Platform <span>Statistics</span>
-              </Typography>
-              <Box sx={{ width: '60px', height: '4px', background: 'linear-gradient(90deg, #5e0476, #c774e8)', mx: 'auto', mt: 2, borderRadius: 2 }} />
-            </Box>
+          <Box sx={{
+            background: 'linear-gradient(135deg, #0B192C 0%, #1A365D 100%)',
+            borderRadius: '24px',
+            boxShadow: '0 20px 40px rgba(11, 25, 44, 0.15)',
+            p: { xs: 4, md: 6 },
+            mt: { xs: 4, md: 5 }, // Added margin-top as requested
+            position: 'relative',
+            zIndex: 10,
+            overflow: 'hidden'
+          }}>
+            {/* Decorative gold accent */}
+            <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, #D4AF37, #FFB200)' }} />
 
-            <Grid container spacing={{ xs: 3, md: 4 }} justifyContent="center">
-              {stats.map((stat, index) => (
-                <Grid item xs={12} sm={6} md={4} key={stat.id} sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Card sx={{
-                    width: '100%',
-                    maxWidth: 360,
-                    height: '100%',
-                    minHeight: 240,
-                    borderRadius: 4,
-                    background: '#fff',
-                    boxShadow: '0 10px 40px rgba(94, 4, 118, 0.08)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    border: '1px solid rgba(94, 4, 118, 0.05)',
-                    position: 'relative',
-                    overflow: 'visible',
-                    transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    '&:hover': {
-                      transform: 'translateY(-12px)',
-                      boxShadow: '0 20px 50px rgba(94, 4, 118, 0.15)',
-                      borderColor: 'rgba(94, 4, 118, 0.15)',
-                      '& .stat-icon-wrapper': {
-                        transform: 'scale(1.1) rotate(5deg)',
-                        background: 'linear-gradient(135deg, #5e0476, #8e18ab)',
-                        '& svg': { color: '#fff !important' }
-                      }
-                    },
-                    '&::before': {
-                      content: '""',
-                      position: 'absolute', top: 0, left: 0, width: '100%', height: '4px',
-                      background: 'linear-gradient(90deg, #5e0476, #c774e8)',
-                      borderRadius: '4px 4px 0 0'
-                    }
-                  }}>
-                    <CardContent sx={{
-                      flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center',
-                      justifyContent: 'center', p: { xs: 4, md: 5 }, position: 'relative'
-                    }}>
-                      <Box className="stat-icon-wrapper" sx={{
-                        width: 80, height: 80, borderRadius: '20px',
-                        background: 'rgba(94, 4, 118, 0.04)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        mb: 3, transition: 'all 0.3s ease',
-                        boxShadow: '0 8px 16px rgba(0,0,0,0.03)'
+            <Grid container spacing={{ xs: 4, md: 2 }} justifyContent="center" alignItems="center">
+              <Grid item xs={12} md={3}>
+                <Typography variant="h3" sx={{ color: '#fff', fontWeight: 800, fontSize: { xs: '2rem', md: '2.5rem' }, lineHeight: 1.2 }}>
+                  Platform <span style={{ color: '#D4AF37' }}>Impact</span>
+                </Typography>
+                <Typography sx={{ color: '#94A3B8', mt: 1 }}>Join our growing community</Typography>
+              </Grid>
+
+              <Grid item xs={12} md={9}>
+                <Grid container spacing={3}>
+                  {stats.map((stat, index) => (
+                    <Grid item xs={12} sm={4} key={stat.id}>
+                      <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        p: 2,
+                        borderRadius: '16px',
+                        background: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        transition: 'transform 0.3s ease',
+                        '&:hover': { transform: 'translateY(-4px)', background: 'rgba(255,255,255,0.08)' }
                       }}>
-                        {stat.icon}
+                        <Box sx={{
+                          width: 60, height: 60, borderRadius: '12px',
+                          background: 'rgba(212, 175, 55, 0.1)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          color: '#D4AF37'
+                        }}>
+                          {React.cloneElement(stat.icon, { style: { fontSize: 30, color: '#D4AF37' } })}
+                        </Box>
+                        <Box>
+                          <Typography variant="h4" sx={{ color: '#fff', fontWeight: 700 }}>{stat.value}</Typography>
+                          <Typography variant="body2" sx={{ color: '#94A3B8' }}>{stat.title}</Typography>
+                        </Box>
                       </Box>
-                      <Typography variant="h3" sx={{
-                        color: "#1a1a1a", fontWeight: 800, fontSize: { xs: '2rem', md: '2.5rem' },
-                        lineHeight: 1.2, mb: 1,
-                        background: 'linear-gradient(135deg, #5e0476, #1a1a1a)',
-                        WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
-                      }}>
-                        {stat.value}
-                      </Typography>
-                      <Typography variant="h6" sx={{ color: "#666", fontWeight: 500, fontSize: { xs: '1rem', md: '1.1rem' }, letterSpacing: '0.5px' }}>
-                        {stat.title}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
+              </Grid>
             </Grid>
           </Box>
         </Container>
       </Box>
 
       {/* How it Works Section */}
-      <Box sx={{ py: { xs: 4, md: 6 }, background: '#fff', position: 'relative' }}>
-        <Container sx={{ textAlign: 'center', fontFamily: "Outfit" }}>
-          <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 6 } }}>
-            <Typography variant="h6" sx={{ color: '#c774e8', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', mb: 1, fontSize: '0.85rem' }}>
+      <Box sx={{ py: { xs: 6, md: 10 }, background: '#fff', position: 'relative' }}>
+        <Container maxWidth="lg" sx={{ fontFamily: "Outfit", textAlign: 'center' }}>
+          <Box sx={{ mb: { xs: 6, md: 8 } }}>
+            <Typography variant="subtitle1" sx={{ color: '#D4AF37', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', mb: 1 }}>
               Simple 3-Step Process
             </Typography>
             <Typography variant="h3" sx={{
-              color: '#1a1a1a',
+              color: '#0F172A',
               fontWeight: 800,
-              fontSize: { xs: '2rem', md: '2.75rem' },
-              '& span': { color: '#5e0476' }
+              fontSize: { xs: '2.5rem', md: '3.5rem' },
+              '& span': { color: '#0B192C' }
             }}>
               Find your <span>Special Someone</span>
             </Typography>
-            <Box sx={{ width: '60px', height: '4px', background: 'linear-gradient(90deg, #5e0476, #c774e8)', mx: 'auto', mt: 2, borderRadius: 2 }} />
+            <Box sx={{ width: '80px', height: '4px', background: 'linear-gradient(90deg, #D4AF37, #FFB200)', mx: 'auto', mt: 3, borderRadius: 2 }} />
           </Box>
 
-          <Grid container spacing={{ xs: 1, sm: 2, md: 4 }} justifyContent="center" sx={{ position: 'relative' }}>
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: { xs: 4, md: 2 }, position: 'relative' }}>
             {/* Connecting lines for desktop */}
             <Box sx={{
-              display: { xs: 'block' },
+              display: { xs: 'none', md: 'block' },
               position: 'absolute',
-              top: { xs: '35px', md: '85px' },
+              top: '80px',
               left: '15%',
               right: '15%',
-              height: '2px',
-              background: 'dashed 2px rgba(94,4,118,0.2)',
-              borderTop: '2px dashed rgba(94,4,118,0.2)',
+              height: '3px',
+              background: 'linear-gradient(90deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.8), rgba(212, 175, 55, 0.1))',
               zIndex: 0
             }} />
 
             {features.map((feature, index) => (
-              <Grid item xs={4} sm={4} key={feature.id} sx={{ position: 'relative', zIndex: 1 }}>
+              <Box key={feature.id} sx={{ flex: 1, position: 'relative', zIndex: 1, width: '100%' }}>
                 <Box sx={{
                   display: 'flex', flexDirection: 'column', alignItems: 'center',
-                  transition: 'all 0.3s ease',
+                  transition: 'transform 0.4s ease',
                   '&:hover': {
-                    transform: 'translateY(-8px)',
+                    transform: 'translateY(-10px)',
                     '& .feature-icon': {
-                      boxShadow: '0 20px 40px rgba(94, 4, 118, 0.3)',
-                      transform: 'scale(1.05)',
+                      boxShadow: '0 20px 40px rgba(11, 25, 44, 0.15)',
+                      transform: 'scale(1.1)',
+                      borderColor: '#D4AF37'
                     }
                   }
                 }}>
-                  <Badge
-                    badgeContent={feature.id}
-                    color="primary"
-                    overlap="circular"
+                  <Paper
+                    className="feature-icon"
+                    elevation={0}
                     sx={{
-                      '& .MuiBadge-badge': {
-                        fontSize: { xs: '0.8rem', md: '1.2rem' }, fontWeight: 700,
-                        height: { xs: '20px', md: '32px' }, minWidth: { xs: '20px', md: '32px' },
-                        borderRadius: '50%', top: { xs: 5, md: 15 }, right: { xs: 5, md: 15 },
-                        background: '#fff', color: '#5e0476',
-                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                        border: { xs: '2px solid #5e0476', md: '3px solid #5e0476' },
-                      },
+                      p: 4, borderRadius: '50%',
+                      background: '#fff',
+                      display: 'flex', justifyContent: 'center', alignItems: 'center',
+                      width: 140, height: 140, mx: 'auto', mb: 4,
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
+                      transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                      border: '4px solid #F8FAFC',
+                      position: 'relative'
                     }}
                   >
-                    <Paper
-                      className="feature-icon"
-                      elevation={0}
-                      sx={{
-                        p: { xs: 1.5, md: 3 }, borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #5e0476 0%, #8e18ab 100%)',
-                        display: 'flex', justifyContent: 'center', alignItems: 'center',
-                        width: { xs: 70, md: 110 }, height: { xs: 70, md: 110 }, mx: 'auto', mb: { xs: 1, md: 3 },
-                        boxShadow: '0 12px 30px rgba(94,4,118,0.2)',
-                        transition: 'all 0.3s ease',
-                        border: { xs: '4px solid rgba(94,4,118,0.05)', md: '8px solid rgba(94,4,118,0.05)' },
-                        backgroundClip: 'padding-box',
-                      }}
-                    >
-                      <Box sx={{ display: 'flex', '& svg': { fontSize: { xs: '2rem !important', md: '3rem !important' } } }}>
-                        {feature.icon}
-                      </Box>
-                    </Paper>
-                  </Badge>
+                    {/* Step Number Badge */}
+                    <Box sx={{
+                      position: 'absolute', top: 0, right: 0,
+                      width: 36, height: 36, borderRadius: '50%',
+                      background: '#0B192C', color: '#fff',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontWeight: 700, fontSize: '1.2rem',
+                      boxShadow: '0 4px 10px rgba(11, 25, 44, 0.3)'
+                    }}>
+                      {feature.id}
+                    </Box>
+                    <Box sx={{
+                      display: 'flex',
+                      '& svg': { fontSize: '3.5rem !important', color: '#0B192C !important' },
+                      background: 'rgba(212, 175, 55, 0.1)',
+                      p: 2,
+                      borderRadius: '50%'
+                    }}>
+                      {feature.icon}
+                    </Box>
+                  </Paper>
 
-                  <Box sx={{ mt: { xs: 1, md: 2 }, px: { xs: 0.5, md: 2 }, textAlign: 'center' }}>
-                    <Typography variant="h5" sx={{ color: '#1a1a1a', fontWeight: 700, mb: { xs: 0.5, md: 1.5 }, fontSize: { xs: '0.9rem', md: '1.5rem' } }}>
+                  <Box sx={{ px: { xs: 2, md: 4 }, textAlign: 'center' }}>
+                    <Typography variant="h4" sx={{ color: '#0F172A', fontWeight: 800, mb: 2, fontSize: '1.75rem' }}>
                       {feature.title}
                     </Typography>
-                    <Typography variant="body1" sx={{ color: '#666', lineHeight: 1.4, fontSize: { xs: '0.65rem', sm: '0.8rem', md: '1rem' } }}>
+                    <Typography variant="body1" sx={{ color: '#64748B', lineHeight: 1.6, fontSize: '1.1rem' }}>
                       {feature.description}
                     </Typography>
                   </Box>
                 </Box>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
     </>

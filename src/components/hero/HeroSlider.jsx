@@ -47,8 +47,14 @@ const Content = styled(Box)(({ theme }) => ({
   zIndex: 2,
   textAlign: "center",
   width: "90%",
-  maxWidth: "1200px",
-  padding: theme.spacing(2),
+  maxWidth: "600px",
+  padding: { xs: theme.spacing(3, 2), md: theme.spacing(5, 6) },
+  background: "rgba(11, 25, 44, 0.6)", // Navy background
+  backdropFilter: "blur(12px)",
+  WebkitBackdropFilter: "blur(12px)",
+  borderRadius: "24px",
+  border: "1px solid rgba(255, 255, 255, 0.1)",
+  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
 }));
 
 const HeroSlider = () => {
@@ -98,32 +104,32 @@ const HeroSlider = () => {
           <Typography
             variant={isMobile ? "h4" : isTablet ? "h3" : "h2"}
             component="h1"
-            fontWeight={700}
+            fontWeight={800}
             gutterBottom
             fontFamily={'Outfit, sans-serif'}
             sx={{
-              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-              mb: isMobile ? 1 : 2,
-              fontSize: isMobile ? '2.5rem' : isTablet ? '2.2rem' : '2.8rem',
-              lineHeight: isMobile ? '1.2' : '1.3',
+              color: '#fff',
+              mb: isMobile ? 1.5 : 2,
+              fontSize: isMobile ? '2.5rem' : isTablet ? '3rem' : '3.5rem',
+              lineHeight: 1.2,
+              letterSpacing: '-1px'
             }}
           >
-            Find Your Perfect Match
+            Find Your <span style={{ color: '#D4AF37' }}>Perfect Match</span>
           </Typography>
           <Typography
-            variant={isMobile ? "body2" : "h6"}
-            fontWeight={500}
+            variant={isMobile ? "body1" : "h6"}
+            fontWeight={400}
             paragraph
             fontFamily={'Outfit, sans-serif'}
             sx={{
-              color: '#fff',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-              mb: isMobile ? 2 : 3,
-              fontSize: isMobile ? '1rem' : '1.1rem',
-              lineHeight: isMobile ? '1.4' : '1.6',
+              color: '#cbd5e1',
+              mb: isMobile ? 3 : 4,
+              fontSize: isMobile ? '1.05rem' : '1.15rem',
+              lineHeight: 1.6,
             }}
           >
-            Join the most trusted platform and start your journey towards a lifetime of happiness.
+            Join the most trusted premium platform and start your elegant journey towards a lifetime of happiness.
           </Typography>
           <Box
             sx={{
@@ -133,6 +139,7 @@ const HeroSlider = () => {
               gap: isMobile ? 1 : 2,
               flexWrap: 'nowrap',
               mt: isMobile ? 1 : 2,
+              mb: isMobile ? 1 : 2,
             }}
           >
             {isLoggedIn ? (
@@ -140,11 +147,21 @@ const HeroSlider = () => {
                 title="Get Started"
                 size={isMobile ? "small" : "large"}
                 sx={{
-                  px: isMobile ? 2 : 4,
-                  py: isMobile ? 1.5 : 1.5,
-                  fontSize: isMobile ? '1rem' : '1rem',
+                  px: isMobile ? 3 : 5,
+                  py: isMobile ? 1.5 : 2,
+                  fontSize: isMobile ? '1rem' : '1.1rem',
                   fontFamily: 'Outfit, sans-serif',
                   minWidth: isMobile ? '160px' : '200px',
+                  borderRadius: "50px", // Pill shape
+                  background: 'linear-gradient(135deg, #D4AF37 0%, #FFB200 100%)',
+                  color: '#0B192C',
+                  fontWeight: 700,
+                  boxShadow: '0 8px 16px rgba(212, 175, 55, 0.3)',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 12px 20px rgba(212, 175, 55, 0.4)',
+                  }
                 }}
                 onClick={() => navigate(isAdmin ? '/admin/dashboard' : '/user/userDashboard')}
               />
@@ -154,11 +171,21 @@ const HeroSlider = () => {
                   title="Free Register"
                   size={isMobile ? "small" : "large"}
                   sx={{
-                    px: isMobile ? 2 : 4,
-                    py: isMobile ? 1.5 : 1.5,
-                    fontSize: isMobile ? '1rem' : '1rem',
+                    px: isMobile ? 3 : 4,
+                    py: isMobile ? 1.5 : 2,
+                    fontSize: isMobile ? '1rem' : '1.1rem',
                     fontFamily: 'Outfit, sans-serif',
-                    minWidth: isMobile ? '120px' : '160px',
+                    minWidth: isMobile ? '140px' : '180px',
+                    borderRadius: "50px",
+                    background: 'linear-gradient(135deg, #D4AF37 0%, #FFB200 100%)',
+                    color: '#0B192C',
+                    fontWeight: 700,
+                    boxShadow: '0 8px 16px rgba(212, 175, 55, 0.3)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 12px 20px rgba(212, 175, 55, 0.4)',
+                    }
                   }}
                   onClick={() => navigate('/register')}
                 />
@@ -167,14 +194,22 @@ const HeroSlider = () => {
                   title="Premium"
                   size={isMobile ? "small" : "large"}
                   sx={{
-                    backgroundColor: '#FFFF',
-                    '&:hover': { backgroundColor: '#FFFF' },
-                    color: '#000',
-                    px: isMobile ? 2 : 4,
-                    py: isMobile ? 1.5 : 1.5,
-                    fontSize: isMobile ? '1rem' : '1rem',
+                    backgroundColor: 'transparent',
+                    border: '2px solid rgba(255, 255, 255, 0.8)',
+                    '&:hover': {
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      borderColor: '#fff',
+                      transform: 'translateY(-2px)',
+                    },
+                    color: '#fff',
+                    px: isMobile ? 3 : 4,
+                    py: isMobile ? 1.5 : 2,
+                    fontSize: isMobile ? '1rem' : '1.1rem',
                     fontFamily: 'Outfit, sans-serif',
-                    minWidth: isMobile ? '120px' : '160px',
+                    minWidth: isMobile ? '140px' : '180px',
+                    borderRadius: "50px",
+                    fontWeight: 600,
+                    transition: 'all 0.3s ease',
                   }}
                   onClick={() => navigate('/membership')}
                 />

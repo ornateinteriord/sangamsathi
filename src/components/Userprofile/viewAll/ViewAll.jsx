@@ -66,53 +66,55 @@ const ViewAll = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: {xs:"flex-start", sm: "space-between"},
-          alignItems: {xs: "flex-start", sm: "center"},
+          justifyContent: { xs: "flex-start", sm: "space-between" },
+          alignItems: { xs: "flex-start", sm: "center" },
           flexDirection: { xs: "column", sm: "row" },
           gap: 2,
           mb: 3,
         }}
       >
-        <Typography variant="h5" sx={{ fontSize: { xs: '21px', sm: '25px' }, color: '#5e0476',
-                   mt:{xs:0},mb:{xs:1,md:2},textAlign:'left' }} fontWeight="500px">
-                       Profiles
-                     </Typography>
+        <Typography variant="h5" sx={{
+          fontSize: { xs: '21px', sm: '25px' }, color: '#0B192C',
+          mt: { xs: 0 }, mb: { xs: 1, md: 2 }, textAlign: 'left'
+        }} fontWeight="500px">
+          Profiles
+        </Typography>
 
         <GenderFilter
           selectedStatus={selectedStatus}
           handleStatusChange={handleStatusChange}
         />
       </Box>
- { !isLoading &&  filteredUsers?.length === 0 ? (
+      {!isLoading && filteredUsers?.length === 0 ? (
         <Typography variant="h6" textAlign="center" mt={4}>
           No records to display.
         </Typography>
       ) : (
-      <Box
-        sx={{
-          display: "grid",
-          placeItems: "center",
-          mr:2,
-          gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(4, 1fr)",
-          },
-          gap: { xs: 2, sm: 3 },
-        }}
-      >
-        {filteredUsers.map((user)=>{
-          return (
-            <UserCard
-              key={user._id}
-              profile={user}
-              onViewMore={handleOpenDialog}
-              showCancelButton={false}
-            />
-          );
-        })}
-      </Box>
+        <Box
+          sx={{
+            display: "grid",
+            placeItems: "center",
+            mr: 2,
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+              lg: "repeat(4, 1fr)",
+            },
+            gap: { xs: 2, sm: 3 },
+          }}
+        >
+          {filteredUsers.map((user) => {
+            return (
+              <UserCard
+                key={user._id}
+                profile={user}
+                onViewMore={handleOpenDialog}
+                showCancelButton={false}
+              />
+            );
+          })}
+        </Box>
       )}
 
       {selectedUser && (
@@ -131,7 +133,7 @@ const ViewAll = () => {
           <Pagination
             count={totalPages}
             page={currentPage}
-            onChange={( e,page) => setCurrentPage(page)}
+            onChange={(e, page) => setCurrentPage(page)}
             color="primary"
             shape="rounded"
             size={window.innerWidth < 600 ? "small" : "medium"}

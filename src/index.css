@@ -15,9 +15,9 @@ html,
 body {
   width: 100%;
   min-height: 100%;
-  /* Premium soft off-white to make pure white cards pop */
-  background-color: #f8f6fa;
-  color: #1a1a1a;
+  /* Premium Slate background */
+  background-color: #F8FAFC;
+  color: #0F172A;
   overflow-x: hidden;
 }
 
@@ -28,16 +28,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8f6fa;
+  background: #F8FAFC;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #5e0476;
+  background: #0B192C;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7a0c99;
+  background: #1A365D;
 }
 
 /* Remove default browser button reset that fights with MUI */

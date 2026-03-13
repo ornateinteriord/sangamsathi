@@ -75,7 +75,7 @@ const MembershipPlans = () => {
               mb: isMobile ? 1 : 3,
               fontWeight: 500,
               color: theme.palette.primary.main,
-              background: '#5e0476',
+              background: '#0B192C',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}
@@ -115,7 +115,7 @@ const MembershipPlans = () => {
                     fontSize: isMobile ? "18px" : "23px",
                     mb: 0,
                     fontWeight: 500,
-                    color: '#5e0476',
+                    color: '#0B192C',
                     textAlign: 'left',
                   }}
                 >
@@ -389,7 +389,7 @@ const MembershipPlans = () => {
                 textAlign: 'center',
               }}
             >
-              <VerifiedUser sx={{ fontSize: 40, color: '#5e0476' }} />
+              <VerifiedUser sx={{ fontSize: 40, color: '#0B192C' }} />
               Trusted By Thousands of Users
             </Typography>
 
@@ -412,7 +412,7 @@ const MembershipPlans = () => {
                   minWidth: isMobile ? "100%" : 280,
                 }}
               >
-                <Shield sx={{ fontSize: 50, color: "#5e0476", mb: 1 }} />
+                <Shield sx={{ fontSize: 50, color: "#0B192C", mb: 1 }} />
                 <Typography variant="h6" sx={{ fontWeight: 500, mb: 1, }}>
                   Secure Payment
                 </Typography>
@@ -431,7 +431,7 @@ const MembershipPlans = () => {
                   minWidth: isMobile ? "100%" : 280,
                 }}
               >
-                <VerifiedUser sx={{ fontSize: 50, color: '#5e0476', mb: 2 }} />
+                <VerifiedUser sx={{ fontSize: 50, color: '#0B192C', mb: 2 }} />
                 <Typography variant="h6" sx={{ fontWeight: 500, mb: 1, color: '#000' }}>
                   Verified Profiles
                 </Typography>
@@ -450,7 +450,7 @@ const MembershipPlans = () => {
                   minWidth: isMobile ? "100%" : 280,
                 }}
               >
-                <CreditCard sx={{ fontSize: 50, color: '#5e0476', mb: 2 }} />
+                <CreditCard sx={{ fontSize: 50, color: '#0B192C', mb: 2 }} />
                 <Typography variant="h6" sx={{ fontWeight: 500, mb: 1, color: '#000' }}>
                   Payment Options
                 </Typography>
