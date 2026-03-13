@@ -71,19 +71,19 @@ const Members = () => {
           px: { xs: 2, sm: 3 },
         }}
       >
-        <Box sx={{ textAlign: 'center', mb: { xs: 4, sm: 6 } }}>
-          <Typography variant="h6" sx={{ color: '#c774e8', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', mb: 1, fontSize: '0.85rem' }}>
+        <Box sx={{ textAlign: 'center', mb: { xs: 6, sm: 8 } }}>
+          <Typography variant="subtitle1" sx={{ color: '#D4AF37', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', mb: 1 }}>
             New Members
           </Typography>
           <Typography variant="h3" sx={{
-            color: '#1a1a1a',
+            color: '#0F172A',
             fontWeight: 800,
-            fontSize: { xs: '2rem', md: '2.75rem' },
-            '& span': { color: '#5e0476' }
+            fontSize: { xs: '2.5rem', md: '3.5rem' },
+            '& span': { color: '#0B192C' }
           }}>
             Recent <span>Registers</span>
           </Typography>
-          <Box sx={{ width: '60px', height: '4px', background: 'linear-gradient(90deg, #5e0476, #c774e8)', mx: 'auto', mt: 2, borderRadius: 2 }} />
+          <Box sx={{ width: '80px', height: '4px', background: 'linear-gradient(90deg, #D4AF37, #FFB200)', mx: 'auto', mt: 3, borderRadius: 2 }} />
         </Box>
 
         <Box sx={{ px: { xs: 0, sm: 2 } }}>
@@ -115,100 +115,99 @@ const Members = () => {
                     elevation={0}
                     sx={{
                       borderRadius: '24px',
-                      background: '#fff',
-                      boxShadow: '0 10px 40px rgba(94, 4, 118, 0.08)',
+                      background: '#0B192C',
                       overflow: 'hidden',
                       display: 'flex',
                       flexDirection: 'column',
                       position: 'relative',
-                      border: '1px solid rgba(94, 4, 118, 0.05)',
+                      border: 'none',
                       height: '100%',
-                      minHeight: '420px',
+                      minHeight: '460px', // Taller for full-bleed feel
+                      boxShadow: '0 15px 35px rgba(11, 25, 44, 0.15)',
                     }}
                   >
-                    {/* Top gradient banner */}
+                    {/* Full Bleed Avatar / Background */}
                     <Box sx={{
-                      width: '100%',
-                      height: '100px',
-                      background: 'url("data:image/svg+xml,%3Csvg width=\'100%25\' height=\'100%25\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cdefs%3E%3Cpattern id=\'p\' width=\'100\' height=\'100\' patternUnits=\'userSpaceOnUse\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'40\' fill=\'rgba(255,255,255,0.05)\'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'none\'/%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'url(%23p)\'/%3E%3C/svg%3E"), linear-gradient(135deg, #5e0476 0%, #c774e8 100%)',
-                      position: 'relative',
+                      width: '100%', height: '100%', position: 'absolute', top: 0, left: 0,
+                      background: 'linear-gradient(135deg, #1A365D, #0B192C)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: 'rgba(255,255,255,0.1)', fontSize: '8rem', fontWeight: 'bold'
                     }}>
-                      <Typography sx={{
-                        position: 'absolute', top: 12, right: 16,
-                        color: 'rgba(255,255,255,0.9)', fontSize: '0.75rem',
-                        fontWeight: 600, letterSpacing: '1px',
-                        background: 'rgba(0,0,0,0.2)', px: 1.5, py: 0.5, borderRadius: '12px'
-                      }}>
-                        #{member.registration_no}
-                      </Typography>
+                      {member.name ? member.name.charAt(0).toUpperCase() : '?'}
                     </Box>
 
-                    {/* Avatar Profile */}
-                    <Box sx={{ position: 'relative', mt: '-50px', display: 'flex', justifyContent: 'center', zIndex: 1 }}>
-                      <Box sx={{
-                        width: 100, height: 100, borderRadius: '50%',
-                        background: '#fff', padding: '4px',
-                        boxShadow: '0 8px 24px rgba(94,4,118,0.15)',
-                      }}>
-                        <Box sx={{
-                          width: '100%', height: '100%', borderRadius: '50%',
-                          background: 'linear-gradient(135deg, #f0f0f0, #e0e0e0)',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          color: '#5e0476', fontSize: '2.5rem', fontWeight: 'bold'
-                        }}>
-                          {member.name ? member.name.charAt(0).toUpperCase() : '?'}
-                        </Box>
-                      </Box>
-                    </Box>
+                    {/* Gradient Overlay for Text Readability */}
+                    <Box sx={{
+                      position: 'absolute', bottom: 0, left: 0, right: 0, height: '70%',
+                      background: 'linear-gradient(to top, rgba(11,25,44,1) 0%, rgba(11,25,44,0.8) 50%, rgba(11,25,44,0) 100%)',
+                      zIndex: 1
+                    }} />
 
-                    {/* Profile Info */}
-                    <Box sx={{ p: 3, pt: 2, display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', textAlign: 'center' }}>
-                      <Typography variant="h5" sx={{ color: '#1a1a1a', fontWeight: 800, mb: 0.5, fontSize: '1.4rem' }}>
+                    {/* Registration Tag */}
+                    <Typography sx={{
+                      position: 'absolute', top: 16, right: 16, zIndex: 2,
+                      color: '#0B192C', fontSize: '0.75rem',
+                      fontWeight: 700, letterSpacing: '1px',
+                      background: 'linear-gradient(135deg, #D4AF37, #FFB200)',
+                      px: 2, py: 0.5, borderRadius: '50px',
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.2)'
+                    }}>
+                      #{member.registration_no}
+                    </Typography>
+
+                    {/* Profile Info Overlay */}
+                    <Box sx={{
+                      p: 3, pb: 4, display: 'flex', flexDirection: 'column',
+                      flex: 1, justifyContent: 'flex-end', textAlign: 'left',
+                      position: 'relative', zIndex: 2
+                    }}>
+                      <Typography variant="h4" sx={{ color: '#fff', fontWeight: 800, mb: 1, fontSize: '1.8rem' }}>
                         {member.name || 'Unknown'}
                       </Typography>
 
-                      <Box sx={{ display: 'flex', gap: 1, mb: 2, alignItems: 'center' }}>
+                      <Box sx={{ display: 'flex', gap: 1.5, mb: 3, alignItems: 'center' }}>
                         <Typography variant="body2" sx={{
-                          color: '#5e0476', fontWeight: 600, px: 1.5, py: 0.5,
-                          background: 'rgba(94,4,118,0.06)', borderRadius: '20px', fontSize: '0.8rem'
+                          color: '#D4AF37', fontWeight: 600, px: 2, py: 0.5,
+                          background: 'rgba(212,175,55,0.15)', borderRadius: '20px', fontSize: '0.85rem',
+                          border: '1px solid rgba(212,175,55,0.3)'
                         }}>
                           {member.age || 'N/A'} yrs
                         </Typography>
-                        <Typography variant="body2" sx={{ color: '#666', fontSize: '0.9rem' }}>•</Typography>
-                        <Typography variant="body2" sx={{ color: '#666', fontSize: '0.9rem', fontWeight: 500 }}>
+                        <Typography variant="body2" sx={{ color: '#94A3B8', fontSize: '0.9rem' }}>•</Typography>
+                        <Typography variant="body2" sx={{ color: '#E2E8F0', fontSize: '0.95rem', fontWeight: 500 }}>
                           {member.city || 'Location N/A'}
                         </Typography>
                       </Box>
 
                       {/* Details Grid */}
                       <Box sx={{
-                        width: '100%', mt: 'auto', display: 'grid', gridTemplateColumns: '1fr 1fr',
-                        gap: 2, background: 'rgba(249,242,252,0.5)', borderRadius: '16px', p: 2,
-                        border: '1px solid rgba(94,4,118,0.03)'
+                        width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr',
+                        gap: 2, background: 'rgba(255,255,255,0.05)', borderRadius: '16px', p: 2,
+                        border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(4px)'
                       }}>
                         <Box sx={{ textAlign: 'left' }}>
-                          <Typography sx={{ color: '#888', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: 700, mb: 0.5 }}>
+                          <Typography sx={{ color: '#94A3B8', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: 700, mb: 0.5 }}>
                             Caste
                           </Typography>
-                          <Typography sx={{ color: '#1a1a1a', fontSize: '0.85rem', fontWeight: 600 }}>
+                          <Typography sx={{ color: '#F8FAFC', fontSize: '0.85rem', fontWeight: 600 }}>
                             {member.caste || 'N/A'}
                           </Typography>
                         </Box>
 
                         <Box sx={{ textAlign: 'left' }}>
-                          <Typography sx={{ color: '#888', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: 700, mb: 0.5 }}>
+                          <Typography sx={{ color: '#94A3B8', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: 700, mb: 0.5 }}>
                             Education
                           </Typography>
-                          <Typography sx={{ color: '#1a1a1a', fontSize: '0.85rem', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          <Typography sx={{ color: '#F8FAFC', fontSize: '0.85rem', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                             {member.educational_qualification || 'N/A'}
                           </Typography>
                         </Box>
 
                         <Box sx={{ textAlign: 'left', gridColumn: 'span 2' }}>
-                          <Typography sx={{ color: '#888', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: 700, mb: 0.5 }}>
+                          <Typography sx={{ color: '#94A3B8', fontSize: '0.7rem', textTransform: 'uppercase', fontWeight: 700, mb: 0.5 }}>
                             Occupation
                           </Typography>
-                          <Typography sx={{ color: '#1a1a1a', fontSize: '0.85rem', fontWeight: 600 }}>
+                          <Typography sx={{ color: '#F8FAFC', fontSize: '0.85rem', fontWeight: 600 }}>
                             {member.occupation || 'N/A'}
                           </Typography>
                         </Box>

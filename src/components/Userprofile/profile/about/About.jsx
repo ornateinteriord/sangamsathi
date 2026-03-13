@@ -185,7 +185,7 @@ const About = () => {
           fullWidth={true}
           sx={{ 
             color: "black",
-            border:'1px solid #5e0476',
+            border:'1px solid #0B192C',
             maxWidth: { xs: '160px', sm: 180 },
             textTransform: 'capitalize',
             "&:hover": {
@@ -203,7 +203,7 @@ const About = () => {
           sx={{ 
             maxWidth: { xs: '160px', sm: 200 },
             textTransform: 'capitalize', 
-            backgroundColor: "#5e0476",
+            backgroundColor: "#0B192C",
             color: "#fff",
             "&:hover": {
               backgroundColor: "#6d2980ff"

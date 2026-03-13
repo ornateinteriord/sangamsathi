@@ -44,35 +44,35 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 
-const Sidebar = ({ 
-  isMobile, 
-  open, 
-  toggleDrawer, 
-  sidebarData 
+const Sidebar = ({
+  isMobile,
+  open,
+  toggleDrawer,
+  sidebarData
 }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [openSubmenus, setOpenSubmenus] = useState({});
   const [selectedItem, setSelectedItem] = useState(null);
 
-    const handleItemClick = (text, hasSubItems = false, path = null) => {
-  const newOpenSubmenus = {};
-  if (hasSubItems) {
-    newOpenSubmenus[text] = !openSubmenus[text];
-  } else if (path) {
-    navigate(path); 
-     console.log(path,"yy")
-  }
-  setOpenSubmenus(newOpenSubmenus);
-  setSelectedItem(text);
-};
+  const handleItemClick = (text, hasSubItems = false, path = null) => {
+    const newOpenSubmenus = {};
+    if (hasSubItems) {
+      newOpenSubmenus[text] = !openSubmenus[text];
+    } else if (path) {
+      navigate(path);
+      console.log(path, "yy")
+    }
+    setOpenSubmenus(newOpenSubmenus);
+    setSelectedItem(text);
+  };
 
-const handleSubItemClick = (parentText, subItem) => {
-  setSelectedItem(`${parentText}-${subItem.text}`);
-  if (subItem.path) {
-    navigate(subItem.path); 
-   
-  }
-};
+  const handleSubItemClick = (parentText, subItem) => {
+    setSelectedItem(`${parentText}-${subItem.text}`);
+    if (subItem.path) {
+      navigate(subItem.path);
+
+    }
+  };
 
   const getIconComponent = (iconName, props = {}) => {
     const iconComponents = {
@@ -107,40 +107,40 @@ const handleSubItemClick = (parentText, subItem) => {
       Notifications,
       Email,
     };
-    
+
     const IconComponent = iconComponents[iconName];
     return IconComponent ? <IconComponent {...props} /> : null;
   };
 
- const renderSubItems = (subItems, parentText) => (
-  <Collapse in={openSubmenus[parentText]} timeout="auto" unmountOnExit>
-    <List component="div" disablePadding>
-      {subItems.map((item, index) => (
-        <ListItem
-          key={index}
-          button
-          onClick={() => handleSubItemClick(parentText, item)} // Pass the whole item
-          sx={{
-            pl: 4,
-            py: 0.5,
-            backgroundColor:
-              selectedItem === `${parentText}-${item.text}` ? '#4d75d4' : 'transparent',
-            '&:hover': { backgroundColor: '#4d75d4' },
-          }}
-        >
-          <ListItemText
-            primary={item.text}
+  const renderSubItems = (subItems, parentText) => (
+    <Collapse in={openSubmenus[parentText]} timeout="auto" unmountOnExit>
+      <List component="div" disablePadding>
+        {subItems.map((item, index) => (
+          <ListItem
+            key={index}
+            button
+            onClick={() => handleSubItemClick(parentText, item)} // Pass the whole item
             sx={{
-              color: '#fff',
-              '& .MuiTypography-root': { fontWeight: 'bold' },
+              pl: 4,
+              py: 0.5,
+              backgroundColor:
+                selectedItem === `${parentText}-${item.text}` ? 'rgba(212, 175, 55, 0.25)' : 'transparent',
+              '&:hover': { backgroundColor: 'rgba(212, 175, 55, 0.15)' },
             }}
-            primaryTypographyProps={{ fontSize: '1rem' }}
-          />
-        </ListItem>
-      ))}
-    </List>
-  </Collapse>
-);
+          >
+            <ListItemText
+              primary={item.text}
+              sx={{
+                color: '#fff',
+                '& .MuiTypography-root': { fontWeight: 'bold' },
+              }}
+              primaryTypographyProps={{ fontSize: '1rem' }}
+            />
+          </ListItem>
+        ))}
+      </List>
+    </Collapse>
+  );
 
   return (
     <Drawer
@@ -164,13 +164,14 @@ const handleSubItemClick = (parentText, subItem) => {
             <Box key={index}>
               <ListItem
                 button
-                onClick={() => handleItemClick(item.text, !!item.subItems,item.path)}
+                onClick={() => handleItemClick(item.text, !!item.subItems, item.path)}
                 sx={{
                   cursor: 'pointer',
                   pl: 2,
                   py: 1,
-                  backgroundColor: selectedItem === item.text ? '#4d75d4' : 'transparent',
-                  '&:hover': { backgroundColor: '#4d75d4' },
+                  backgroundColor: selectedItem === item.text ? 'rgba(212, 175, 55, 0.25)' : 'transparent',
+                  borderLeft: selectedItem === item.text ? '3px solid #D4AF37' : '3px solid transparent',
+                  '&:hover': { backgroundColor: 'rgba(212, 175, 55, 0.15)' },
                 }}
               >
                 <ListItemIcon sx={{ minWidth: 35, color: '#fff' }}>
@@ -199,8 +200,8 @@ const handleSubItemClick = (parentText, subItem) => {
                 <Box
                   sx={{
                     cursor: 'pointer',
-                    backgroundColor: '#1a3151',
-                    borderLeft: '3px solid #4d75d4',
+                    backgroundColor: 'rgba(212, 175, 55, 0.08)',
+                    borderLeft: '3px solid #D4AF37',
                     ml: 0,
                   }}
                 >

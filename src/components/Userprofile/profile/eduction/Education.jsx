@@ -166,7 +166,7 @@ const Education = () => {
                 variant="outlined"
                 sx={{
                   color: "black",
-                  border:'1px solid #5e0476',
+                  border:'1px solid #0B192C',
                   backgroundColor: "#fff",
                   textTransform: "capitalize",
                   "&:hover": { backgroundColor: "#fff" },
@@ -180,9 +180,9 @@ const Education = () => {
                 variant="contained"
                 disabled={isUpdating}
                 sx={{
-                  backgroundColor: "#5e0476",
+                  backgroundColor: "#0B192C",
                   textTransform: "capitalize",
-                  "&:hover": { backgroundColor: "#5e0476" },
+                  "&:hover": { backgroundColor: "#0B192C" },
                   width: isMobile ? '100%' : '130px'
                 }}
               >

@@ -310,7 +310,7 @@ const Navbar = () => {
         sx={{
           "& .MuiDrawer-paper": {
             width: "280px",
-            background: '#5e0476',
+            background: '#0B192C',
             color: "#fff",
           },
         }}
@@ -436,7 +436,7 @@ const Navbar = () => {
         {/* Gradient Header */}
         <Box
           sx={{
-            background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+            background: "linear-gradient(135deg, #0B192C 0%, #1A365D 100%)",
             pt: 4,
             pb: 3,
             px: 3,
@@ -499,20 +499,20 @@ const Navbar = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <EmailOutlined sx={{ color: "#5e0476", fontSize: 20 }} />
+                    <EmailOutlined sx={{ color: "#0B192C", fontSize: 20 }} />
                   </InputAdornment>
                 ),
               }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "10px",
-                  "&:hover fieldset": { borderColor: "#5e0476" },
+                  "&:hover fieldset": { borderColor: "#0B192C" },
                   "&.Mui-focused fieldset": {
-                    borderColor: "#5e0476",
+                    borderColor: "#0B192C",
                     boxShadow: "0 0 0 3px rgba(94,4,118,0.1)",
                   },
                 },
-                "& label.Mui-focused": { color: "#5e0476" },
+                "& label.Mui-focused": { color: "#0B192C" },
               }}
             />
             <TextField
@@ -527,7 +527,7 @@ const Navbar = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockOutlined sx={{ color: "#5e0476", fontSize: 20 }} />
+                    <LockOutlined sx={{ color: "#0B192C", fontSize: 20 }} />
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -547,19 +547,19 @@ const Navbar = () => {
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "10px",
-                  "&:hover fieldset": { borderColor: "#5e0476" },
+                  "&:hover fieldset": { borderColor: "#0B192C" },
                   "&.Mui-focused fieldset": {
-                    borderColor: "#5e0476",
+                    borderColor: "#0B192C",
                     boxShadow: "0 0 0 3px rgba(94,4,118,0.1)",
                   },
                 },
-                "& label.Mui-focused": { color: "#5e0476" },
+                "& label.Mui-focused": { color: "#0B192C" },
               }}
             />
             <Typography
               variant="body2"
               sx={{
-                color: "#5e0476",
+                color: "#0B192C",
                 cursor: "pointer",
                 textAlign: "right",
                 fontWeight: 500,
@@ -587,10 +587,10 @@ const Navbar = () => {
               textTransform: "none",
               fontSize: "1rem",
               letterSpacing: "0.3px",
-              background: "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+              background: "linear-gradient(135deg, #0B192C 0%, #1A365D 100%)",
               boxShadow: "0 4px 14px rgba(94,4,118,0.35)",
               "&:hover": {
-                background: "linear-gradient(135deg, #7a0c99 0%, #5e0476 100%)",
+                background: "linear-gradient(135deg, #1A365D 0%, #0B192C 100%)",
                 boxShadow: "0 6px 20px rgba(94,4,118,0.45)",
                 transform: "translateY(-1px)",
               },
@@ -605,7 +605,7 @@ const Navbar = () => {
             <Box
               component="span"
               sx={{
-                color: "#5e0476",
+                color: "#0B192C",
                 cursor: "pointer",
                 fontWeight: 700,
                 "&:hover": { textDecoration: "underline" },
@@ -767,7 +767,7 @@ const Navbar = () => {
               fontWeight: 500,
               textTransform: "capitalize",
               fontSize: "1rem",
-              backgroundColor: "#5e0476",
+              backgroundColor: "#0B192C",
               "&:hover": {
                 backgroundColor: "#6c1b83",
               },
@@ -794,8 +794,8 @@ const Navbar = () => {
               fontWeight: 500,
               textTransform: "capitalize",
               fontSize: "1rem",
-              color: "#5e0476",
-              borderColor: "#5e0476",
+              color: "#0B192C",
+              borderColor: "#0B192C",
               "&:hover": {
                 borderColor: "#6c1b83",
                 backgroundColor: "#e3d2e7ff",

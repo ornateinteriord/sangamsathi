@@ -69,27 +69,27 @@ const SidebarMenu = ({
               variant="h5"
               marginLeft={2}
               textTransform={"capitalize"}
-              sx={{fontSize:"2rem"}}
+              sx={{ fontSize: "2rem" }}
             >
               {userProfile?.first_name}
             </Typography>
-             <Chip
-                  label={userProfile?.type_of_user || "FreeUser"}
-                  size="small"
-                  sx={{
-                    mt: 1,
-                    fontSize: { xs: "0.7rem", sm: "0.8rem" },
-                    backgroundColor:
-                      userProfile?.type_of_user === "PremiumUser" ||
-                      userProfile?.type_of_user === "SilverUser"
-                        ? "#FFD700"
-                        : userProfile?.type_of_user === "FreeUser"
-                        ? "#87CEEB"
-                        : "gray",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
-                />
+            <Chip
+              label={userProfile?.type_of_user || "FreeUser"}
+              size="small"
+              sx={{
+                mt: 1,
+                fontSize: { xs: "0.7rem", sm: "0.8rem" },
+                backgroundColor:
+                  userProfile?.type_of_user === "PremiumUser" ||
+                    userProfile?.type_of_user === "SilverUser"
+                    ? "#FFD700"
+                    : userProfile?.type_of_user === "FreeUser"
+                      ? "#87CEEB"
+                      : "gray",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            />
           </Box>
         </ListItem>
 
@@ -100,9 +100,10 @@ const SidebarMenu = ({
             onClick={item.onClick}
             sx={{
               backgroundColor:
-                selectedItem === item.text ? "#b47ac4" : "transparent",
+                selectedItem === item.text ? "rgba(212, 175, 55, 0.25)" : "transparent",
+              borderLeft: selectedItem === item.text ? "3px solid #D4AF37" : "3px solid transparent",
               "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                backgroundColor: "rgba(212, 175, 55, 0.15)",
               },
               borderRadius: "2px",
               mx: 0,

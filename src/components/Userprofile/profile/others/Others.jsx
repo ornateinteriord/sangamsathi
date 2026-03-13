@@ -115,7 +115,7 @@ const Others = () => {
           fullWidth={isMobile}
           sx={{
             color: "black",
-             border:'1px solid #5e0476',
+             border:'1px solid #0B192C',
             backgroundColor: "#fff",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#fff" },
@@ -130,7 +130,7 @@ const Others = () => {
           disabled={isUpdating}
           fullWidth={isMobile}
           sx={{
-            backgroundColor: "#5e0476",
+            backgroundColor: "#0B192C",
             textTransform: "capitalize",
             "&:hover": { backgroundColor: "#2c3e50" },
             width: isMobile ? "100%" : "130px"

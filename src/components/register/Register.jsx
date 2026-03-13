@@ -329,7 +329,7 @@ const Register = () => {
                 mt: isMobile ? "15px" : "",
               }}
             >
-              <Avatar sx={{ bgcolor: "#5e0476" }}>
+              <Avatar sx={{ bgcolor: "#0B192C" }}>
                 <HowToRegIcon />
               </Avatar>
               <Typography
@@ -347,7 +347,7 @@ const Register = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: 1.5,
-                  background: "linear-gradient(135deg, #5e0476, #7a0c99)",
+                  background: "linear-gradient(135deg, #0B192C, #1A365D)",
                   color: "#fff",
                   py: 1,
                   px: 2.5,
@@ -387,7 +387,7 @@ const Register = () => {
                   background: "rgba(94,4,118,0.04)",
                 }}
               >
-                Plan: <Box component="span" sx={{ color: "#5e0476", fontWeight: 600 }}>Free</Box>
+                Plan: <Box component="span" sx={{ color: "#0B192C", fontWeight: 600 }}>Free</Box>
               </Box>
             )}
           </Box>
@@ -414,7 +414,7 @@ const Register = () => {
                 variant="h6"
                 sx={{
                   mb: 3,
-                  color: "#5e0476",
+                  color: "#0B192C",
                   fontWeight: 700,
                   fontSize: "0.9rem",
                   letterSpacing: "1.5px",
@@ -525,7 +525,7 @@ const Register = () => {
               />
               <Typography
                 variant="h6"
-                sx={{ mb: 2, color: "#5e0476", fontWeight: 600 }}
+                sx={{ mb: 2, color: "#0B192C", fontWeight: 600 }}
               >
                 SOCIAL & CAREER DETAILS
               </Typography>
@@ -606,7 +606,7 @@ const Register = () => {
                 variant="h6"
                 sx={{
                   mb: 3,
-                  color: "#5e0476",
+                  color: "#0B192C",
                   fontWeight: 700,
                   fontSize: "0.9rem",
                   letterSpacing: "1.5px",
@@ -712,7 +712,7 @@ const Register = () => {
             sx={{
               mt: 3,
               mb: 2.5,
-              color: "#5e0476",
+              color: "#0B192C",
               fontWeight: 700,
               fontSize: "0.9rem",
               letterSpacing: "1.5px",
@@ -842,11 +842,11 @@ const Register = () => {
               sx={{
                 fontWeight: 600,
                 color: "#000",
-                border: '1px solid #5e0476',
+                border: '1px solid #0B192C',
                 width: { xs: "100%", sm: "50%", md: "20%" },
                 textTransform: "capitalize",
                 "&:hover": {
-                  backgroundColor: "#5e0476",
+                  backgroundColor: "#0B192C",
                   color: "#fff",
                 },
               }}
@@ -862,9 +862,9 @@ const Register = () => {
               sx={{
                 background: isPending || isProcessingPayment
                   ? "#ccc"
-                  : "linear-gradient(135deg, #5e0476 0%, #7a0c99 100%)",
+                  : "linear-gradient(135deg, #0B192C 0%, #1A365D 100%)",
                 "&:hover": {
-                  background: "linear-gradient(135deg, #7a0c99 0%, #5e0476 100%)",
+                  background: "linear-gradient(135deg, #1A365D 0%, #0B192C 100%)",
                   boxShadow: "0 6px 20px rgba(94,4,118,0.4)",
                   transform: "translateY(-1px)",
                 },
