@@ -486,6 +486,11 @@ const Navbar = () => {
           <Box
             component="form"
             onSubmit={handleLogin}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleLogin(e);
+              }
+            }}
             sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}
           >
             <TextField

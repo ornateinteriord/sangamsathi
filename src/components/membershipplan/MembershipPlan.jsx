@@ -75,7 +75,7 @@ const MembershipPlans = () => {
               mb: isMobile ? 1 : 3,
               fontWeight: 500,
               color: theme.palette.primary.main,
-              background: '#0B192C',
+              background: 'linear-gradient(90deg, #0B192C, #D4AF37)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}
@@ -105,8 +105,8 @@ const MembershipPlans = () => {
                   mt: isMobile ? 2 : 6,
                   p: 4,
                   borderRadius: 3,
-                  background: 'linear-gradient(145deg, #ffffff, #f5f5ff)',
-                  borderLeft: `6px solid ${theme.palette.primary.main}`,
+                  background: 'linear-gradient(145deg, #ffffff, #fdf8ed)',
+                  borderLeft: '6px solid #D4AF37',
                   height: '100%',
                 }}
               >
@@ -141,8 +141,8 @@ const MembershipPlans = () => {
                   sx={{
                     p: 2,
                     borderRadius: 2,
-                    bgcolor: '#f0f4ff',
-                    border: `1px dashed ${theme.palette.primary.light}`,
+                    bgcolor: '#fdf8ed',
+                    border: '1px dashed #D4AF37',
                   }}
                 >
                   <Typography variant="body2" color='#000'>
@@ -408,7 +408,7 @@ const MembershipPlans = () => {
                   flex: '1 1 300px',
                   p: 3,
                   borderRadius: 2,
-                  bgcolor: '#f9f9ff',
+                  bgcolor: '#fdf8ed',
                   minWidth: isMobile ? "100%" : 280,
                 }}
               >
@@ -427,7 +427,7 @@ const MembershipPlans = () => {
                   flex: '1 1 300px',
                   p: 3,
                   borderRadius: 2,
-                  bgcolor: '#f9f9ff',
+                  bgcolor: '#fdf8ed',
                   minWidth: isMobile ? "100%" : 280,
                 }}
               >
@@ -446,7 +446,7 @@ const MembershipPlans = () => {
                   flex: '1 1 300px',
                   p: 3,
                   borderRadius: 2,
-                  bgcolor: '#f9f9ff',
+                  bgcolor: '#fdf8ed',
                   minWidth: isMobile ? "100%" : 280,
                 }}
               >
