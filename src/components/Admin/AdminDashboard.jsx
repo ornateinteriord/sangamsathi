@@ -242,10 +242,10 @@ const handleConfirmLogout = () => {
             sx={{ 
               cursor: 'pointer',
               padding: '10px',
-              backgroundColor: isActive('/admin/profile') ? '#1976d2' : 'transparent',
+              backgroundColor: isActive('/admin/profile') ? '#800000' : 'transparent',
               '&:hover': {
-                backgroundColor: isActive('/admin/profile') ? '#1976d2' : 'rgba(0, 0, 0, 0.04)',
-                color: 'aqua'
+                backgroundColor: isActive('/admin/profile') ? '#800000' : 'rgba(0, 0, 0, 0.04)',
+                color: '#FFD700'
               }
             }}
           >
@@ -258,10 +258,10 @@ const handleConfirmLogout = () => {
                 cursor: 'pointer',
                 padding: '14px',
                 borderRadius:'4px',
-                backgroundColor: isActive('/admin/dashboard') ? '#1976d2' : 'transparent',
+                backgroundColor: isActive('/admin/dashboard') ? '#800000' : 'transparent',
                 '&:hover': {
-                  backgroundColor: isActive('/admin/dashboard') ? '#1976d2' : 'rgba(0, 0, 0, 0.04)',
-                  color: 'aqua'
+                  backgroundColor: isActive('/admin/dashboard') ? '#800000' : 'rgba(0, 0, 0, 0.04)',
+                  color: '#FFD700'
                 }
               }}
             >
@@ -276,11 +276,11 @@ const handleConfirmLogout = () => {
                 cursor: 'pointer',
                 padding: '10px',
                 borderRadius: '4px',
-                backgroundColor: openUserManagement ? '#1976d2' : 'transparent',
+                backgroundColor: openUserManagement ? '#800000' : 'transparent',
                 color: openUserManagement ? '#fff' : 'inherit',
                 '&:hover': {
-                  backgroundColor: openUserManagement ? '#1565c0' : 'transparent',
-                  color: 'aqua'
+                  backgroundColor: openUserManagement ? '#A52A2A' : 'transparent',
+                  color: '#FFD700'
                 },
               }}
             >
@@ -296,9 +296,9 @@ const handleConfirmLogout = () => {
                   sx={{
                     padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/user-table') ? 'aqua' : '',
+                    color: isActive('/admin/user-table') ? '#FFD700' : '',
                     '&:hover': {
-                    color: isActive('/admin/user-table') ?  'darkaqua' : 'aqua',
+                    color: isActive('/admin/user-table') ?  '#E8A54B' : '#FFD700',
                    
                     }
                   }}
@@ -312,9 +312,9 @@ const handleConfirmLogout = () => {
                   sx={{
                     padding: '0px ',
                     borderRadius:'2px',
-                    color: isActive('/admin/userData') ? 'aqua' : '',
+                    color: isActive('/admin/userData') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/userData') ? 'darkaqua' : 'aqua',
+                      color: isActive('/admin/userData') ? '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -328,9 +328,9 @@ const handleConfirmLogout = () => {
                   sx={{
                  padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/renewals') ? 'aqua' : '',
+                    color: isActive('/admin/renewals') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/renewals') ? 'darkaqua' : 'aqua',
+                      color: isActive('/admin/renewals') ? '#E8A54B' : '#FFD700',
                       
                     }
                   }}
@@ -344,9 +344,9 @@ const handleConfirmLogout = () => {
                   sx={{
                    padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/resetpass') ? 'aqua' : '',
+                    color: isActive('/admin/resetpass') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/resetpass') ? 'darkaqua' : 'aqua',
+                      color: isActive('/admin/resetpass') ? '#E8A54B' : '#FFD700',
                    
                     }
                   }}
@@ -360,9 +360,9 @@ const handleConfirmLogout = () => {
                   sx={{
                     padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/imageverify') ? 'aqua' : '',
+                    color: isActive('/admin/imageverify') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/imageverify') ?  'darkaqua' : 'aqua',
+                      color: isActive('/admin/imageverify') ?  '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -380,11 +380,11 @@ const handleConfirmLogout = () => {
                 cursor: 'pointer',
                 padding: '10px',
                 borderRadius: '4px',
-                backgroundColor: openAssistanceService ? '#1976d2' : 'transparent',
+                backgroundColor: openAssistanceService ? '#800000' : 'transparent',
                 color: openAssistanceService ? '#fff' : 'inherit',
                 '&:hover': {
-                  backgroundColor: openAssistanceService ? '#1565c0' : 'rgba(0, 0, 0, 0.04)',
-                  color: 'aqua'
+                  backgroundColor: openAssistanceService ? '#A52A2A' : 'rgba(0, 0, 0, 0.04)',
+                  color: '#FFD700'
                 }
               }}
             >
@@ -400,9 +400,9 @@ const handleConfirmLogout = () => {
                   sx={{
                     padding: '0',
                     borderRadius:'2px',
-                  color: isActive('/admin/pendingdata') ? 'aqua' : '',
+                  color: isActive('/admin/pendingdata') ? '#FFD700' : '',
                     '&:hover': {
-                     color: isActive('/admin/pendingdata') ?  'darkaqua' : 'aqua',
+                     color: isActive('/admin/pendingdata') ?  '#E8A54B' : '#FFD700',
                     
                     }
                   }}
@@ -416,9 +416,9 @@ const handleConfirmLogout = () => {
                   sx={{
                   padding: '0',
                     borderRadius:'2px',
-                  color: isActive('/admin/successdata') ? 'aqua' : '',
+                  color: isActive('/admin/successdata') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/successdata') ? 'darkaqua' : 'aqua',
+                      color: isActive('/admin/successdata') ? '#E8A54B' : '#FFD700',
                       
                     }
                   }}
@@ -432,9 +432,9 @@ const handleConfirmLogout = () => {
                   sx={{
                    padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/promotersdata') ? 'aqua' : '',
+                    color: isActive('/admin/promotersdata') ? '#FFD700' : '',
                     '&:hover': {
-                   color: isActive('/admin/promotersdata') ?  'darkaqua' : 'aqua',
+                   color: isActive('/admin/promotersdata') ?  '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -452,11 +452,11 @@ const handleConfirmLogout = () => {
                 cursor: 'pointer',
                 padding: '10px',
                 borderRadius: '4px',
-                backgroundColor: openPromoterManagement ? '#1976d2' : 'transparent',
+                backgroundColor: openPromoterManagement ? '#800000' : 'transparent',
                 color: openPromoterManagement ? '#fff' : 'inherit',
                 '&:hover': {
-                  backgroundColor: openPromoterManagement ? '#1565c0' : 'rgba(0, 0, 0, 0.04)',
-                  color: 'aqua'
+                  backgroundColor: openPromoterManagement ? '#A52A2A' : 'rgba(0, 0, 0, 0.04)',
+                  color: '#FFD700'
                 }
               }}
             >
@@ -472,9 +472,9 @@ const handleConfirmLogout = () => {
                   sx={{
                    padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/promoters') ? 'aqua' : '',
+                    color: isActive('/admin/promoters') ? '#FFD700' : '',
                     '&:hover': {
-                  color: isActive('/admin/promoters') ?  'darkaqua' : 'aqua',
+                  color: isActive('/admin/promoters') ?  '#E8A54B' : '#FFD700',
                       
                     }
                   }}
@@ -488,9 +488,9 @@ const handleConfirmLogout = () => {
                   sx={{
                   padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/promotersusers') ? 'aqua' : '',
+                    color: isActive('/admin/promotersusers') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/promotersusers') ?  'darkaqua' : 'aqua',
+                      color: isActive('/admin/promotersusers') ?  '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -504,9 +504,9 @@ const handleConfirmLogout = () => {
                   sx={{
                    padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/promoterearn') ? 'aqua' : '',
+                    color: isActive('/admin/promoterearn') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/promoterearn') ?  'darkaqua' : 'aqua',
+                      color: isActive('/admin/promoterearn') ?  '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -520,9 +520,9 @@ const handleConfirmLogout = () => {
                   sx={{
                    padding: '0',
                     borderRadius:'2px',
-                   color: isActive('/admin/paytopromoters') ? 'aqua' : '',
+                   color: isActive('/admin/paytopromoters') ? '#FFD700' : '',
                     '&:hover': {
-                     color: isActive('/admin/paytopromoters') ?  'darkaqua' : 'aqua',
+                     color: isActive('/admin/paytopromoters') ?  '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -540,11 +540,11 @@ const handleConfirmLogout = () => {
                 cursor: 'pointer',
                 padding: '10px',
                 borderRadius: '4px',
-                backgroundColor: openPromoterReceipts ? '#1976d2' : 'transparent',
+                backgroundColor: openPromoterReceipts ? '#800000' : 'transparent',
                 color: openPromoterReceipts ? '#fff' : 'inherit',
                 '&:hover': {
-                  backgroundColor: openPromoterReceipts ? '#1565c0' : 'rgba(0, 0, 0, 0.04)',
-                  color: 'aqua'
+                  backgroundColor: openPromoterReceipts ? '#A52A2A' : 'rgba(0, 0, 0, 0.04)',
+                  color: '#FFD700'
                 }
               }}
             >
@@ -560,9 +560,9 @@ const handleConfirmLogout = () => {
                   sx={{
                    padding: '0',
                     borderRadius:'2px',
-                  color: isActive('/admin/onlinetransaction') ? 'aqua' : '',
+                  color: isActive('/admin/onlinetransaction') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/onlinetransaction') ?  'darkaqua' : 'aqua',
+                      color: isActive('/admin/onlinetransaction') ?  '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -576,9 +576,9 @@ const handleConfirmLogout = () => {
                   sx={{
                    padding: '0',
                     borderRadius:'2px',
-                color: isActive('/admin/assistance') ? 'aqua' : '',
+                color: isActive('/admin/assistance') ? '#FFD700' : '',
                     '&:hover': {
-                    color: isActive('/admin/assistance') ? 'darkaqua' : 'aqua',
+                    color: isActive('/admin/assistance') ? '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -592,9 +592,9 @@ const handleConfirmLogout = () => {
                   sx={{
                    padding: '0',
                     borderRadius:'2px',
-                   color: isActive('/admin/receiptsvocher') ? 'aqua' : '',
+                   color: isActive('/admin/receiptsvocher') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/receiptsvocher') ?  'darkaqua' : 'aqua',
+                      color: isActive('/admin/receiptsvocher') ?  '#E8A54B' : '#FFD700',
                     
                     }
                   }}
@@ -612,11 +612,11 @@ const handleConfirmLogout = () => {
                  cursor: 'pointer',
                  padding: '10px',
                  borderRadius: '4px',
-                 backgroundColor: openPromoterReports ? '#1976d2' : 'transparent',
+                 backgroundColor: openPromoterReports ? '#800000' : 'transparent',
                  color: openPromoterReports ? '#fff' : 'inherit',
                  '&:hover': {
-                   backgroundColor: openPromoterReports ? '#1565c0' : 'rgba(0, 0, 0, 0.04)',
-                   color: 'aqua'
+                   backgroundColor: openPromoterReports ? '#A52A2A' : 'rgba(0, 0, 0, 0.04)',
+                   color: '#FFD700'
                  }
                }}
              >
@@ -632,9 +632,9 @@ const handleConfirmLogout = () => {
                   sx={{
                     padding: '0',
                     borderRadius:'2px',
-                  color: isActive('/admin/userreports') ? 'aqua' : '',
+                  color: isActive('/admin/userreports') ? '#FFD700' : '',
                     '&:hover': {
-                      color: isActive('/admin/userreports') ? 'darkaqua' : 'aqua',
+                      color: isActive('/admin/userreports') ? '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -648,9 +648,9 @@ const handleConfirmLogout = () => {
                   sx={{
                     padding: '0',
                     borderRadius:'2px',
-                    color: isActive('/admin/renewalreports') ? 'aqua' : '',
+                    color: isActive('/admin/renewalreports') ? '#FFD700' : '',
                     '&:hover': {
-                   color: isActive('/admin/renewalreports') ?  'darkaqua' : 'aqua',
+                   color: isActive('/admin/renewalreports') ?  '#E8A54B' : '#FFD700',
                     
                     }
                   }}
@@ -664,9 +664,9 @@ const handleConfirmLogout = () => {
                   sx={{
                   padding: '0',
                     borderRadius:'2px',
-                 color: isActive('/admin/receiptsreports') ? 'aqua' : '',
+                 color: isActive('/admin/receiptsreports') ? '#FFD700' : '',
                     '&:hover': {
-                     color: isActive('/admin/receiptsreports') ?  'darkaqua' : 'aqua',
+                     color: isActive('/admin/receiptsreports') ?  '#E8A54B' : '#FFD700',
                      
                     }
                   }}
@@ -683,10 +683,10 @@ const handleConfirmLogout = () => {
                 cursor: 'pointer',
                 padding: '10px',
                 borderRadius:'4px',
-                backgroundColor: isActive('/admin/notification') ? '#1976d2' : 'transparent',
+                backgroundColor: isActive('/admin/notification') ? '#800000' : 'transparent',
                 '&:hover': {
-                  backgroundColor: isActive('/admin/notification') ? '#1976d2' : 'rgba(0, 0, 0, 0.04)',
-                  color: 'aqua'
+                  backgroundColor: isActive('/admin/notification') ? '#800000' : 'rgba(0, 0, 0, 0.04)',
+                  color: '#FFD700'
                 }
               }}
             >

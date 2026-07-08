@@ -124,8 +124,8 @@ const Sidebar = ({
               pl: 4,
               py: 0.5,
               backgroundColor:
-                selectedItem === `${parentText}-${item.text}` ? 'rgba(212, 175, 55, 0.25)' : 'transparent',
-              '&:hover': { backgroundColor: 'rgba(212, 175, 55, 0.15)' },
+                selectedItem === `${parentText}-${item.text}` ? 'rgba(255, 215, 0, 0.25)' : 'transparent',
+              '&:hover': { backgroundColor: 'rgba(255, 215, 0, 0.15)' },
             }}
           >
             <ListItemText
@@ -153,7 +153,7 @@ const Sidebar = ({
         '& .MuiDrawer-paper': {
           width: 250,
           boxSizing: 'border-box',
-          background: '#182848',
+          background: '#800000',
         },
       }}
     >
@@ -169,9 +169,9 @@ const Sidebar = ({
                   cursor: 'pointer',
                   pl: 2,
                   py: 1,
-                  backgroundColor: selectedItem === item.text ? 'rgba(212, 175, 55, 0.25)' : 'transparent',
-                  borderLeft: selectedItem === item.text ? '3px solid #D4AF37' : '3px solid transparent',
-                  '&:hover': { backgroundColor: 'rgba(212, 175, 55, 0.15)' },
+                  backgroundColor: selectedItem === item.text ? 'rgba(255, 215, 0, 0.25)' : 'transparent',
+                  borderLeft: selectedItem === item.text ? '3px solid #FFD700' : '3px solid transparent',
+                  '&:hover': { backgroundColor: 'rgba(255, 215, 0, 0.15)' },
                 }}
               >
                 <ListItemIcon sx={{ minWidth: 35, color: '#fff' }}>
@@ -200,8 +200,8 @@ const Sidebar = ({
                 <Box
                   sx={{
                     cursor: 'pointer',
-                    backgroundColor: 'rgba(212, 175, 55, 0.08)',
-                    borderLeft: '3px solid #D4AF37',
+                    backgroundColor: 'rgba(255, 215, 0, 0.08)',
+                    borderLeft: '3px solid #FFD700',
                     ml: 0,
                   }}
                 >
