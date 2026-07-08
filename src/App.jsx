@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Box, CircularProgress, Dialog, DialogContent, Typography } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
@@ -88,13 +88,10 @@ const App = () => {
   return (
     <ProfileProvider>
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={
-
-          <LoadingComponent />
-
-        }>
+        <Suspense fallback={<LoadingComponent />}>
           <Router>
             <ScrollToTop />
+            <div className="app-wrapper" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<><HeroSlider /><Connect /><Members /></>} />
@@ -132,6 +129,8 @@ const App = () => {
               </Route>
 
               {/* <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}> */}
+              <Route path="/promoter/*" element={<Navigate to="/PromotAdmin" replace />} />
+              <Route path="/promoter" element={<Navigate to="/PromotAdmin" replace />} />
               <Route element={<ProtectedRoute allowedRoles={["promoter"]} />}>
                 <Route path="/PromotAdmin" element={<PromotersDashboard />}>
                   <Route index element={<DashboardContent sidebarData={sidebarData} />} />
@@ -162,6 +161,7 @@ const App = () => {
               <Route path="activation-pending" element={<ActivationPending />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
+            </div>
           </Router>
 
           <ToastContainer position="top-right" autoClose={5000} />

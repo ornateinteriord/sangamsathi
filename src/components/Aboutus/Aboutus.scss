@@ -6,6 +6,7 @@
   padding: clamp(1.5rem, 5vw, 3.125rem); // Responsive padding
   max-width: 1500px;
   margin-top: 80px;
+  margin-bottom: auto; /* Push footer down if content is short */
   font-family: "Outfit sans-serif";
 
   /* Section 1: Intro About Us */

@@ -38,33 +38,28 @@ export const useLoginMutation = () => {
         TokenService.setToken(response.token);
         window.dispatchEvent(new Event("storage")); 
 
-        const userStatus = response?.user?.status;
+        const userStatus = response?.user?.status || response?.status || TokenService.decodeToken()?.status || TokenService.decodeToken()?.user_status;
         const role = TokenService.getRole();
 
-        if (userStatus !== "active") {
+        if (userStatus && userStatus !== "active") {
           toast.info(response.message || "Your account is not yet active");
-        navigate("/activation-pending");
+          navigate("/activation-pending");
           return;
         }
 
         toast.success(response.message );
 
-        switch (role) {
-          case "FreeUser":
-          case "PremiumUser":
-          case "SilverUser":
-          case "Assistance":
-            navigate("/user/userDashboard");
-            break;
-          case "Admin":
-            navigate("/admin/dashboard");
-            break;
-          case "promoter":
-            navigate("/PromotAdmin");
-            break;
-          default:
-            localStorage.clear();
-            toast.error("Invalid user role");
+        const roleLower = role?.toString().trim().toLowerCase();
+
+        if (roleLower === "promoter") {
+          navigate("/PromotAdmin");
+        } else if (roleLower === "admin") {
+          navigate("/admin/dashboard");
+        } else if (["freeuser", "premiumuser", "silveruser", "assistance", "user", "basicuser"].includes(roleLower)) {
+          navigate("/user/userDashboard");
+        } else {
+          localStorage.clear();
+          toast.error("Invalid user role: " + (role || "Unknown"));
         }
       } else {
         toast.error(response?.message);

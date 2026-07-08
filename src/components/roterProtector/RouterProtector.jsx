@@ -10,7 +10,11 @@ import TokenService from "../token/tokenService";
   
     if (!userRole) return <Navigate to="/" replace />;
 
-    if (!allowedRoles.includes(userRole)) {
+    const isAllowed = allowedRoles?.some(
+      (role) => role?.toString().trim().toLowerCase() === userRole?.toString().trim().toLowerCase()
+    );
+
+    if (!isAllowed) {
         return <Navigate to="/" replace />;
       }
   
