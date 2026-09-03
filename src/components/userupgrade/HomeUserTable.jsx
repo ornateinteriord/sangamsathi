@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -11,25 +12,36 @@ import {
   useTheme,
 } from "@mui/material";
 import MembershipDialog from "../Userprofile/MembershipDailog/MembershipDailog";
+import PaymentSuccessScanner from "../common/PaymentSuccessScanner";
+// import { membershipOptions } from "../assets/memberShipOptions/MemberShipPlans";
 
 const HomeUserTable = () => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [open, setOpen] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
   const [currentMembership, ] = useState(null);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
 
   const handleUpgrade = () => {
-    const dummyPlan = {
-      type: "Premium",
-      price: "₹999",
-    };
-    setSelectedPlan(dummyPlan);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+  
+  const handlePlanSelection = (plan) => {
+    setSelectedPlan(plan);
+    setOpen(false);
+    setShowScanner(true);
+  };
+  
+  const handleScannerClose = () => {
+    setShowScanner(false);
+    setSelectedPlan(null);
+    navigate("/user/userDashboard");
   };
 
   return (
@@ -120,7 +132,7 @@ const HomeUserTable = () => {
                 overflow: "hidden",
                 background: "linear-gradient(135deg,rgb(235, 247, 101) 0%,rgb(136, 126, 8) 100%)",
                 color: "#fff",
-                width:isSmallScreen? "300px": "500px",
+                width: isSmallScreen ? "300px" : "500px",
                 marginBottom: "15px",
               }}
             >
@@ -128,13 +140,13 @@ const HomeUserTable = () => {
                 <Typography
                   variant={isSmallScreen ? "h6" : "h5"}
                   fontWeight={700}
-                  sx={{ fontSize: isSmallScreen ? "1.25rem" : "1.5rem",color:'#000' }}
+                  sx={{ fontSize: isSmallScreen ? "1.25rem" : "1.5rem", color: '#000' }}
                 >
                   Upgrade Your Membership
                 </Typography>
                 <Typography
                   variant={isSmallScreen ? "subtitle1" : "h6"}
-                  sx={{ mt: 1, opacity: 0.9 ,color:'#000'}}
+                  sx={{ mt: 1, opacity: 0.9, color: '#000' }}
                 >
                   Unlock premium features
                 </Typography>
@@ -164,7 +176,15 @@ const HomeUserTable = () => {
       <MembershipDialog
         open={open}
         onClose={handleClose}
-        selectedPlan={selectedPlan}
+        onSelectPlan={handlePlanSelection}
+      />
+      
+      {/* Payment Success Scanner Dialog */}
+      <PaymentSuccessScanner
+        open={showScanner}
+        onClose={handleScannerClose}
+        userType={selectedPlan?.name || selectedPlan?.originalName || selectedPlan?.type || ""}
+        buttonText="Submit"
       />
     </Box>
   );

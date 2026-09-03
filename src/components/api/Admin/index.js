@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 
 
 export const useUpgradeUserType = () => {
-   return useMutation({
+  const queryClient = useQueryClient();
+  return useMutation({
     mutationFn: async ({ userType, amountPaid, paidType, referenceNumber, registration_no }) => {
       const response = await post(`/api/admin/upgrade-user-type/${registration_no}`, {
         userType, amountPaid, paidType, referenceNumber
@@ -14,8 +15,22 @@ export const useUpgradeUserType = () => {
       if (response?.success) {
         return response;
       } else {
-        throw new Error(response?.message || "Failed to fetch users");
+        throw new Error(response?.message || "Failed to upgrade user");
       }
+    },
+    onSuccess: (response) => {
+      if (response?.success) {
+        toast.success(response?.message || "User upgraded successfully");
+        queryClient.invalidateQueries({ queryKey: ["profiles"] });
+        queryClient.invalidateQueries({ queryKey: ["renewalProfiles"] });
+        queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+      } else {
+        toast.error(response?.message || "Failed to upgrade user");
+      }
+    },
+    onError: (err) => {
+      const errorMessage = err?.response?.data?.message || err?.message || "Upgrade failed";
+      toast.error(errorMessage);
     },
   });
 };
@@ -198,6 +213,39 @@ export const useOnlineTransactions = () => {
   });
 };
 
+export const useUpdateOnlineTransactionStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, status, activateUser, usertype }) => {
+      const response = await put(`/api/admin/online-transactions/${id}/update-status`, {
+        status,
+        activateUser,
+        usertype,
+      });
+      if (response?.success) {
+        return response;
+      } else {
+        throw new Error(response?.message || "Failed to update transaction status");
+      }
+    },
+    onSuccess: (response) => {
+      if (response?.success) {
+        toast.success(response?.message || "Transaction updated successfully");
+        queryClient.invalidateQueries({ queryKey: ["online-transactions"] });
+        queryClient.invalidateQueries({ queryKey: ["profiles"] });
+        queryClient.invalidateQueries({ queryKey: ["renewalProfiles"] });
+        queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+      } else {
+        toast.error(response?.message || "Failed to update transaction");
+      }
+    },
+    onError: (err) => {
+      const errorMessage = err?.response?.data?.message || err?.message || "Update failed";
+      toast.error(errorMessage);
+    },
+  });
+};
+
 export const usePromotersEarnings = () => {
   return useQuery({
     queryKey: ['promoters-earnings'],
@@ -272,6 +320,32 @@ export const useUpdatePromoterStatus = () => {
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message || "Error updating status");
+    },
+  });
+};
+
+export const useAddPromoter = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data) => {
+      const response = await post("/api/admin/add-promoter", data);
+      if (!response?.success) {
+        throw new Error(response?.message || "Failed to add promoter");
+      }
+      return response;
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success(data.message || "Promoter added successfully");
+        queryClient.invalidateQueries({ queryKey: ["promoters"] });
+      } else {
+        toast.error(data.message || "Failed to add promoter");
+      }
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || error?.message || "Error adding promoter";
+      toast.error(errorMessage);
     },
   });
 };

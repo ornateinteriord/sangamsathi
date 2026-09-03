@@ -9,9 +9,12 @@ import {
 import { useOnlineTransactions } from "../../api/Admin";
 import { toast } from "react-toastify";
 import { LoadingTextSpinner } from "../../../utils/common";
+import UpdateOnlineTransactionDialog from "./UpdateOnlineTransactionDialog";
 
 const OnlineTransactionData = () => {
   const [search, setSearch] = useState("");
+  const [selectedTxn, setSelectedTxn] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const {
     data: records = [],
@@ -19,6 +22,7 @@ const OnlineTransactionData = () => {
     isError,
     error,
   } = useOnlineTransactions();
+
   useEffect(() => {
     if (isError) {
       toast.error(error.message);
@@ -27,6 +31,16 @@ const OnlineTransactionData = () => {
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
+  };
+
+  const handleOpenUpdate = (row) => {
+    setSelectedTxn(row);
+    setDialogOpen(true);
+  };
+
+  const handleCloseUpdate = () => {
+    setSelectedTxn(null);
+    setDialogOpen(false);
   };
 
   const filteredRows = records.filter((data) => {
@@ -74,7 +88,7 @@ const OnlineTransactionData = () => {
       </Box>
 
       <DataTable
-        columns={getOnlineTransactionColumns()}
+        columns={getOnlineTransactionColumns(handleOpenUpdate)}
         data={filteredRows}
         pagination
         paginationPerPage={6}
@@ -93,6 +107,12 @@ const OnlineTransactionData = () => {
         progressComponent={<LoadingTextSpinner />}
         persistTableHead
         highlightOnHover
+      />
+
+      <UpdateOnlineTransactionDialog
+        open={dialogOpen}
+        handleClose={handleCloseUpdate}
+        transaction={selectedTxn}
       />
     </Box>
   );

@@ -23,6 +23,7 @@ import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { toast } from "react-toastify";
 import { useSignupMutation } from "../api/Auth";
+import { post } from "../api/authHooks";
 import { useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -81,10 +82,15 @@ const Register = () => {
     mobile_no: "",
     password: "",
     confirmPassword: "",
+    refered_by: "",
+    refered_name: "",
   };
 
   const [formData, setFormData] = useState(initialFormState);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [promoterName, setPromoterName] = useState("");
+  const [promoterError, setPromoterError] = useState("");
+  const [isValidatingPromoter, setIsValidatingPromoter] = useState(false);
 
   // Determine display amount for selected plan
   const getPlanAmount = () => {
@@ -128,6 +134,11 @@ const Register = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    if (name === "refered_by") {
+      setFormData((prev) => ({ ...prev, [name]: value.toUpperCase() }));
+      return;
+    }
+
     // For mobile number field - only allow numbers up to 10 digits
     if (name === "mobile_no") {
       if (value === "" || /^\d{0,10}$/.test(value)) {
@@ -169,8 +180,43 @@ const Register = () => {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
 
+  const handleVerifyPromoter = async () => {
+    const code = formData.refered_by?.trim().toUpperCase();
+    if (code !== formData.refered_by) {
+      setFormData((prev) => ({ ...prev, refered_by: code || "" }));
+    }
+    if (!code) {
+      setPromoterError("Please enter a Sponsor Code first");
+      setPromoterName("");
+      return;
+    }
+    setIsValidatingPromoter(true);
+    setPromoterError("");
+    setPromoterName("");
+    setFormData((prev) => ({ ...prev, refered_name: "" }));
+    try {
+      const response = await post("/api/promoter/promocheck", { promocode: code });
+      if (response?.success && response?.data?.promoterName) {
+        setPromoterName(response.data.promoterName);
+        setFormData((prev) => ({ ...prev, refered_name: response.data.promoterName }));
+        toast.success(`Sponsor verified: ${response.data.promoterName}`);
+      } else {
+        setPromoterError(response?.message || "Invalid Sponsor Code");
+        toast.error(response?.message || "Invalid Sponsor Code");
+      }
+    } catch (error) {
+      const msg = error?.response?.data?.message || "Invalid Sponsor Code or inactive promoter";
+      setPromoterError(msg);
+      toast.error(msg);
+    } finally {
+      setIsValidatingPromoter(false);
+    }
+  };
+
   const handleClear = () => {
     setFormData(initialFormState);
+    setPromoterName("");
+    setPromoterError("");
   };
 
   const handleSubmit = (e) => {
@@ -821,6 +867,74 @@ const Register = () => {
               onChange={handleChange}
               required
             />
+          </Box>
+
+          {/* Sponsor Code and Sponsor Name Fields */}
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3, mb: 3 }}>
+            <Box>
+              <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: '#333' }}>
+                Sponsor Code:
+              </Typography>
+              <Box display="flex" gap={1}>
+                <TextField
+                  fullWidth
+                  name="refered_by"
+                  value={formData.refered_by || ""}
+                  onChange={handleChange}
+                  placeholder="Promoter ID / Sponsor Code"
+                  inputProps={{ maxLength: 8 }}
+                />
+                <Button
+                  type="button"
+                  variant="contained"
+                  onClick={handleVerifyPromoter}
+                  disabled={isValidatingPromoter || !formData.refered_by}
+                  sx={{
+                    bgcolor: "#0B192C",
+                    color: "#fff",
+                    fontWeight: 600,
+                    "&:hover": { bgcolor: "#1A365D" },
+                    textTransform: "none",
+                    minWidth: "85px",
+                    borderRadius: "4px",
+                  }}
+                >
+                  {isValidatingPromoter ? "..." : "Verify"}
+                </Button>
+              </Box>
+              {promoterError && (
+                <Typography variant="caption" sx={{ color: "#d32f2f", fontWeight: 600, display: "block", mt: 0.5 }}>
+                  ✖ {promoterError}
+                </Typography>
+              )}
+            </Box>
+
+            <Box>
+              <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: '#333' }}>
+                Sponsor Name:
+              </Typography>
+              <TextField
+                fullWidth
+                name="refered_name"
+                value={promoterName || ""}
+                placeholder="Sponsor Name (Auto-filled on verify)"
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: promoterName ? (
+                    <span style={{ color: "#2e7d32", fontWeight: "bold", marginRight: "8px" }}>✔</span>
+                  ) : null
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    bgcolor: promoterName ? "#edf7ed !important" : "#ffffff !important",
+                    "& input": {
+                      color: promoterName ? "#1e4620 !important" : "#555 !important",
+                      fontWeight: promoterName ? 600 : 400
+                    }
+                  }
+                }}
+              />
+            </Box>
           </Box>
 
           <Box

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Collapse, List, ListItem, ListItemText, IconButton, Typography, Menu, MenuItem, Avatar, Badge, Dialog, DialogTitle, DialogContent, TextField, Button, DialogActions } from '@mui/material';
 import { IoMdNotifications } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import { getAllUserCounts } from '../api/Admin';
+import { getAllUserCounts, getAllUserImageVerification } from '../api/Admin';
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -31,6 +31,10 @@ const AdminDashboard = () => {
   
   const navigate = useNavigate();
   const adminName = "Admin";
+  const [imageVerificationCount, setImageVerificationCount] = useState(0);
+  const [lastViewedCount, setLastViewedCount] = useState(() => parseInt(localStorage.getItem('lastViewedImageVerifications') || '0', 10));
+  const { mutate: fetchImageVerification } = getAllUserImageVerification();
+
   
   useEffect(() => {
     const token = localStorage.getItem('token'); 
@@ -39,6 +43,22 @@ const AdminDashboard = () => {
     }
     setActivePath(location.pathname);
   }, [location.pathname]);
+
+  useEffect(() => {
+    fetchImageVerification(
+      { page: 0, pageSize: 1 },
+      {
+        onSuccess: (response) => {
+          if (response?.success) {
+            setImageVerificationCount(response.totalRecords || 0);
+          }
+        },
+        onError: (err) => {
+          console.error("Failed to fetch image verification count", err);
+        }
+      }
+    );
+  }, []);
 
 const closeAllDropdowns = () => {
   setOpenUserManagement(false);
@@ -92,6 +112,8 @@ const closeAllDropdowns = () => {
     navigate('/admin/resetpass');
   }
   const navigateImageVerify=()=>{
+    localStorage.setItem('lastViewedImageVerifications', imageVerificationCount.toString());
+    setLastViewedCount(imageVerificationCount);
     navigate('/admin/imageverify');
   }
   const navigatePendingdata=()=>{
@@ -202,7 +224,7 @@ const handleConfirmLogout = () => {
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}><h2 className="navtxt">Admin Dashboard</h2></Link>
         </div>
         <div className="nav-right">
-        <Badge color="error" variant="dot">
+        <Badge badgeContent={Math.max(0, imageVerificationCount - lastViewedCount)} color="error" max={99} onClick={navigateImageVerify}>
         <IoMdNotifications fontSize={40} cursor={'pointer'}/>
         </Badge>
          

@@ -22,14 +22,18 @@ const UserUpgradeDialog = ({ open, handleClose, defaultUserType, userId }) => {
         referenceNumber: "",
     });
 
-     useEffect(() => {
+    useEffect(() => {
         if (open) {
-        setFormData({
-            userType: defaultUserType || "FreeUser",
-            amountPaid: "",
-            paidType: "",
-            referenceNumber: "",
-        });
+            const initialType = defaultUserType || "FreeUser";
+            let initialAmount = "0";
+            if (initialType === "SilverUser") initialAmount = "799";
+            else if (initialType === "PremiumUser") initialAmount = "999";
+            setFormData({
+                userType: initialType,
+                amountPaid: initialAmount,
+                paidType: "Admin",
+                referenceNumber: "ADMIN_UPGRADE",
+            });
         }
     }, [open, defaultUserType]);
 
@@ -40,6 +44,16 @@ const UserUpgradeDialog = ({ open, handleClose, defaultUserType, userId }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "userType") {
+            let defaultAmount = formData.amountPaid;
+            if (value === "SilverUser") defaultAmount = "799";
+            else if (value === "PremiumUser") defaultAmount = "999";
+            else if (value === "FreeUser" || value === "Assistance" || value === "Promoter" || value === "BasicUser") defaultAmount = "0";
+
+            setFormData({ ...formData, userType: value, amountPaid: defaultAmount });
+            return;
+        }
 
         // For amountPaid, allow only digits
         if (name === "amountPaid") {
@@ -56,180 +70,169 @@ const UserUpgradeDialog = ({ open, handleClose, defaultUserType, userId }) => {
         upgradeUser({
             userType: formData.userType,
             amountPaid: Number(formData.amountPaid),
-            paidType: formData.paidType,
-            referenceNumber: formData.referenceNumber,
+            paidType: formData.paidType || "Admin",
+            referenceNumber: formData.referenceNumber || "ADMIN_UPGRADE",
             registration_no: userId
         }, {
-            onSuccess:()=>{
-                handleClose()
+            onSuccess: () => {
+                handleClose();
                 setFormData({
                     userType: "",
                     amountPaid: "",
                     paidType: "",
                     referenceNumber: "",
                 });
-                toast.success("User upgraded successfully");
             },
-            onError:(error)=>{
-                toast.error(error?.message || "Failed to upgrade user");
+            onError: (error) => {
+                console.error("Upgrade error:", error);
             }
         });
     };
 
     return (
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            maxWidth="xs"
-            fullWidth
-            PaperProps={{
-                sx: {
-                    borderRadius: "10px",
-                    padding: { xs: "0px", sm: "10px" },
-                },
-            }}
-        >
-            <DialogTitle
-                sx={{
-                    textAlign: "center",
-                    fontWeight: 500,
-                    fontSize: "1.5rem",
-                    paddingBottom: "10px",
+        <>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                maxWidth="xs"
+                fullWidth
+                PaperProps={{
+                    sx: {
+                        borderRadius: "10px",
+                        padding: { xs: "0px", sm: "10px" },
+                    },
                 }}
             >
-                Upgrade User
-            </DialogTitle>
-            <DialogContent>
-                <Typography
-                    variant="body2"
-                    sx={{ mb: 2, textAlign: "center", color: "text.secondary" }}
-                >
-                    You are changing the details of <b>{userId}</b>
-                </Typography>
-
-                <Box
-                    component="form"
+                <DialogTitle
                     sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 2,
+                        textAlign: "center",
+                        fontWeight: 500,
+                        fontSize: "1.5rem",
                     }}
                 >
-                    {/* User Type */}
-                    <TextField
-                        select
-                        label="User Type"
-                        name="userType"
-                        value={formData.userType} 
-                        onChange={handleChange}
+                    Upgrade User
+                </DialogTitle>
+                <DialogContent>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+                        {/* User Type */}
+                        <TextField
+                            select
+                            label="User Type"
+                            name="userType"
+                            value={formData.userType}
+                            onChange={handleChange}
+                            fullWidth
+                            variant="outlined"
+                            sx={{
+                                "& .MuiOutlinedInput-root": { borderRadius: "5px" },
+                            }}
+                        >
+                            {userTypes.map((type) => (
+                                <MenuItem key={type} value={type}>
+                                    {type}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+
+                        {/* Amount Paid */}
+                        <TextField
+                            label="Amount Paid"
+                            name="amountPaid"
+                            value={formData.amountPaid}
+                            onChange={handleChange}
+                            fullWidth
+                            variant="outlined"
+                            inputProps={{
+                                inputMode: "numeric",
+                                pattern: "[0-9]*",
+                                style: { MozAppearance: "textfield" }, // remove firefox arrows
+                            }}
+                            sx={{
+                                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                    WebkitAppearance: "none",
+                                    margin: 0,
+                                },
+                                "& .MuiOutlinedInput-root": { borderRadius: "5px" },
+                            }}
+                        />
+
+                        {/* Paid Type */}
+                        <TextField
+                            label="Paid Type"
+                            name="paidType"
+                            value={formData.paidType}
+                            onChange={handleChange}
+                            fullWidth
+                            variant="outlined"
+                            sx={{
+                                "& .MuiOutlinedInput-root": { borderRadius: "5px" },
+                            }}
+                        />
+
+                        {/* Reference Number */}
+                        <TextField
+                            label="Reference Number"
+                            name="referenceNumber"
+                            value={formData.referenceNumber}
+                            onChange={handleChange}
+                            fullWidth
+                            variant="outlined"
+                            sx={{
+                                "& .MuiOutlinedInput-root": { borderRadius: "5px" },
+                            }}
+                        />
+                    </Box>
+                </DialogContent>
+
+                <DialogActions
+                    sx={{
+                        padding: "6px 24px",
+                        flexDirection: "column",
+                        gap: "12px",
+                    }}
+                >
+                    <Button
                         fullWidth
                         variant="outlined"
+                        onClick={handleClose}
                         sx={{
-                            "& .MuiOutlinedInput-root": { borderRadius: "5px" },
+                            height: "44px",
+                            borderRadius: "8px",
+                            fontWeight: 500,
+                            textTransform: "capitalize",
+                            fontSize: "1rem",
+                            color: "#333",
+                            borderColor: "#ccc",
+                            "&:hover": {
+                                borderColor: "#999",
+                                backgroundColor: "#f5f5f5",
+                            },
                         }}
                     >
-                        {userTypes.map((type) => (
-                            <MenuItem key={type} value={type}>
-                                {type}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-
-                    {/* Amount Paid */}
-                    <TextField
-                        label="Amount Paid"
-                        name="amountPaid"
-                        value={formData.amountPaid}
-                        onChange={handleChange}
+                        Cancel
+                    </Button>
+                    <Button
                         fullWidth
-                        variant="outlined"
-                        inputProps={{
-                            inputMode: "numeric",
-                            pattern: "[0-9]*",
-                            style: { MozAppearance: "textfield" }, // remove firefox arrows
-                        }}
+                        variant="contained"
+                        onClick={handleSubmit}
+                        disabled={isUpgrading}
                         sx={{
-                            "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
-                                WebkitAppearance: "none",
-                                margin: 0,
-                            },
-                            "& .MuiOutlinedInput-root": { borderRadius: "5px" },
-                        }}
-                    />
-
-                    {/* Paid Type */}
-                    <TextField
-                        label="Paid Type"
-                        name="paidType"
-                        value={formData.paidType}
-                        onChange={handleChange}
-                        fullWidth
-                        variant="outlined"
-                        sx={{
-                            "& .MuiOutlinedInput-root": { borderRadius: "5px" },
-                        }}
-                    />
-
-                    {/* Reference Number */}
-                    <TextField
-                        label="Reference Number"
-                        name="referenceNumber"
-                        value={formData.referenceNumber}
-                        onChange={handleChange}
-                        fullWidth
-                        variant="outlined"
-                        sx={{
-                            "& .MuiOutlinedInput-root": { borderRadius: "5px" },
-                        }}
-                    />
-                </Box>
-            </DialogContent>
-
-            <DialogActions
-                sx={{
-                    padding: "6px 24px",
-                    flexDirection: "column",
-                    gap: "12px",
-                }}
-            >
-                <Button
-                    fullWidth
-                    variant="outlined"
-                    onClick={handleClose}
-                    sx={{
-                        height: "44px",
-                        borderRadius: "8px",
-                        fontWeight: 500,
-                        textTransform: "capitalize",
-                        ':hover': {
-                            backgroundColor: 'transparent',
-                            borderColor: '#1a4f72'
-                        }
-                    }}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={handleSubmit}
-                    sx={{
-                        height: "44px",
-                        borderRadius: "8px",
-                        fontWeight: 500,
-                        textTransform: "capitalize",
-                        fontSize: "1rem",
-                        backgroundColor: "#1a4f72",
-                        "&:hover": {
+                            height: "44px",
+                            borderRadius: "8px",
+                            fontWeight: 500,
+                            textTransform: "capitalize",
+                            fontSize: "1rem",
                             backgroundColor: "#1a4f72",
-                        },
-                    }}
-                    disabled={isUpgrading || !formData.userType || !formData.amountPaid || !formData.paidType || !formData.referenceNumber}
-                >
-                    {isUpgrading ? 'Upgrading...' : 'Upgrade'}
-                </Button>
-            </DialogActions>
-        </Dialog>
+                            "&:hover": {
+                                backgroundColor: "#285228",
+                            },
+                        }}
+                    >
+                        {isUpgrading ? "Upgrading..." : "Upgrade"}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
     );
 };
 

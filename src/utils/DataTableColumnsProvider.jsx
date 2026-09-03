@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Chip } from "@mui/material";
 import { ModeComment } from "@mui/icons-material";
 import { getRelativeTime } from "./common/date";
 import { ViewImagesComponent } from "../components/Admin/imageVarify/ImageVerificationdata";
@@ -72,6 +72,12 @@ export const getPromoterUserListTable = () => [
       width : '10%'
     },
     {
+      name: "Promoter ID",
+      selector: row => row.refered_by || "-",
+      sortable: true,
+      width : '10%'
+    },
+    {
       name: "Name",
       selector: row => `${row.first_name} ${row.last_name}`,
       sortable: true,
@@ -98,7 +104,7 @@ export const getPromoterUserListTable = () => [
     {
       name: "Status",
       cell: row => (
-        <Typography color={row.status === "active" ? "green" : "red"}>
+        <Typography color={row.status === "active" ? "success" : "error"}>
           {row.status}
         </Typography>
       ),
@@ -110,6 +116,11 @@ export const getPendingandSuccessUserDataColumns = () => [
     {
       name: "Registration No",
       selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Promoter ID",
+      selector: (row) => row.refered_by || "-",
       sortable: true,
     },
     {
@@ -164,7 +175,7 @@ export const getImageVerificationColumns = (upgradeUserMutation,handleStatusUpda
     {
       name: "Image Status",
       cell: row => (
-        <Typography color={row.image_verification === "active" ? "green" : "orange"}>
+        <Typography color={row.image_verification === "active" ? "success" : "warning"}>
           {row.image_verification}
         </Typography>
       ),
@@ -299,7 +310,7 @@ export const getResetPasswordColumns = (handleOpenDialog) =>  [
     {
       name: "Status",
       cell: (row) => (
-        <Typography color={row.status === "active" ? "green" : "red"}>
+        <Typography color={row.status === "active" ? "success" : "error"}>
           {row.status}
         </Typography>
       ),
@@ -391,13 +402,13 @@ export const getPromotersDataColumns = (handleStatusChange) => [
   },
   {
     name: "Membership",
-    selector: (row) => row.membership_type || "-",
+    selector: (row) => (row.membership_type === "Premium" ? "Promoter" : (row.membership_type || "Promoter")),
     sortable: true,
   },
   {
   name: "Status",
   cell: (row) => (
-    <Typography color={row.status === "active" ? "green" : row.status === "inactive" ? "red" : "orange"}>
+    <Typography color={row.status === "active" ? "success" : row.status === "inactive" ? "error" : "warning"}>
       {row.status === "active" ? "Active" : row.status === "inactive" ? "Inactive" : "Pending"}
     </Typography>
   ),
@@ -432,6 +443,11 @@ export const getUserTableColumns = (formatUserRole) =>  [
     {
       name: "Reference No",
       selector: row => row.registration_no,
+      sortable: true,
+    },
+    {
+      name: "Promoter ID",
+      selector: row => row.refered_by || "-",
       sortable: true,
     },
     {
@@ -476,8 +492,23 @@ export const getUserTableColumns = (formatUserRole) =>  [
 export const getPromotersEarningsColumns = (handleDetailsClick) => [
   {
     name: "Promoter Code",
-    selector: (row) => row.referal_by || "N/A",
+    selector: (row) => row.referal_by || "-",
     sortable: true,
+  },
+  {
+    name: "Promoter Name",
+    selector: (row) => row.promoter_name || "-",
+    sortable: true,
+  },
+  {
+    name: "Contact Info",
+    selector: (row) => row.mobile && row.email ? `${row.mobile} / ${row.email}` : (row.mobile || row.email || "-"),
+    sortable: false,
+  },
+  {
+    name: "Bank Account",
+    selector: (row) => row.account_number ? `A/c: ${row.account_number}${row.bank_ifsc ? ` (${row.bank_ifsc})` : ""}` : "-",
+    sortable: false,
   },
   {
     name: "Total Earnings",
@@ -494,7 +525,7 @@ export const getPromotersEarningsColumns = (handleDetailsClick) => [
     selector: (row) => row.status,
     sortable: true,
     cell: (row) => (
-      <span style={{ color: row.status === "pending" ? "red" : "green" }}>
+      <span style={{ color: row.status === "pending" ? "#d32f2f" : "#2e7d32", fontWeight: 600 }}>
         {row.status}
       </span>
     ),
@@ -516,38 +547,38 @@ export const getPromotersEarningsColumns = (handleDetailsClick) => [
 ];
 export const getTransactionDetailsDialogColumns = () => [
             {
-                name: "Ref No",
-                selector: (row) => row.ref_no || "N/A",
+                name: "Referred User Reg No",
+                selector: (row) => row.ref_no || "-",
                 sortable: true,
             },
             {
-                name: "Email",
-                selector: (row) => row.emailid || "N/A",
+                name: "Referred User Email",
+                selector: (row) => row.user_email || row.emailid || "-",
                 sortable: true,
             },
             {
-                name: "Mobile",
-                selector: (row) => row.mobile || "N/A",
+                name: "Referred User Mobile",
+                selector: (row) => row.user_mobile || row.mobile || "-",
                 sortable: true,
             },
             {
-                name: "Amount",
+                name: "Promoter Earning",
                 selector: (row) => `₹${row.amount_earned || 0}`,
                 sortable: true,
             },
             {
                 name: "Transaction No",
-                selector: (row) => row.transaction_no || "N/A",
+                selector: (row) => row.transaction_no || "-",
                 sortable: true,
             },
             {
-                name: "Transaction Date",
-                selector: (row) => row.transaction_date || "N/A",
+                name: "Date",
+                selector: (row) => row.transaction_date || row.date || "-",
                 sortable: true,
             },
             {
-                name: "User Type",
-                selector: (row) => row.usertype || "N/A",
+                name: "Plan Type",
+                selector: (row) => row.usertype || "-",
                 sortable: true,
             },
         ];
@@ -582,7 +613,7 @@ export const getTransactionDetailsDialogColumns = () => [
     name: "Status",
     selector: (row) => row.status,
     cell: (row) => (
-      <Typography color={row.status === "active" ? "green" : "red"}>
+      <Typography color={row.status === "active" ? "success" : "error"}>
         {row.status}
       </Typography>
     ),
@@ -594,6 +625,11 @@ export const getUserUpgradeColumns = (handleUpgrade) => [
     {
       name: "Registration No",
       selector: row => row.registration_no,
+      sortable: true,
+    },
+    {
+      name: "Promoter ID",
+      selector: row => row.refered_by || "-",
       sortable: true,
     },
     {
@@ -614,7 +650,7 @@ export const getUserUpgradeColumns = (handleUpgrade) => [
     {
       name: "Status",
       cell: row => (
-        <Typography color={row.status === "active" ? "green" : "red"}>
+        <Typography color={row.status === "active" ? "success" : "error"}>
           {row.status}
         </Typography>
       ),
@@ -640,6 +676,11 @@ export const getUserDataColumns = (upgradeUserMutation, handleUpgrade) => [
       sortable: true,
     },
     {
+      name: "Promoter ID",
+      selector: row => row.refered_by || "-",
+      sortable: true,
+    },
+    {
       name: "Name",
       selector: row => `${row.first_name} ${row.last_name}`,
       sortable: true,
@@ -662,7 +703,7 @@ export const getUserDataColumns = (upgradeUserMutation, handleUpgrade) => [
     {
       name: "Status",
       cell: row => (
-        <Typography color={row.status === "active" ? "green" : "red"}>
+        <Typography color={row.status === "active" ? "success" : "error"}>
           {row.status}
         </Typography>
       ),
@@ -760,7 +801,7 @@ export const getUserDataColumns = (upgradeUserMutation, handleUpgrade) => [
   ];
 
 
-export const getOnlineTransactionColumns = (showActive) => [
+export const getOnlineTransactionColumns = (onUpdateClick) => [
   {
     name: "Date",
     selector: (row) => new Date(row.date).toLocaleDateString(),
@@ -794,11 +835,28 @@ export const getOnlineTransactionColumns = (showActive) => [
   {
     name: "Status",
     cell: (row) => (
-      <Typography color={row.status === "TXN_SUCCESS" ? "success.main" : "warning.main"}>
+      <Typography color={row.status === "TXN_SUCCESS" || row.status === "success" ? "#4caf50" : "#ff9800"} fontWeight={600}>
         {row.status}
       </Typography>
     ),
     sortable: true,
+  },
+  {
+    name: "Actions",
+    cell: (row) => (
+      <Button
+        variant="contained"
+        size="small"
+        color="primary"
+        onClick={() => onUpdateClick && onUpdateClick(row)}
+        sx={{ textTransform: "none", fontSize: "0.85rem", backgroundColor: "#34495e", "&:hover": { backgroundColor: "#2c3e50" } }}
+      >
+        Update
+      </Button>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
   },
 ];
 
@@ -837,7 +895,7 @@ export const getOnlineTransactionColumns = (showActive) => [
     {
       name: "Status",
       cell: (row) => (
-        <Typography color={row.status === "TXN_SUCCESS" ? "green" : "red"}>
+        <Typography color={row.status === "TXN_SUCCESS" ? "success" : "error"}>
           {row.status}
         </Typography>
       ),
@@ -904,7 +962,7 @@ export const getOnlineTransactionColumns = (showActive) => [
     {
       name: "Status",
       cell: (row) => (
-        <Typography color={row.status === "active" ? "green" : "red"}>
+        <Typography color={row.status === "active" ? "success" : "error"}>
           {row.status}
         </Typography>
       ),
@@ -938,7 +996,7 @@ export const getOnlineTransactionColumns = (showActive) => [
       cell: (row, index) => (
         <Typography
           variant="body2"
-          color={index % 2 === 0 ? "success.main" : "error.main"}
+          color={index % 2 === 0 ? "#4caf50" : "#f44336"}
         >
           {index % 2 === 0 ? "Active" : "Expires"}
         </Typography>
@@ -982,9 +1040,9 @@ export const getOnlineTransactionColumns = (showActive) => [
       name: "Status",
       cell: (row) => (
         <Typography
-          color={row.id % 2 === 0 ? "success.main" : "error.main"}
+          color={row.id % 2 === 0 ? "#4caf50" : "#f44336"}>
           sx={{ fontFamily: "Outfit sans-serif", fontSize: "17px" }}
-        >
+        
           {row.id % 2 === 0 ? "Success" : "Pending"}
         </Typography>
       ),
@@ -1021,7 +1079,7 @@ export const getOnlineTransactionColumns = (showActive) => [
     {
       name: "Status",
       cell: (row) => (
-        <Typography color={row.status === "active" ? "green" : "red"}>
+        <Typography color={row.status === "active" ? "success" : "error"}>
           {row.status}
         </Typography>
       ),
