@@ -119,7 +119,7 @@ const Navbar = () => {
     }
     setForgotPasswordError("");
 
-    resetPassword({ email }, {
+    resetPassword({ username: email, projectName: 'Sangamsathi' }, {
       onSuccess: (response) => {
         if (response.success) {
           setOtpSent(true);
@@ -143,9 +143,10 @@ const Navbar = () => {
     }
 
     resetPassword({
-      email,
+      username: email,
       otp,
-      password: newPassword,
+      newPassword: newPassword,
+      projectName: 'Sangamsathi',
     }, {
       onSuccess: () => {
         toast.success("Password reset successfully");
