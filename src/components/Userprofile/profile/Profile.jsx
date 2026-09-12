@@ -50,8 +50,6 @@ const Profile = () => {
       case 5:
         return <ParentsPrefer />;
       case 6:
-        return <Others />;
-      case 7:
         return <PrivacySettings />;
       default:
         return null;
@@ -65,7 +63,6 @@ const Profile = () => {
     "Photos",
     "LifeStyle",
     "Partner's Preference",
-    "Others",
     "Privacy Setting",
   ];
 

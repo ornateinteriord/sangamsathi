@@ -56,7 +56,13 @@ export const useLoginMutation = () => {
         } else if (roleLower === "admin") {
           navigate("/admin/dashboard");
         } else if (["freeuser", "premiumuser", "silveruser", "assistance", "user", "basicuser"].includes(roleLower)) {
-          navigate("/user/userDashboard");
+          const profileCompletion = response?.user?.otherInfo || TokenService.decodeToken()?.otherInfo;
+          
+          if (profileCompletion === 'Pending') {
+            navigate("/user/complete-profile");
+          } else {
+            navigate("/user/userDashboard");
+          }
         } else {
           localStorage.clear();
           toast.error("Invalid user role: " + (role || "Unknown"));

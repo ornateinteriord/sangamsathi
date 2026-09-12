@@ -251,11 +251,7 @@ const Register = () => {
 
     // --- Free User: Register directly ---
     if (amount === 0) {
-      mutate(formData, {
-        onSuccess: () => toast.success("Registered successfully!"),
-        onError: (err) =>
-          toast.error(err?.response?.data?.error || "Registration failed. Try again."),
-      });
+      mutate(formData);
       return;
     }
 
@@ -563,6 +559,7 @@ const Register = () => {
                 name="age"
                 value={formData.age}
                 onChange={handleChange}
+                required
                 InputLabelProps={{ shrink: !!formData.age }}
                 error={!isValidAge(formData.age)} // Show error state if not valid
                 helperText={
@@ -590,6 +587,7 @@ const Register = () => {
                     name="educational_qualification"
                     value={formData.educational_qualification}
                     onChange={handleChange}
+                    required
                     sx={{ width: "100%", mb: 2 }}
                   />
                 </Box>
@@ -600,6 +598,7 @@ const Register = () => {
                     name="occupation"
                     value={formData.occupation}
                     onChange={handleChange}
+                    required
                     sx={{ width: "100%", mb: 2 }}
                   />
                 </Box>
@@ -611,6 +610,7 @@ const Register = () => {
                     name="income_per_month"
                     value={formData.income_per_month}
                     onChange={handleChange}
+                    required
                     sx={{ width: "100%", mb: 2 }}
                   />
                 </Box>
@@ -621,6 +621,7 @@ const Register = () => {
                     name="country"
                     value={formData.country}
                     onChange={handleChange}
+                    required
                     sx={{ width: "100%", mb: 2 }}
                   />
                 </Box>
@@ -632,6 +633,7 @@ const Register = () => {
                     name="mother_tongue"
                     value={formData.mother_tongue}
                     onChange={handleChange}
+                    required
                     sx={{ width: "100%", mb: 2 }}
                   />
                 </Box>
@@ -672,7 +674,7 @@ const Register = () => {
                 Family Details
               </Typography>
 
-              <FormControl fullWidth sx={{ mb: 3 }}>
+              <FormControl fullWidth sx={{ mb: 3 }} required>
                 <InputLabel>Select Parents</InputLabel>
                 <Select
                   label="Select Parents"
@@ -693,6 +695,7 @@ const Register = () => {
                 sx={{ mb: 3 }}
                 value={formData.parent_name}
                 onChange={handleChange}
+                required
               />
 
               <TextField
@@ -702,6 +705,7 @@ const Register = () => {
                 value="Hindu"
                 disabled
                 sx={{ mb: 3 }}
+                required
               />
 
               <CustomAutocomplete
@@ -710,6 +714,7 @@ const Register = () => {
                 name="caste"
                 value={formData.caste}
                 onChange={handleChange}
+                required
                 sx={{ mb: 3 }}
               />
 
@@ -722,6 +727,7 @@ const Register = () => {
                 sx={{ mb: 3 }}
                 value={formData.address}
                 onChange={handleChange}
+                required
               />
 
               <CustomAutocomplete
@@ -730,6 +736,7 @@ const Register = () => {
                 name="occupation_country"
                 value={formData.occupation_country}
                 onChange={handleChange}
+                required
                 sx={{ mb: 3 }}
               />
 
@@ -739,6 +746,7 @@ const Register = () => {
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
+                required
                 sx={{ mb: 3 }}
               />
 
@@ -748,6 +756,7 @@ const Register = () => {
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
+                required
                 sx={{ mb: 3 }}
               />
             </Box>

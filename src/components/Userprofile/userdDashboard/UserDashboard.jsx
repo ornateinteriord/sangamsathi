@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Divider,
@@ -26,6 +27,7 @@ const UserDashboard = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const registerNo = TokenService.getRegistrationNo();
+  const navigate = useNavigate();
 
   const {
     data: userProfile,
@@ -55,6 +57,12 @@ const UserDashboard = () => {
     if (isProfileError) toast.error(profileError.message);
     if (isConnectionsError) toast.error(connectionsError.message);
   }, [isProfileError, profileError, isConnectionsError, connectionsError]);
+
+  useEffect(() => {
+    if (userProfile && userProfile.otherInfo === 'Pending') {
+      navigate('/user/complete-profile');
+    }
+  }, [userProfile, navigate]);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);

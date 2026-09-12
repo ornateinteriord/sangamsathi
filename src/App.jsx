@@ -67,6 +67,7 @@ const ViewAll = lazy(() => import('./components/Userprofile/viewAll/ViewAll'));
 const Search = lazy(() => import('./components/Userprofile/search/Search'));
 const UserDashboard = lazy(() => import('./components/Userprofile/userdDashboard/UserDashboard'));
 const Profile = lazy(() => import('./components/Userprofile/profile/Profile'));
+const CompleteProfile = lazy(() => import('./components/Userprofile/CompleteProfile/CompleteProfile'));
 
 
 
@@ -147,6 +148,7 @@ const App = () => {
 
               {/* User Routes */}
               <Route element={<ProtectedRoute allowedRoles={["FreeUser", "PremiumUser", "SilverUser"]} />}>
+                <Route path="/user/complete-profile" element={<CompleteProfile />} />
                 <Route path="/user" element={<UserNavBar />}>
                   <Route path="userDashboard" element={<UserDashboard />} />
                   <Route path="profile" element={<Profile />} />
