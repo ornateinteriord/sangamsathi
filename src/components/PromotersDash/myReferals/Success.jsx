@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
+import ReferralsTable from './ReferralsTable';
 
 function Success() {
   return (
-    <div>
-      Successs
-    </div>
+    <ReferralsTable statusFilter="Success" />
   )
 }
 

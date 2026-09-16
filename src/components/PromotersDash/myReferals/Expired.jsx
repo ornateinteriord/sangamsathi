@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
+import ReferralsTable from './ReferralsTable';
 
 function Expired() {
   return (
-    <div>
-      Expired
-    </div>
+    <ReferralsTable statusFilter="Expired" />
   )
 }
 
