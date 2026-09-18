@@ -19,7 +19,7 @@ const MyMatches = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [openDialog, setOpenDialog] = useState(null);
   const [currentTab, setCurrentTab] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
 
   const {
     mutate: fetchProfiles,
@@ -69,7 +69,7 @@ const MyMatches = () => {
             gridTemplateColumns: {
               sm: "repeat(2, 1fr)",
               md: "repeat(3, 1fr)",
-              lg: "repeat(4, 1fr)",
+              lg: "repeat(3, 1fr)",
             },
             gap: { xs: 2, sm: 3 },
           }}

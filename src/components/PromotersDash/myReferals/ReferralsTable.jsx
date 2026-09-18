@@ -58,6 +58,10 @@ const ReferralsTable = ({ statusFilter }) => {
       case 'TeamUsers':
         // Not entirely sure what defines a Team User, assuming maybe a specific profile type or just all users for now
         return true; 
+      case 'AssistancePending':
+        return user.type_of_user === 'Assistance' && (user.status === 'pending' || user.status === 'Pending' || user.status === 'inactive' || user.status === 'inActive');
+      case 'AssistanceSuccess':
+        return user.type_of_user === 'Assistance' && (user.status === 'active' || user.status === 'Active');
       default:
         return true;
     }

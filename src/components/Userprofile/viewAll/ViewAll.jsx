@@ -18,7 +18,7 @@ import { LoadingTextSpinner } from "../../../utils/common";
 import PageTitle from "../../UI/PageTitle";
 import UserCard from "../../common/UserCard";
 
-const itemsPerPage = 8;
+const itemsPerPage = 6;
 
 const ViewAll = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -95,12 +95,7 @@ const ViewAll = () => {
             display: "grid",
             placeItems: "center",
             mr: 2,
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
-              lg: "repeat(4, 1fr)",
-            },
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
             gap: { xs: 2, sm: 3 },
           }}
         >

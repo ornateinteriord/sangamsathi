@@ -22,6 +22,8 @@ import sidebarData from './components/PromotersDash/sidebar/data';
 import Expired from './components/PromotersDash/myReferals/Expired';
 import InActive from './components/PromotersDash/myReferals/InActive';
 import TeamUsers from './components/PromotersDash/myReferals/TeamUsers';
+import AssistancePending from './components/PromotersDash/myReferals/AssistancePending';
+import AssistanceSuccess from './components/PromotersDash/myReferals/AssistanceSuccess';
 import ActivationPending from './components/activationPending/activationPending';
 import ScrollToTop from './components/common/scrollToTop';
 import NotFoundPage from './components/notFound/NotFoundPage';
@@ -143,6 +145,8 @@ const App = () => {
                   <Route path="expired" element={<Expired />} />
                   <Route path="inactive" element={<InActive />} />
                   <Route path="team-users" element={<TeamUsers />} />
+                  <Route path="assistance-pending" element={<AssistancePending />} />
+                  <Route path="assistance-success" element={<AssistanceSuccess />} />
                 </Route>
               </Route>
 

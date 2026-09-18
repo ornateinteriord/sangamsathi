@@ -30,8 +30,9 @@ const UserCard = ({
   return (
     <Card
       sx={{
-        width: { xs: 280, sm: 280, md: 280, lg: 300 },
-        height: 420,
+        width: "100%",
+        maxWidth: { xs: 280, sm: 280, md: 300, lg: 320 },
+        height: 470,
         borderRadius: "24px",
         boxShadow: "0 10px 30px rgba(11,25,44,0.1)",
         overflow: "hidden",
@@ -50,7 +51,7 @@ const UserCard = ({
       {/* Top 60% Full Bleed Image */}
       <Box sx={{
         width: '100%',
-        height: '65%',
+        height: '55%',
         position: 'relative',
         background: 'linear-gradient(135deg, #F1F5F9, #E2E8F0)',
         overflow: 'hidden'
@@ -72,7 +73,7 @@ const UserCard = ({
 
         {/* Dark Gradient Overlay for text */}
         <Box sx={{
-          position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%',
+          position: 'absolute', bottom: 0, left: 0, right: 0, height: '55%',
           background: 'linear-gradient(to top, rgba(11,25,44,0.9) 0%, rgba(11,25,44,0) 100%)',
           zIndex: 1
         }} />
@@ -106,7 +107,7 @@ const UserCard = ({
 
         {/* Name & Age Overlay */}
         <Box sx={{ position: 'absolute', bottom: 16, left: 16, right: 16, zIndex: 2 }}>
-          <Typography sx={{ fontWeight: 800, fontSize: "1.3rem", color: "#fff", lineHeight: 1.2, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+          <Typography sx={{ fontWeight: 800, fontSize: "1.3rem", color: "#fff", lineHeight: 1.2, textShadow: '0 2px 4px rgba(0,0,0,0.5)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
             {profile?.first_name} {profile?.last_name}
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
@@ -130,7 +131,7 @@ const UserCard = ({
         }}
       >
         {/* Minimal Info Strip */}
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.2, mb: "auto" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.2, mb: 1.5 }}>
           {/* Occupation */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <Box sx={{ width: 28, height: 28, borderRadius: '8px', background: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -152,13 +153,35 @@ const UserCard = ({
           </Box>
         </Box>
 
+        {/* Stats row */}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            background: "#F8FAFC",
+            borderRadius: "12px",
+            border: "1px solid #E2E8F0",
+            py: 1,
+            px: 0.5,
+            mb: 1.5,
+            mt: 1.5,
+          }}
+        >
+          <ProfileInfo label="Height" value={profile?.height || "N/A"} />
+          <Divider orientation="vertical" flexItem sx={{ borderColor: "#E2E8F0" }} />
+          <ProfileInfo label="Religion" value={profile?.religion || "N/A"} />
+          <Divider orientation="vertical" flexItem sx={{ borderColor: "#E2E8F0" }} />
+          <ProfileInfo label="Caste" value={profile?.caste || "N/A"} />
+        </Box>
+
         {/* Floating Action Buttons */}
         <Box
           display="flex"
           justifyContent="center"
           gap={1.5}
           width="100%"
-          mt={2}
+          mt="auto"
           flexWrap="wrap"
         >
           {showResponseButtons && (
@@ -287,14 +310,14 @@ const UserCard = ({
 export default UserCard;
 
 export const ProfileInfo = ({ label, value }) => (
-  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: 0.5 }}>
+  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: 0.5, flex: 1, width: 0 }}>
     <Typography
       variant="caption"
-      sx={{ fontWeight: 700, color: "#64748B", fontSize: "0.68rem", letterSpacing: "0.5px", textTransform: "uppercase" }}
+      sx={{ fontWeight: 700, color: "#64748B", fontSize: "0.68rem", letterSpacing: "0.5px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%", textAlign: "center" }}
     >
       {label}
     </Typography>
-    <Typography variant="body2" sx={{ color: "#0F172A", fontWeight: 600, fontSize: "0.85rem" }}>
+    <Typography variant="body2" sx={{ color: "#0F172A", fontWeight: 600, fontSize: "0.85rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%", textAlign: "center" }} title={value}>
       {value}
     </Typography>
   </Box>

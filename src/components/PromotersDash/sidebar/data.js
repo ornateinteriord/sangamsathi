@@ -31,7 +31,10 @@ const sidebarData = {
     {
       text: "Assistance Services",
       icon: "SupportAgent",
-      subItems: [{ text: "Pending" }, { text: "Success" }],
+      subItems: [
+        { text: "Pending", path: "/PromotAdmin/assistance-pending" },
+        { text: "Success", path: "/PromotAdmin/assistance-success" }
+      ],
     },
     {
       text: "My Earnings",
